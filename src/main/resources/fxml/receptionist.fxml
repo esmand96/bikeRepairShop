@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="20" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="bikerepairshop.view.handler.ReceptionistHandler">
+
+    <padding><Insets top="28" right="32" bottom="28" left="32"/></padding>
+
+    <!-- Page Header -->
+    <VBox spacing="4">
+        <Label text="Reception" styleClass="section-title"/>
+        <Label text="Search for a customer and create a repair order." styleClass="section-subtitle"/>
+    </VBox>
+
+    <!-- Search Card -->
+    <VBox styleClass="card" spacing="14">
+        <Label text="Customer Search" styleClass="field-label"/>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <TextField fx:id="phoneField" promptText="Phone number" HBox.hgrow="ALWAYS"/>
+            <Button text="Search" styleClass="btn-primary" onAction="#onSearch"/>
+        </HBox>
+    </VBox>
+
+    <!-- Customer Info Card (hidden by default) -->
+    <VBox fx:id="customerInfoCard" styleClass="card" spacing="16" visible="false" managed="false">
+        <Label text="Customer Details" styleClass="field-label"/>
+
+        <GridPane hgap="16" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints minWidth="130" prefWidth="140"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <Label text="Name"          styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Label fx:id="nameLabel"    styleClass="field-value" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Phone"         styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Label fx:id="phoneLabel"   styleClass="field-value" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Email"         styleClass="field-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <Label fx:id="emailLabel"   styleClass="field-value" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Bike Brand"    styleClass="field-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <Label fx:id="brandLabel"   styleClass="field-value" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <Label text="Serial Number" styleClass="field-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <Label fx:id="serialLabel"  styleClass="field-value" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            <Label text="Bike Type"     styleClass="field-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <Label fx:id="typeLabel"    styleClass="field-value" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <Separator/>
+
+        <Label text="Problem Description" styleClass="field-label"/>
+        <TextArea fx:id="problemArea" promptText="Describe the customer's problem..."/>
+
+        <HBox alignment="CENTER_RIGHT">
+            <Button text="Create Repair Order" styleClass="btn-primary" onAction="#onCreateOrder"/>
+        </HBox>
+    </VBox>
+
+    <!-- Status message (not found / success / error) -->
+    <Label fx:id="statusLabel" styleClass="info-message"/>
+
+</VBox>

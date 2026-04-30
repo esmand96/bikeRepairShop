@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE"
+         xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+
+    <Tab text="Reception — New Order">
+        <StackPane fx:id="receptionistContainer"/>
+    </Tab>
+
+    <Tab text="Technician">
+        <StackPane fx:id="technicianContainer"/>
+    </Tab>
+
+    <Tab text="Reception — Approval">
+        <StackPane fx:id="approvalContainer"/>
+    </Tab>
+
+</TabPane>
