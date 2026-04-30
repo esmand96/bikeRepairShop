@@ -1,7 +1,10 @@
 package bikerepairshop.controller;
 
 import bikerepairshop.model.dto.CustomerDetailsDTO;
+import bikerepairshop.model.dto.PresentNewlyCreatedRepairOrderDTO;
 import bikerepairshop.service.Service;
+
+import java.util.List;
 
 public class Controller {
     private final Service service;
@@ -16,5 +19,10 @@ public class Controller {
         ///man kan skapa en dTO som parameter.
     public void enterCustomerDescription(String consultationId, String problemDescription){
         service.createRepairOrder(consultationId, problemDescription);
+    }
+
+    public List<PresentNewlyCreatedRepairOrderDTO> getAllNewlyCreatedRepairOrders() {
+        List<PresentNewlyCreatedRepairOrderDTO> presentNewlyCreatedRepairOrderDTOS =  service.getAllNewlyCreatedRepairOrders();
+        return presentNewlyCreatedRepairOrderDTOS;
     }
 }

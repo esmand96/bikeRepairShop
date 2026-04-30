@@ -1,20 +1,25 @@
 package bikerepairshop.model.domain;
-                                                                                                                          /// FRÅGOR HÄR
+
+import java.util.List;
+
 
 public class RepairOrder {
     private String date;
     private String problemDescription;
     private RepairOrderState state;
     private CustomerDetails customerDetails;
-    private RepairTask[] repairTasks;                                                                                /// ta bort listan?
+    private List<RepairTask> repairTasks;
     private DiagnosticReport diagnosticReport;
+    private String id;
 
-    public RepairOrder(String date, String problemDescription, RepairOrderState state, CustomerDetails customerDetails, RepairTask[] repairTasks, DiagnosticReport diagnosticReport){
+    public RepairOrder(String date, String problemDescription, RepairOrderState state, CustomerDetails customerDetails, List<RepairTask> repairTasks, DiagnosticReport diagnosticReport, String id){
         this.date = date;
         this.problemDescription = problemDescription;
         this.state = state;
+        this.customerDetails = customerDetails;
         this.repairTasks = repairTasks;
         this.diagnosticReport = diagnosticReport;
+        this.id = id;
     }
 
       public String getDate() {
@@ -49,11 +54,11 @@ public class RepairOrder {
           this.customerDetails = customerDetails;
       }
 
-      public RepairTask[] getRepairTasks() {
+      public List<RepairTask> getRepairTasks() {
           return repairTasks;
       }
 
-      public void setRepairTasks(RepairTask[] repairTasks) {
+      public void setRepairTasks(List<RepairTask> repairTasks) {
           this.repairTasks = repairTasks;
       }
 
@@ -64,4 +69,11 @@ public class RepairOrder {
       public void setDiagnosticReport(DiagnosticReport diagnosticReport) {
           this.diagnosticReport = diagnosticReport;
       }
+
+    public String getId() {
+        return id;
     }
+    public void setId(String id) {
+        this.id = id;
+    }
+}

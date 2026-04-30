@@ -1,12 +1,10 @@
 package bikerepairshop.model.entity;
 
 public class RepairTaskEntity {
-    private String repairTaskId;
     private String description;
     private double cost;
 
-    public RepairTaskEntity(String repairTaskId, String description, double cost) {
-        this.repairTaskId = repairTaskId;
+    public RepairTaskEntity(String description, double cost) {
         this.description = description;
         this.cost = cost;
     }
@@ -27,11 +25,4 @@ public class RepairTaskEntity {
         this.description = description;
     }
 
-    public String getRepairTaskId() {
-        return repairTaskId;
-    }
-
-    public void setRepairTaskId(String repairTaskId) {
-        this.repairTaskId = repairTaskId;
-    }
 }

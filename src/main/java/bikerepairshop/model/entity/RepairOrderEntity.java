@@ -1,18 +1,21 @@
 package bikerepairshop.model.entity;
 
+import java.util.List;
+
 public class RepairOrderEntity {
     private String date;
     private String problemDescription;
     private String state;
     private DiagnosticReportEntity diagnosticReport;
-    private RepairTaskEntity[] repairTasks;
+    private List<RepairTaskEntity> repairTasks;
     private String customerPhoneNumber;
     private String bikeBrand;
     private String bikeSerialNumber;
+    private String bikeModel;
     private String consultationId;
     private String id;
 
-    public RepairOrderEntity(String date, String problemDescription, String state, DiagnosticReportEntity diagnosticReport, RepairTaskEntity[] repairTasks, String customerPhoneNumber, String bikeBrand, String bikeSerialNumber, String consultationId, String id) {
+    public RepairOrderEntity(String date, String problemDescription, String state, DiagnosticReportEntity diagnosticReport, List<RepairTaskEntity> repairTasks, String customerPhoneNumber, String bikeBrand, String bikeSerialNumber, String consultationId, String id,String bikeModel) {
         this.date = date;
         this.problemDescription = problemDescription;
         this.state = state;
@@ -21,8 +24,9 @@ public class RepairOrderEntity {
         this.customerPhoneNumber = customerPhoneNumber;
         this.bikeBrand = bikeBrand;
         this.bikeSerialNumber = bikeSerialNumber;
-        this.consultationId = consultationId;
+        this.consultationId = consultationId; ///kanske ta bort consultationId hörifrån?
         this.id = id;
+        this.bikeModel = bikeModel;
     }
 
     public String getDate() {
@@ -57,11 +61,11 @@ public class RepairOrderEntity {
         this.diagnosticReport = diagnosticReport;
     }
 
-    public RepairTaskEntity[] getRepairTasks() {
+    public List<RepairTaskEntity> getRepairTasks() {
         return repairTasks;
     }
 
-    public void setRepairTasks(RepairTaskEntity[] repairTasks) {
+    public void setRepairTasks(List<RepairTaskEntity> repairTasks) {
         this.repairTasks = repairTasks;
     }
 
@@ -103,5 +107,12 @@ public class RepairOrderEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setBikeModel(String bikeModel) {
+        this.bikeModel = bikeModel;
+    }
+    public String getBikeModel() {
+        return bikeModel;
     }
 }
