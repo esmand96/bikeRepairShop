@@ -108,7 +108,7 @@ public class ApprovalHandler implements ViewHandler<Controller> {
         estimatedTimeLabel.setText(order.getEstimatedRepairTime());
          */
 
-        taskTable.getItems().setAll(order.getProposedRepairTasks());
+       // taskTable.getItems().setAll(order.getProposedRepairTasks());
 
         // Reset decision
         approveRadio.setSelected(false);

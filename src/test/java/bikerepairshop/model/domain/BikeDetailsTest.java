@@ -1,8 +1,9 @@
 package bikerepairshop.model.domain;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class BikeDetailsTest {
     private BikeDetails bikeDetailsToTest;
@@ -11,7 +12,7 @@ public class BikeDetailsTest {
     private String serialNumber = "1234";
 
 
-    @Before
+    @BeforeEach
     public void setUp() {
         bikeDetailsToTest = new BikeDetails(brand, model, serialNumber);
 
@@ -20,7 +21,7 @@ public class BikeDetailsTest {
     @Test
     public void getBrand() {
         String brandTest = bikeDetailsToTest.getBrand();
-        Assert.assertEquals(brand, brandTest);
+        Assertions.assertEquals(brand, brandTest);
 
     }
 }

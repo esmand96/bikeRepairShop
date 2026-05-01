@@ -1,8 +1,5 @@
 package bikerepairshop.integration;
-
-import bikerepairshop.model.entity.BikeRepairConsultationEntity;
 import bikerepairshop.model.entity.RepairOrderEntity;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,19 +10,27 @@ public class RepairOrderRegistryIntegration {
             map = new HashMap<>();
         }
 
-    public RepairOrderRegistryIntegration() {
-    }
-
     public void insertRepairOrder(RepairOrderEntity repairOrderEntity) {
             map.put(repairOrderEntity.getId(),repairOrderEntity);
     }
 
     public List<RepairOrderEntity> getAllNewlyCreatedRepairOrders() {
-        List<RepairOrderEntity> newlyCreatedRepairOrders = new ArrayList<>();
+        return getAllWithState("NEWLY_CREATED");
+    }
+
+    public RepairOrderEntity getRepairOrderById(String repairOrderId) {
+            return map.get(repairOrderId);
+    }
+
+    public List<RepairOrderEntity> getAllReadyForApprovalOrders() {
+        return getAllWithState("READY_FOR_APPROVAL") ;
+    }
+    private List<RepairOrderEntity> getAllWithState(String state) {
+        List<RepairOrderEntity> repairOrderEntities = new ArrayList<>();
         map.forEach( (phoneNumber,entity) -> {
-            if (entity.getState().equals("NEWLY_CREATED"))
-                newlyCreatedRepairOrders.add(entity);
+            if (entity.getState().equals(state))
+                repairOrderEntities.add(entity);
         });
-        return newlyCreatedRepairOrders;
+        return repairOrderEntities;
     }
 }

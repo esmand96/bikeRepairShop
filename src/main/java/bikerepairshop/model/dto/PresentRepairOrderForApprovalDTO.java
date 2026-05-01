@@ -1,16 +1,18 @@
 package bikerepairshop.model.dto;
 
+import java.util.List;
+
 public class PresentRepairOrderForApprovalDTO {
     private final DiagnosticReportDTO diagnosticReport;
     private final double totalCost;
-    private final RepairTaskDTO[] proposedRepairTasks;
+    private final List<RepairTaskDTO> proposedRepairTasks;
     private final String repairOrderId;
     private final String customerPhoneNumber;
     private final String bikeModel;
     private final String bikeSerialNumber;
     private final String bikeBrand;
 
-    public PresentRepairOrderForApprovalDTO(DiagnosticReportDTO diagnosticReport, double totalCost, RepairTaskDTO[] proposedRepairTasks, String repairOrderId, String customerPhoneNumber, String bikeModel, String bikeSerialNumber, String bikeBrand) {
+    public PresentRepairOrderForApprovalDTO(DiagnosticReportDTO diagnosticReport, double totalCost, List<RepairTaskDTO> proposedRepairTasks, String repairOrderId, String customerPhoneNumber, String bikeModel, String bikeSerialNumber, String bikeBrand) {
         this.diagnosticReport = diagnosticReport;
         this.totalCost = totalCost;
         this.proposedRepairTasks = proposedRepairTasks;
@@ -45,7 +47,7 @@ public class PresentRepairOrderForApprovalDTO {
         return diagnosticReport;
     }
 
-    public RepairTaskDTO[] getProposedRepairTasks() {
+    public List<RepairTaskDTO> proposedRepairTasks() {
         return proposedRepairTasks;
     }
 

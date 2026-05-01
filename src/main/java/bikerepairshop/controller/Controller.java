@@ -2,8 +2,10 @@ package bikerepairshop.controller;
 
 import bikerepairshop.model.dto.CustomerDetailsDTO;
 import bikerepairshop.model.dto.PresentNewlyCreatedRepairOrderDTO;
+import bikerepairshop.model.dto.PresentRepairOrderForApprovalDTO;
+import bikerepairshop.model.dto.RepairTaskDTO;
 import bikerepairshop.service.Service;
-
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Controller {
@@ -13,8 +15,7 @@ public class Controller {
     }
 
     public CustomerDetailsDTO findCustomer (String phoneNumber){
-        CustomerDetailsDTO customerDetails = service.findCustomerByPhoneNumber(phoneNumber);
-        return customerDetails;
+        return service.findCustomerByPhoneNumber(phoneNumber);
     }
         ///man kan skapa en dTO som parameter.
     public void enterCustomerDescription(String consultationId, String problemDescription){
@@ -22,7 +23,14 @@ public class Controller {
     }
 
     public List<PresentNewlyCreatedRepairOrderDTO> getAllNewlyCreatedRepairOrders() {
-        List<PresentNewlyCreatedRepairOrderDTO> presentNewlyCreatedRepairOrderDTOS =  service.getAllNewlyCreatedRepairOrders();
-        return presentNewlyCreatedRepairOrderDTOS;
+        return service.getAllNewlyCreatedRepairOrders();
+    }
+
+    public void enterDiagnosticReportAndRepairTasks(String repairOrderId, String diagnosticReportDescription, List<RepairTaskDTO> repairTasks, LocalDateTime estimatedRepairTime) {
+        service.enterDiagnosticReportAndRepairTasks(repairOrderId, diagnosticReportDescription, repairTasks, estimatedRepairTime);
+    }
+
+    public List <PresentRepairOrderForApprovalDTO> getAllReadyForApprovalOrders() {
+        return service.getAllReadyForApprovalOrders();
     }
 }

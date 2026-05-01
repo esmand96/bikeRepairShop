@@ -6,8 +6,9 @@ import bikerepairshop.integration.RepairOrderRegistryIntegration;
 import bikerepairshop.model.domain.*;
 import bikerepairshop.model.dto.CustomerDetailsDTO;
 import bikerepairshop.model.dto.PresentNewlyCreatedRepairOrderDTO;
+import bikerepairshop.model.dto.PresentRepairOrderForApprovalDTO;
+import bikerepairshop.model.dto.RepairTaskDTO;
 import bikerepairshop.model.entity.*;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,18 +27,12 @@ public class Service {
         this.mapper = mapper;
     }
 
-    /**
-     * Skapandet av BikeDetails och CustomerDetails kan flyttas ut i egna/egen metoder för att få högre sammanhållning och bättre inkapsling.
-     * @param phoneNumber
-     * @return
-     */
     public CustomerDetailsDTO findCustomerByPhoneNumber(String phoneNumber) {
         CustomerDetailsEntity customerDetailsEntity = customerRegistryIntegration.findCustomerEntityByPhoneNumber(phoneNumber);
         BikeRepairConsultationEntity bikeRepairConsultationEntity = selectFirstUnhandledConsultation(customerDetailsEntity);
         BikeDetails bikeDetails = createBikeDetails(bikeRepairConsultationEntity);
         CustomerDetails customerDetails = createCustomerDetails(customerDetailsEntity, bikeDetails, bikeRepairConsultationEntity.getId());
-        CustomerDetailsDTO customerDetailsDTO = mapper.mapToCustomerDetailsDTO(customerDetails);
-        return customerDetailsDTO;
+        return mapper.mapToCustomerDetailsDTO(customerDetails);
     }
 
     public void createRepairOrder(String consultationId, String problemDescription){
@@ -54,14 +49,38 @@ public class Service {
         List<RepairOrderEntity> repairOrderEntities = repairOrderRegistryIntegration.getAllNewlyCreatedRepairOrders();
         List<PresentNewlyCreatedRepairOrderDTO> newlyCreatedRepairOrderDTOS = new ArrayList<>();
         for (RepairOrderEntity repairOrderEntity : repairOrderEntities){
-            BikeDetails bikeDetails = createBikeDetails(repairOrderEntity);
-            CustomerDetails customerDetails = createCustomerDetails(repairOrderEntity, bikeDetails);
-            RepairOrder repairOrder = createRepairOrder(repairOrderEntity, customerDetails);
-            PresentNewlyCreatedRepairOrderDTO presentNewlyCreatedRepairOrderDTO =
-                    mapper.mapToPresentNewlyCreatedRepairOrderDTO(repairOrder);
+            RepairOrder repairOrder = createRepairOrder(repairOrderEntity);
+            PresentNewlyCreatedRepairOrderDTO presentNewlyCreatedRepairOrderDTO = mapper.mapToPresentNewlyCreatedRepairOrderDTO(repairOrder);
             newlyCreatedRepairOrderDTOS.add(presentNewlyCreatedRepairOrderDTO);
         }
         return newlyCreatedRepairOrderDTOS;
+    }
+
+
+    public List<PresentRepairOrderForApprovalDTO> getAllReadyForApprovalOrders() {
+        List<RepairOrderEntity> repairOrderEntities = repairOrderRegistryIntegration.getAllReadyForApprovalOrders();
+        List<PresentRepairOrderForApprovalDTO> repairOrderForApprovalDTOs = new ArrayList<>();
+        for (RepairOrderEntity repairOrderEntity : repairOrderEntities){
+            RepairOrder repairOrder = createRepairOrder((repairOrderEntity));
+            double totalCost = calculateTotalCost(repairOrder);
+            PresentRepairOrderForApprovalDTO presentRepairOrderForApprovalDTO = mapper.mapToPresentRepairOrderForApprovalDTO(repairOrder,totalCost);
+            repairOrderForApprovalDTOs.add(presentRepairOrderForApprovalDTO);
+        }
+        return repairOrderForApprovalDTOs;
+    }
+
+    public void enterDiagnosticReportAndRepairTasks(String repairOrderId, String diagnosticReportDescription, List<RepairTaskDTO> repairTasks, LocalDateTime estimatedRepairTime){
+        RepairOrderEntity repairOrderEntity = repairOrderRegistryIntegration.getRepairOrderById(repairOrderId);
+        List <RepairTaskEntity> repairTaskEntities = new ArrayList<>();
+        DiagnosticReportEntity diagnosticReportEntity = new DiagnosticReportEntity(diagnosticReportDescription, estimatedRepairTime);
+        for (RepairTaskDTO repairTaskDTO : repairTasks){
+            RepairTaskEntity repairTaskEntity = new RepairTaskEntity(repairTaskDTO.getDescription(), repairTaskDTO.getCost());
+            repairTaskEntities.add(repairTaskEntity);
+        }
+        repairOrderEntity.setRepairTasks(repairTaskEntities);
+        repairOrderEntity.setDiagnosticReport(diagnosticReportEntity);
+        repairOrderEntity.setState("READY_FOR_APPROVAL");
+        repairOrderRegistryIntegration.insertRepairOrder(repairOrderEntity);
     }
 
     ///lossas att den consultation högst upp i listan gäller. sorterar ej. (kanske fixar detta sen),
@@ -84,60 +103,62 @@ public class Service {
         String serialNumber = consultationEntity.getSerialNumber();
         String brand = consultationEntity.getBrand();
         String model = consultationEntity.getModel();
-        BikeDetails bikeDetails = new BikeDetails(brand, serialNumber, model);
-        return bikeDetails;
+        return new BikeDetails(brand, serialNumber, model);
     }
 
     private BikeDetails createBikeDetails(RepairOrderEntity repairOrderEntity){
         String serialNumber = repairOrderEntity.getBikeSerialNumber();
         String brand = repairOrderEntity.getBikeBrand();
         String model = repairOrderEntity.getBikeModel();
-        BikeDetails bikeDetails = new BikeDetails(brand, serialNumber, model);
-        return bikeDetails;
+        return new BikeDetails(brand, serialNumber, model);
     }
 
-    private CustomerDetails createCustomerDetails(CustomerDetailsEntity customerDetailsEntity,
-                                                  BikeDetails bikeDetails, String consultationId){
+    private CustomerDetails createCustomerDetails(CustomerDetailsEntity customerDetailsEntity, BikeDetails bikeDetails, String consultationId){
         String email = customerDetailsEntity.getEmail();
         String phoneNumber = customerDetailsEntity.getPhoneNumber();
         String name = customerDetailsEntity.getName();
-        CustomerDetails customerDetails = new CustomerDetails(name,email, phoneNumber, bikeDetails, consultationId);
-        return customerDetails;
+        return new CustomerDetails(name,email, phoneNumber, bikeDetails, consultationId);
     }
     private CustomerDetails createCustomerDetails(RepairOrderEntity repairOrderEntity, BikeDetails bikeDetails){
         String phoneNumber = repairOrderEntity.getCustomerPhoneNumber();
         CustomerDetailsEntity customerDetailsEntity = customerRegistryIntegration.findCustomerEntityByPhoneNumber(phoneNumber);
         String name = customerDetailsEntity.getName();
         String email = customerDetailsEntity.getEmail();
-
-        CustomerDetails customerDetails = new CustomerDetails(name,email, phoneNumber,bikeDetails, repairOrderEntity.getConsultationId() );
-        return customerDetails;
+        return new CustomerDetails(name,email, phoneNumber,bikeDetails, repairOrderEntity.getConsultationId() );
     }
 
     private RepairOrder createNewRepairOrder(String problemDescription, CustomerDetails customerDetails){
         RepairOrderState repairOrderState = RepairOrderState.NEWLY_CREATED;
         String date = LocalDateTime.now().toString();
-        RepairOrder repairOrder = new RepairOrder(date, problemDescription, repairOrderState, customerDetails, null,
+        return new RepairOrder(date, problemDescription, repairOrderState, customerDetails, null,
                 null, UUID.randomUUID().toString());
-        return repairOrder;
     }
 
-    private RepairOrder createRepairOrder (RepairOrderEntity repairOrderEntity, CustomerDetails customerDetails) {
+    private RepairOrder createRepairOrder (RepairOrderEntity repairOrderEntity) {
         RepairOrderState repairOrderState = RepairOrderState.valueOf(repairOrderEntity.getState());
+        BikeDetails bikeDetails = createBikeDetails(repairOrderEntity);
+        CustomerDetails customerDetails = createCustomerDetails(repairOrderEntity, bikeDetails);
         String date = LocalDateTime.now().toString();
         List<RepairTask> repairTasks = createRepairTasks(repairOrderEntity);
         DiagnosticReport diagnosticReport = createDiagnosticReport(repairOrderEntity);
-        RepairOrder repairOrder = new RepairOrder(date, repairOrderEntity.getProblemDescription()
-                , repairOrderState, customerDetails, repairTasks, diagnosticReport,repairOrderEntity.getId());
-        return repairOrder;
+
+        return new RepairOrder(
+                date,
+                repairOrderEntity.getProblemDescription(),
+                repairOrderState,
+                customerDetails,
+                repairTasks,
+                diagnosticReport,
+                repairOrderEntity.getId()
+        );
     }
+
     private DiagnosticReport createDiagnosticReport (RepairOrderEntity repairOrderEntity) {
         DiagnosticReportEntity diagnosticReportEntity = repairOrderEntity.getDiagnosticReport();
         if(diagnosticReportEntity == null)
             return null;
 
-        DiagnosticReport diagnosticReport = new DiagnosticReport(diagnosticReportEntity.getDescription(), diagnosticReportEntity.getEstimatedRepairTime());
-        return diagnosticReport;
+        return new DiagnosticReport(diagnosticReportEntity.getDescription(), diagnosticReportEntity.getEstimatedRepairTime());
 
     }
     private List<RepairTask> createRepairTasks (RepairOrderEntity repairOrderEntity) {
@@ -145,12 +166,20 @@ public class Service {
         List<RepairTaskEntity> repairTaskEntities = repairOrderEntity.getRepairTasks();
         if(repairTaskEntities == null)
             return repairTasks;
-        
+
         for(RepairTaskEntity repairTaskEntity : repairTaskEntities){
             RepairTask repairTask = new RepairTask(repairTaskEntity.getCost(), repairTaskEntity.getDescription());
             repairTasks.add(repairTask);
         }
         return repairTasks;
+    }
+
+    private double calculateTotalCost (RepairOrder repairOrder){
+        double totalCost = 0.0;
+        for (RepairTask repairTask : repairOrder.getRepairTasks()){
+            totalCost += repairTask.getCost();
+        }
+         return totalCost;
     }
 
 }
