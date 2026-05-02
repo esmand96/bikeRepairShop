@@ -1,9 +1,6 @@
 package bikerepairshop.controller;
 
-import bikerepairshop.model.dto.CustomerDetailsDTO;
-import bikerepairshop.model.dto.PresentNewlyCreatedRepairOrderDTO;
-import bikerepairshop.model.dto.PresentRepairOrderForApprovalDTO;
-import bikerepairshop.model.dto.RepairTaskDTO;
+import bikerepairshop.model.dto.*;
 import bikerepairshop.service.Service;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,5 +29,13 @@ public class Controller {
 
     public List <PresentRepairOrderForApprovalDTO> getAllReadyForApprovalOrders() {
         return service.getAllReadyForApprovalOrders();
+    }
+
+    public void approveRepairOrder(String repairOrderId) {
+        service.approveRepairOrder(repairOrderId);
+    }
+
+    public ReceiptDTO getReceipt(String repairOrderId) {
+        return service.getReceipt(repairOrderId);
     }
 }

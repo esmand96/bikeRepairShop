@@ -2,45 +2,42 @@ package bikerepairshop.integration;
 
 import bikerepairshop.model.entity.BikeRepairConsultationEntity;
 import bikerepairshop.model.entity.CustomerDetailsEntity;
+import bikerepairshop.util.Util;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class CustomerRegistryIntegration {
-    private static final HashMap<String, CustomerDetailsEntity> customerDetailsEntityHashMap;
-
+    private static final Set<CustomerDetailsEntity> customerDetailsSet;
     static { /// a customer consultation
-        customerDetailsEntityHashMap = new HashMap<>();
+        customerDetailsSet = new HashSet<>();
         List<BikeRepairConsultationEntity> list = new ArrayList<>();
-        list.add(new BikeRepairConsultationEntity("24jan", randomId(), "someModel", "someBrand", "serial123"));
+        list.add(new BikeRepairConsultationEntity("24jan", Util.generateRandomId(), "someModel", "someBrand", "serial123"));
         CustomerDetailsEntity firstCustomer = new CustomerDetailsEntity("Esmeralda", "first@customer.now", "070123",list );
-        customerDetailsEntityHashMap.put(firstCustomer.getPhoneNumber(), firstCustomer);
+        customerDetailsSet.add(firstCustomer);
+    }
 
-    }
-    private static String randomId (){
-        return UUID.randomUUID().toString();
-    }
 
     public CustomerRegistryIntegration() {
     }
 
 
     public CustomerDetailsEntity findCustomerEntityByPhoneNumber(String phoneNumber){
-        return customerDetailsEntityHashMap.get(phoneNumber);
+        for(CustomerDetailsEntity customerDetailsEntity : customerDetailsSet){
+            if(customerDetailsEntity.getPhoneNumber().equals(phoneNumber))
+                return customerDetailsEntity;
+        }
+        return null;
     }
 
     public CustomerDetailsEntity findCustomerByConsultationId(String consultationId){
-        AtomicReference<CustomerDetailsEntity> customerDetailsEntity = new AtomicReference<>();
-        customerDetailsEntityHashMap.forEach( (phoneNumber,entity) -> {
-            List <BikeRepairConsultationEntity> consultations = entity.getConsultations();
-            for(BikeRepairConsultationEntity consultation : consultations){
-                if (consultation.getId().equals(consultationId)){
-                    customerDetailsEntity.set(entity);
-                }
-
+        for(CustomerDetailsEntity customerDetailsEntity : customerDetailsSet){
+            for(BikeRepairConsultationEntity bikeRepairConsultationEntity : customerDetailsEntity.getConsultations()){
+                if(bikeRepairConsultationEntity.getId().equals(consultationId))
+                    return customerDetailsEntity;
             }
-        });
-        return customerDetailsEntity.get();
+
+        }
+        return null;
     }
 
 

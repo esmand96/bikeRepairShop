@@ -1,5 +1,7 @@
 package bikerepairshop.model.dto;
 
+import java.util.List;
+
 public class ReceiptDTO {
     private final String name;
     private final String email;
@@ -9,11 +11,11 @@ public class ReceiptDTO {
     private final String bikeSerialNumber;
     private final String problemDescription;
     private final String state;
-    private final RepairTaskDTO[] repairTasks;
+    private final List <RepairTaskDTO> repairTasks;
     private final DiagnosticReportDTO diagnosticReport;
     private final double totalCost;
 
-    public ReceiptDTO(String name, String email, String phoneNumber, String bikeBrand, String bikeModel, String bikeSerialNumber, String problemDescription, String state, RepairTaskDTO[] repairTasks, DiagnosticReportDTO diagnosticReport, double totalCost) {
+    public ReceiptDTO(String name, String email, String phoneNumber, String bikeBrand, String bikeModel, String bikeSerialNumber, String problemDescription, String state,  List <RepairTaskDTO> repairTasks, DiagnosticReportDTO diagnosticReport, double totalCost) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -59,7 +61,7 @@ public class ReceiptDTO {
         return diagnosticReport;
     }
 
-    public RepairTaskDTO[] getRepairTasks() {
+    public List <RepairTaskDTO> getRepairTasks() {
         return repairTasks;
     }
 

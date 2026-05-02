@@ -14,8 +14,10 @@ public class RepairOrderEntity {
     private String bikeModel;
     private String consultationId;
     private String id;
+    private String name;
+    private String email;
 
-    public RepairOrderEntity(String date, String problemDescription, String state, DiagnosticReportEntity diagnosticReport, List<RepairTaskEntity> repairTasks, String customerPhoneNumber, String bikeBrand, String bikeSerialNumber, String consultationId, String id,String bikeModel) {
+    public RepairOrderEntity(String date, String problemDescription, String state, DiagnosticReportEntity diagnosticReport, List<RepairTaskEntity> repairTasks, String customerPhoneNumber, String bikeBrand, String bikeSerialNumber, String consultationId, String id, String bikeModel, String name, String email) {
         this.date = date;
         this.problemDescription = problemDescription;
         this.state = state;
@@ -27,6 +29,24 @@ public class RepairOrderEntity {
         this.consultationId = consultationId; ///kanske ta bort consultationId hörifrån?
         this.id = id;
         this.bikeModel = bikeModel;
+        this.name = name;
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDate() {
