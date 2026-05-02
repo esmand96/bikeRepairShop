@@ -67,7 +67,7 @@ public class Mapper {
             String serialNumber = repairOrderEntity.getBikeSerialNumber();
             String brand = repairOrderEntity.getBikeBrand();
             String model = repairOrderEntity.getBikeModel();
-            return new BikeDetails(brand, serialNumber, model);
+            return new BikeDetails(brand, model,  serialNumber);
         }
 
         BikeDetails toBikeDetails(BikeRepairConsultationEntity consultationEntity){
