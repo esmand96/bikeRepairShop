@@ -72,6 +72,7 @@ public class Mapper {
         }
 
         BikeDetails bikeRepairConsultationEntityToBikeDetails(BikeRepairConsultationEntity consultationEntity){
+
             String serialNumber = consultationEntity.getSerialNumber();
             String brand = consultationEntity.getBrand();
             String model = consultationEntity.getModel();
@@ -87,6 +88,8 @@ public class Mapper {
         }
 
         CustomerDetails mergeCustomerDetailsEntityAndBikeConsultationEntityToCustomerDetails(CustomerDetailsEntity customerDetailsEntity, BikeRepairConsultationEntity consultationEntity ){
+            if(customerDetailsEntity == null || consultationEntity == null)
+                return null;
             String email = customerDetailsEntity.getEmail();
             String phoneNumber = customerDetailsEntity.getPhoneNumber();
             String name = customerDetailsEntity.getName();
@@ -100,6 +103,8 @@ public class Mapper {
     static class Domain{
 
         CustomerDetailsDTO customerDetailsToDTO(CustomerDetails customerDetails){
+            if(customerDetails == null)
+                return null;
             return new CustomerDetailsDTO(customerDetails);
         }
 

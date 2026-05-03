@@ -12,22 +12,7 @@ import static bikerepairshop.TestUtil.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MapperTest {
-    private static final double TASK_COST = 123.45;
-    private static final String TASK_DESCRIPTION = "change breaks";
-    private static final LocalDateTime TASK_ESTIMATED_REPAIR_TIME = LocalDateTime.now();
     private static final Mapper mapper = new Mapper();
-    private static final String ORDER_ID = "IDfirst123";
-    private static final String DATE = "2026-05-03";
-    private static final String ORDER_PROBLEM_DESCRIPTION = "Bike makes noise";
-    private static final RepairOrderState ORDER_STATE = RepairOrderState.NEWLY_CREATED;
-    private static final String CUSTOMER_NAME = "Jane Doe";
-    private static final String CUSTOMER_PHONE = "07012345";
-    private static final String CUSTOMER_EMAIL = "janeDoe@example.com";
-    private static final String CONSULTATION_ID = "consult-1";
-    private static final String BIKE_SERIAL_NUMBER = "SN-12345";
-    private static final String BIKE_BRAND = "Crescent";
-    private static final String BIKE_MODEL = "Elda";
-
     @Test
     void toDomain_shouldMapCostAndDescription_forSingleDto() {
         RepairTaskDTO dto = new RepairTaskDTO(TASK_DESCRIPTION, TASK_COST);
