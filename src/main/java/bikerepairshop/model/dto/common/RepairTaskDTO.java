@@ -1,4 +1,4 @@
-package bikerepairshop.model.dto;
+package bikerepairshop.model.dto.common;
 
 public class RepairTaskDTO {
     private final String description;

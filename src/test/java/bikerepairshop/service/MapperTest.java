@@ -1,83 +1,308 @@
 package bikerepairshop.service;
 
 import bikerepairshop.model.domain.*;
-import bikerepairshop.model.entity.RepairOrderEntity;
-import org.junit.jupiter.api.BeforeEach;
+import bikerepairshop.model.dto.*;
+import bikerepairshop.model.dto.common.RepairTaskDTO;
+import bikerepairshop.model.entity.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MapperTest {
+    private static final double TASK_COST = 123.45;
+    private static final String TASK_DESCRIPTION = "change breaks";
+    private static final LocalDateTime TASK_ESTIMATED_REPAIR_TIME = LocalDateTime.now();
+    private static final Mapper mapper = new Mapper();
+    private static final String ORDER_ID = "IDfirst123";
+    private static final String DATE = "2026-05-03";
+    private static final String ORDER_PROBLEM_DESCRIPTION = "Bike makes noise";
+    private static final RepairOrderState ORDER_STATE = RepairOrderState.NEWLY_CREATED;
+    private static final String CUSTOMER_NAME = "Jane Doe";
+    private static final String CUSTOMER_PHONE = "07012345";
+    private static final String CUSTOMER_EMAIL = "janeDoe@example.com";
+    private static final String CONSULTATION_ID = "consult-1";
+    private static final String BIKE_SERIAL_NUMBER = "SN-12345";
+    private static final String BIKE_BRAND = "Crescent";
+    private static final String BIKE_MODEL = "Elda";
 
-    private Mapper mapper;
+    @Test
+    void toDomain_shouldMapCostAndDescription_forSingleDto() {
+        RepairTaskDTO dto = new RepairTaskDTO(TASK_DESCRIPTION, TASK_COST);
+        List<RepairTaskDTO> dtos = List.of(dto);
 
-    // Reusable test data
-    private BikeDetails bikeDetails;
-    private CustomerDetails customerDetails;
-    private RepairTask repairTask1;
-    private RepairTask repairTask2;
-    private DiagnosticReport diagnosticReport;
-    private RepairOrder repairOrder;
-    RepairOrderEntity repairOrderEntity;
-    @BeforeEach
-    public void setUp() {
-        mapper = new Mapper();
+        List<RepairTask> result = mapper.DTO.toDomain(dtos);
 
-        bikeDetails = new BikeDetails("Monark", "SN1", "E-Karin");
-        customerDetails = new CustomerDetails(
-                "Ali", "ali@kth.se", "0700000000", bikeDetails, "consult-1");
+        assertEquals(1, result.size());
+        assertEquals(TASK_COST, result.get(0).getCost());
+        assertEquals(TASK_DESCRIPTION, result.get(0).getDescription());
+    }
 
-        repairTask1 = new RepairTask(500.0, "Replace tire");
-        repairTask2 = new RepairTask(150.0, "Adjust brakes");
+    @Test
+    void toDomain_shouldMapCostAndDescription_forSingleEntity() {
+        RepairTaskEntity entity = new RepairTaskEntity(TASK_DESCRIPTION,TASK_COST );
+        List<RepairTaskEntity> entities = List.of(entity);
 
-        diagnosticReport = new DiagnosticReport(
-                "Puncture confirmed",
-                LocalDateTime.of(2026, 4, 26, 14, 0));
+        List<RepairTask> result = mapper.ENTITY.repairTaskEntityToDomain(entities);
 
-        repairOrder = new RepairOrder(
-                "2026-04-25T10:00",
-                "Flat tire",
-                RepairOrderState.READY_FOR_APPROVAL,
+        assertEquals(1, result.size());
+        assertEquals(TASK_COST, result.get(0).getCost());
+        assertEquals(TASK_DESCRIPTION, result.get(0).getDescription());
+    }
+    @Test
+    void toDomain_shouldMapDescriptionAndEstimatedRepairTime_forDiagnosticReportEntity() {
+        DiagnosticReportEntity entity = new DiagnosticReportEntity(TASK_DESCRIPTION, TASK_ESTIMATED_REPAIR_TIME);
+
+        DiagnosticReport result = mapper.ENTITY.diagnosticReportEntityToDomain(entity);
+
+        assertEquals(TASK_DESCRIPTION, result.getDescription());
+        assertEquals(TASK_ESTIMATED_REPAIR_TIME, result.getEstimatedRepairTime());
+    }
+
+    @Test
+    void toDomain_shouldMapAllFields_forRepairOrderEntity() {
+
+
+        RepairOrderEntity entity = createRepairOrderEntity();
+
+        RepairOrder result = mapper.ENTITY.repairOrderEntityToDomain(entity);
+
+        assertEquals(ORDER_ID, result.getId());
+        assertEquals(DATE, result.getDate());
+        assertEquals(ORDER_PROBLEM_DESCRIPTION, result.getProblemDescription());
+        assertEquals(ORDER_STATE, result.getState());
+        assertEquals(CUSTOMER_NAME, result.getCustomerDetails().getName());
+        assertEquals(CUSTOMER_PHONE, result.getCustomerDetails().getPhoneNumber());
+        assertEquals(CUSTOMER_EMAIL, result.getCustomerDetails().getEmail());
+        assertEquals(1, result.getRepairTasks().size());
+        assertEquals(TASK_COST, result.getRepairTasks().get(0).getCost());
+        assertEquals(TASK_DESCRIPTION, result.getRepairTasks().get(0).getDescription());
+        assertEquals(TASK_DESCRIPTION, result.getDiagnosticReport().getDescription());
+        assertEquals(TASK_ESTIMATED_REPAIR_TIME, result.getDiagnosticReport().getEstimatedRepairTime());
+    }
+
+    @Test
+    void toBikeDetails_shouldMapBrandModelAndSerialNumber_fromRepairOrderEntity() {
+        RepairOrderEntity entity = createRepairOrderEntity();
+
+        BikeDetails result = mapper.ENTITY.repairOrderEntityToBikeDetails(entity);
+
+        assertEquals(BIKE_BRAND, result.getBrand());
+        assertEquals(BIKE_MODEL, result.getModel());
+        assertEquals(BIKE_SERIAL_NUMBER, result.getSerialNumber());
+    }
+
+    @Test
+    void toEntity_shouldMapDescriptionAndCost_forSingleRepairTask() {
+        RepairTask repairTask = new RepairTask(TASK_COST, TASK_DESCRIPTION);
+        List<RepairTask> repairTasks = List.of(repairTask);
+
+        List<RepairTaskEntity> result = mapper.DOMAIN.repairTaskToEntity(repairTasks);
+
+        assertEquals(1, result.size());
+        assertEquals(TASK_DESCRIPTION, result.get(0).getDescription());
+        assertEquals(TASK_COST, result.get(0).getCost());
+    }
+    @Test
+    void toEntity_shouldMapDescriptionAndEstimatedRepairTime_forDiagnosticReport() {
+        DiagnosticReport diagnosticReport = new DiagnosticReport(TASK_DESCRIPTION, TASK_ESTIMATED_REPAIR_TIME);
+
+        DiagnosticReportEntity result = mapper.DOMAIN.diagnosticReportToEntity(diagnosticReport);
+
+        assertEquals(TASK_DESCRIPTION, result.getDescription());
+        assertEquals(TASK_ESTIMATED_REPAIR_TIME, result.getEstimatedRepairTime());
+    }
+
+    @Test
+    void createPresentRepairOrderForApprovalDTO_shouldMapAllFields() {
+
+        BikeDetails bikeDetails = new BikeDetails(BIKE_BRAND, BIKE_MODEL, BIKE_SERIAL_NUMBER);
+        CustomerDetails customerDetails = new CustomerDetails(CUSTOMER_NAME,  CUSTOMER_EMAIL, CUSTOMER_PHONE,bikeDetails, CONSULTATION_ID);
+
+        RepairOrder repairOrder = createRepairOrder(customerDetails);
+
+
+        double totalCost = TASK_COST;
+
+        PresentRepairOrderForApprovalDTO result = mapper.DOMAIN.createPresentRepairOrderForApprovalDTO(repairOrder, totalCost);
+
+        assertEquals(ORDER_ID, result.getRepairOrderId());
+        assertEquals(totalCost, result.getTotalCost());
+        assertEquals(CUSTOMER_PHONE, result.getCustomerPhoneNumber());
+        assertEquals(BIKE_BRAND, result.getBikeBrand());
+        assertEquals(BIKE_MODEL, result.getBikeModel());
+        assertEquals(BIKE_SERIAL_NUMBER, result.getBikeSerialNumber());
+        assertEquals(TASK_DESCRIPTION, result.getDiagnosticReport().getDescription());
+        assertEquals(TASK_ESTIMATED_REPAIR_TIME, result.getDiagnosticReport().getEstimatedRepairTime());
+        assertEquals(1, result.proposedRepairTasks().size());
+        assertEquals(TASK_COST, result.proposedRepairTasks().get(0).getCost());
+        assertEquals(TASK_DESCRIPTION, result.proposedRepairTasks().get(0).getDescription());
+    }
+    @Test
+    void createPresentNewlyCreatedRepairOrderDTO_shouldMapAllFields() {
+        CustomerDetails customerDetails = createCustomerDetails();
+
+        RepairOrder repairOrder = createRepairOrder(customerDetails);
+
+        PresentNewlyCreatedRepairOrderDTO result = mapper.DOMAIN.createPresentNewlyCreatedRepairOrderDTO(repairOrder);
+
+        assertEquals(CUSTOMER_NAME, result.getName());
+        assertEquals(CUSTOMER_EMAIL, result.getEmail());
+        assertEquals(CUSTOMER_PHONE, result.getPhoneNumber());
+        assertEquals(BIKE_BRAND, result.getBikeBrand());
+        assertEquals(BIKE_MODEL, result.getBikeModel());
+        assertEquals(BIKE_SERIAL_NUMBER, result.getBikeSerialNumber());
+        assertEquals(ORDER_PROBLEM_DESCRIPTION, result.getProblemDescription());
+        assertEquals(ORDER_STATE.name(), result.getState());
+        assertEquals(ORDER_ID, result.getRepairOrderId());
+    }
+
+    @Test
+    void createReceiptDTO_shouldMapAllFields() {
+        CustomerDetails customerDetails = createCustomerDetails();
+        RepairOrder repairOrder = createRepairOrder(customerDetails);
+        double totalCost = TASK_COST;
+
+        ReceiptDTO result = mapper.DOMAIN.createReceiptDTO(repairOrder, totalCost);
+
+        assertEquals(CUSTOMER_NAME, result.getName());
+        assertEquals(CUSTOMER_EMAIL, result.getEmail());
+        assertEquals(CUSTOMER_PHONE, result.getPhoneNumber());
+        assertEquals(BIKE_BRAND, result.getBikeBrand());
+        assertEquals(BIKE_MODEL, result.getBikeModel());
+        assertEquals(BIKE_SERIAL_NUMBER, result.getBikeSerialNumber());
+        assertEquals(ORDER_PROBLEM_DESCRIPTION, result.getProblemDescription());
+        assertEquals(ORDER_STATE.name(), result.getState());
+        assertEquals(totalCost, result.getTotalCost());
+        assertEquals(TASK_DESCRIPTION, result.getDiagnosticReport().getDescription());
+        assertEquals(TASK_ESTIMATED_REPAIR_TIME, result.getDiagnosticReport().getEstimatedRepairTime());
+        assertEquals(1, result.getRepairTasks().size());
+        assertEquals(TASK_COST, result.getRepairTasks().get(0).getCost());
+        assertEquals(TASK_DESCRIPTION, result.getRepairTasks().get(0).getDescription());
+    }
+
+    @Test
+    void toEntity_shouldMapAllFields_forRepairOrder() {
+        CustomerDetails customerDetails = createCustomerDetails();
+        RepairOrder repairOrder = createRepairOrder(customerDetails);
+
+        RepairOrderEntity result = mapper.DOMAIN.repairOrderToEntity(repairOrder);
+
+        assertEquals(ORDER_ID, result.getId());
+        assertEquals(DATE, result.getDate());
+        assertEquals(ORDER_PROBLEM_DESCRIPTION, result.getProblemDescription());
+        assertEquals(ORDER_STATE.name(), result.getState());
+        assertEquals(CUSTOMER_NAME, result.getName());
+        assertEquals(CUSTOMER_EMAIL, result.getEmail());
+        assertEquals(CUSTOMER_PHONE, result.getCustomerPhoneNumber());
+        assertEquals(BIKE_BRAND, result.getBikeBrand());
+        assertEquals(BIKE_MODEL, result.getBikeModel());
+        assertEquals(BIKE_SERIAL_NUMBER, result.getBikeSerialNumber());
+        assertEquals(CONSULTATION_ID, result.getConsultationId());
+        assertEquals(1, result.getRepairTasks().size());
+        assertEquals(TASK_COST, result.getRepairTasks().get(0).getCost());
+        assertEquals(TASK_DESCRIPTION, result.getRepairTasks().get(0).getDescription());
+        assertEquals(TASK_DESCRIPTION, result.getDiagnosticReport().getDescription());
+        assertEquals(TASK_ESTIMATED_REPAIR_TIME, result.getDiagnosticReport().getEstimatedRepairTime());
+    }
+
+    @Test
+    void customerDetailsToDTO_shouldMapAllFields() {
+        CustomerDetails customerDetails = createCustomerDetails();
+
+        CustomerDetailsDTO result = mapper.DOMAIN.customerDetailsToDTO(customerDetails);
+
+        assertEquals(CUSTOMER_NAME, result.getName());
+        assertEquals(CUSTOMER_EMAIL, result.getEmail());
+        assertEquals(CUSTOMER_PHONE, result.getPhoneNumber());
+        assertEquals(BIKE_BRAND, result.getBikeBrand());
+        assertEquals(BIKE_MODEL, result.getBikeModel());
+        assertEquals(BIKE_SERIAL_NUMBER, result.getBikeSerialNumber());
+        assertEquals(CONSULTATION_ID, result.getConsultationId());
+    }
+    @Test
+    void toBikeDetails_shouldMapBrandModelAndSerialNumber_fromBikeRepairConsultationEntity() {
+        BikeRepairConsultationEntity consultationEntity = new BikeRepairConsultationEntity(
+                DATE,
+                CONSULTATION_ID,
+                BIKE_MODEL,
+                BIKE_BRAND,
+                BIKE_SERIAL_NUMBER
+        );
+
+        BikeDetails result = mapper.ENTITY.bikeRepairConsultationEntityToBikeDetails(consultationEntity);
+
+        assertEquals(BIKE_BRAND, result.getBrand());
+        assertEquals(BIKE_MODEL, result.getModel());
+        assertEquals(BIKE_SERIAL_NUMBER, result.getSerialNumber());
+    }
+
+    @Test
+    void mergeCustomerDetailsEntityAndBikeConsultationEntityToCustomerDetails_shouldMapAllFields() {
+        BikeRepairConsultationEntity consultationEntity = new BikeRepairConsultationEntity(DATE, CONSULTATION_ID, BIKE_MODEL, BIKE_BRAND, BIKE_SERIAL_NUMBER);
+
+        CustomerDetailsEntity customerDetailsEntity = new CustomerDetailsEntity(CUSTOMER_NAME, CUSTOMER_EMAIL, CUSTOMER_PHONE, List.of(consultationEntity));
+
+        CustomerDetails result = mapper.ENTITY.mergeCustomerDetailsEntityAndBikeConsultationEntityToCustomerDetails(
+                customerDetailsEntity, consultationEntity
+        );
+
+        assertEquals(CUSTOMER_NAME, result.getName());
+        assertEquals(CUSTOMER_EMAIL, result.getEmail());
+        assertEquals(CUSTOMER_PHONE, result.getPhoneNumber());
+        assertEquals(BIKE_BRAND, result.getBikeDetails().getBrand());
+        assertEquals(BIKE_MODEL, result.getBikeDetails().getModel());
+        assertEquals(BIKE_SERIAL_NUMBER, result.getBikeDetails().getSerialNumber());
+        assertEquals(CONSULTATION_ID, result.getConsultationId());
+    }
+
+    private RepairOrder createRepairOrder(CustomerDetails customerDetails){
+        DiagnosticReport diagnosticReport = new DiagnosticReport(TASK_DESCRIPTION, TASK_ESTIMATED_REPAIR_TIME);
+        RepairTask repairTask = new RepairTask(TASK_COST, TASK_DESCRIPTION);
+        return new RepairOrder(
+                DATE,
+                ORDER_PROBLEM_DESCRIPTION,
+                ORDER_STATE,
                 customerDetails,
-                Arrays.asList(repairTask1, repairTask2),
+                List.of(repairTask),
                 diagnosticReport,
-                "order-1");
-
-        repairOrderEntity =  new RepairOrderEntity(
-                "2026-04-25",
-                "Flat tire",
-                "READY_FOR_APPROVAL",
-                null, null,
-                "0700000000",
-                "Monark",
-                "SN1",
-                "consult-1",
-                "order-1",
-                "E-Karin",
-                "Ali",
-                "ali@kth.se");
+                ORDER_ID
+        );
     }
 
-    @Test
-    public void testRepairOrderEntityToBikeDetails() {
-        BikeDetails result = mapper.ENTITY.toBikeDetails(repairOrderEntity);
-        assertEquals(repairOrderEntity.getBikeBrand(), result.getBrand());
-        assertEquals(repairOrderEntity.getBikeSerialNumber(), result.getSerialNumber());
-        assertEquals(repairOrderEntity.getBikeModel(), result.getModel());
+    private CustomerDetails createCustomerDetails () {
+        BikeDetails bikeDetails = new BikeDetails(BIKE_BRAND, BIKE_MODEL, BIKE_SERIAL_NUMBER);
+
+        return new CustomerDetails(CUSTOMER_NAME, CUSTOMER_EMAIL, CUSTOMER_PHONE, bikeDetails, CONSULTATION_ID);
+    }
+
+    private RepairOrderEntity createRepairOrderEntity (){
+        // Arrange
+        RepairTaskEntity repairTaskEntity = new RepairTaskEntity(TASK_DESCRIPTION, TASK_COST);
+        DiagnosticReportEntity diagnosticReportEntity = new DiagnosticReportEntity(TASK_DESCRIPTION, TASK_ESTIMATED_REPAIR_TIME);
+            return  new RepairOrderEntity(
+                    DATE,
+                    ORDER_PROBLEM_DESCRIPTION,
+                    ORDER_STATE.name(),
+                    diagnosticReportEntity,
+                    List.of(repairTaskEntity),
+                    BIKE_BRAND,
+                    BIKE_SERIAL_NUMBER,
+                    BIKE_MODEL,
+                    CONSULTATION_ID,
+                    ORDER_ID,
+                    CUSTOMER_NAME,
+                    CUSTOMER_PHONE,
+                    CUSTOMER_EMAIL
+            );
     }
 
 
-    @Test
-    public void testRepairOrderEntityToDomain() {
-        RepairOrder result = mapper.ENTITY.toDomain(repairOrderEntity);
-        assertEquals(repairOrderEntity.getBikeBrand(), result.getCustomerDetails().getBikeDetails().getBrand());
-        assertEquals(repairOrderEntity.getBikeSerialNumber(),  result.getCustomerDetails().getBikeDetails().getSerialNumber());
-        assertEquals(repairOrderEntity.getBikeModel(),  result.getCustomerDetails().getBikeDetails().getModel());
-        assertEquals(repairOrderEntity.getEmail(), result.getCustomerDetails().getEmail());
-        assertEquals(repairOrderEntity.getName(),  result.getCustomerDetails().getName());
-        assertEquals(repairOrderEntity.getCustomerPhoneNumber(),  result.getCustomerDetails().getPhoneNumber());
-    }
+
+
 }
+
+
+
