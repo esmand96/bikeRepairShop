@@ -98,7 +98,6 @@ public class Service {
         return receiptDTO;
     }
 
-
     private BikeRepairConsultationEntity selectFirstUnhandledConsultation (CustomerDetailsEntity customerDetailsEntity){
         List<BikeRepairConsultationEntity> consultations = customerDetailsEntity.getConsultations();
         consultations.sort(Comparator.comparing(BikeRepairConsultationEntity::getDate)); // sortera på datum och ta den äldsta först

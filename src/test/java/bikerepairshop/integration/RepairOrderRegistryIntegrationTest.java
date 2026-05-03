@@ -1,16 +1,10 @@
 package bikerepairshop.integration;
 
-import bikerepairshop.model.domain.RepairOrder;
 import bikerepairshop.model.domain.RepairOrderState;
 import bikerepairshop.model.entity.RepairOrderEntity;
-
-import java.time.LocalDateTime;
 import java.util.List;
-
-import bikerepairshop.service.Mapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static bikerepairshop.TestUtil.createRepairOrderEntity;
 import static org.junit.jupiter.api.Assertions.*;
 
