@@ -7,11 +7,11 @@ import java.util.*;
 
 public class CustomerRegistryIntegration {
     private static final List<CustomerDetailsEntity> customerDetailsList;
-    static { /// a customer consultation
+    static {
         customerDetailsList = new ArrayList<>();
-        List<BikeRepairConsultationEntity> list = new ArrayList<>();
-        list.add(new BikeRepairConsultationEntity("24jan", Util.generateRandomId(), "someModel", "someBrand", "serial123"));
-        CustomerDetailsEntity firstCustomer = new CustomerDetailsEntity("Esmeralda", "first@customer.now", "070123",list );
+        List<BikeRepairConsultationEntity> consultationEntities = new ArrayList<>();
+        consultationEntities.add(new BikeRepairConsultationEntity("24jan", Util.generateRandomId(), "someModel", "someBrand", "serial123"));
+        CustomerDetailsEntity firstCustomer = new CustomerDetailsEntity("Esmeralda", "first@customer.now", "070123",consultationEntities );
         customerDetailsList.add(firstCustomer);
     }
 

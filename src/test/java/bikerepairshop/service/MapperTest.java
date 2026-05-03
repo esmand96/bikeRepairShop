@@ -5,10 +5,10 @@ import bikerepairshop.model.dto.*;
 import bikerepairshop.model.dto.common.RepairTaskDTO;
 import bikerepairshop.model.entity.*;
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static bikerepairshop.TestUtil.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MapperTest {
@@ -33,7 +33,7 @@ public class MapperTest {
         RepairTaskDTO dto = new RepairTaskDTO(TASK_DESCRIPTION, TASK_COST);
         List<RepairTaskDTO> dtos = List.of(dto);
 
-        List<RepairTask> result = mapper.DTO.toDomain(dtos);
+        List<RepairTask> result = mapper.DTO.repairTaskDTOToDomain(dtos);
 
         assertEquals(1, result.size());
         assertEquals(TASK_COST, result.get(0).getCost());
@@ -257,48 +257,6 @@ public class MapperTest {
         assertEquals(BIKE_SERIAL_NUMBER, result.getBikeDetails().getSerialNumber());
         assertEquals(CONSULTATION_ID, result.getConsultationId());
     }
-
-    private RepairOrder createRepairOrder(CustomerDetails customerDetails){
-        DiagnosticReport diagnosticReport = new DiagnosticReport(TASK_DESCRIPTION, TASK_ESTIMATED_REPAIR_TIME);
-        RepairTask repairTask = new RepairTask(TASK_COST, TASK_DESCRIPTION);
-        return new RepairOrder(
-                DATE,
-                ORDER_PROBLEM_DESCRIPTION,
-                ORDER_STATE,
-                customerDetails,
-                List.of(repairTask),
-                diagnosticReport,
-                ORDER_ID
-        );
-    }
-
-    private CustomerDetails createCustomerDetails () {
-        BikeDetails bikeDetails = new BikeDetails(BIKE_BRAND, BIKE_MODEL, BIKE_SERIAL_NUMBER);
-
-        return new CustomerDetails(CUSTOMER_NAME, CUSTOMER_EMAIL, CUSTOMER_PHONE, bikeDetails, CONSULTATION_ID);
-    }
-
-    private RepairOrderEntity createRepairOrderEntity (){
-        // Arrange
-        RepairTaskEntity repairTaskEntity = new RepairTaskEntity(TASK_DESCRIPTION, TASK_COST);
-        DiagnosticReportEntity diagnosticReportEntity = new DiagnosticReportEntity(TASK_DESCRIPTION, TASK_ESTIMATED_REPAIR_TIME);
-            return  new RepairOrderEntity(
-                    DATE,
-                    ORDER_PROBLEM_DESCRIPTION,
-                    ORDER_STATE.name(),
-                    diagnosticReportEntity,
-                    List.of(repairTaskEntity),
-                    BIKE_BRAND,
-                    BIKE_SERIAL_NUMBER,
-                    BIKE_MODEL,
-                    CONSULTATION_ID,
-                    ORDER_ID,
-                    CUSTOMER_NAME,
-                    CUSTOMER_PHONE,
-                    CUSTOMER_EMAIL
-            );
-    }
-
 
 
 

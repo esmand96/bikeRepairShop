@@ -59,7 +59,7 @@ public class Service {
         List<PresentRepairOrderForApprovalDTO> repairOrderForApprovalDTOs = new ArrayList<>();
         for (RepairOrderEntity repairOrderEntity : repairOrderEntities){
             RepairOrder repairOrder = mapper.ENTITY.repairOrderEntityToDomain(repairOrderEntity);
-            double totalCost = calculateTotalCost(repairOrder);
+            double totalCost = repairOrder.calculateTotalCost();
             PresentRepairOrderForApprovalDTO presentRepairOrderForApprovalDTO = mapper.DOMAIN.createPresentRepairOrderForApprovalDTO(repairOrder,totalCost);
             repairOrderForApprovalDTOs.add(presentRepairOrderForApprovalDTO);
         }
@@ -70,10 +70,10 @@ public class Service {
         RepairOrderEntity repairOrderEntity = repairOrderRegistryIntegration.getRepairOrderById(repairOrderId);
         RepairOrder repairOrder = mapper.ENTITY.repairOrderEntityToDomain(repairOrderEntity);
         DiagnosticReport diagnosticReport = new DiagnosticReport(diagnosticReportDescription, estimatedRepairTime);
-        List<RepairTask> repairTasks = mapper.DTO.toDomain(repairTaskDTOs);
+        List<RepairTask> repairTasks = mapper.DTO.repairTaskDTOToDomain(repairTaskDTOs);
         repairOrder.setDiagnosticReport(diagnosticReport);
         repairOrder.setRepairTasks(repairTasks);
-        updateState(repairOrder, RepairOrderState.READY_FOR_APPROVAL);
+        repairOrder.transitionState(RepairOrderState.READY_FOR_APPROVAL);
         RepairOrderEntity updatedRepairOrderEntity = mapper.DOMAIN.repairOrderToEntity(repairOrder);
         repairOrderRegistryIntegration.saveRepairOrder(updatedRepairOrderEntity);
     }
@@ -81,7 +81,7 @@ public class Service {
     public void approveRepairOrder(String repairOrderId) {
         RepairOrderEntity repairOrderEntity = repairOrderRegistryIntegration.getRepairOrderById(repairOrderId);
         RepairOrder repairOrder = mapper.ENTITY.repairOrderEntityToDomain(repairOrderEntity);
-        updateState(repairOrder, RepairOrderState.ACCEPTED);
+        repairOrder.transitionState(RepairOrderState.ACCEPTED);
         RepairOrderEntity updatedRepairOrderEntity = mapper.DOMAIN.repairOrderToEntity(repairOrder);
         repairOrderRegistryIntegration.saveRepairOrder(updatedRepairOrderEntity);
     }
@@ -92,25 +92,12 @@ public class Service {
         if (repairOrder.getState() != RepairOrderState.ACCEPTED){
             return null;
         }
-        double totalCost = calculateTotalCost(repairOrder);
+        double totalCost = repairOrder.calculateTotalCost();
         ReceiptDTO receiptDTO = mapper.DOMAIN.createReceiptDTO(repairOrder, totalCost);
         printerIntegration.printReceipt(receiptDTO);
         return receiptDTO;
     }
 
-    private void updateState(RepairOrder repairOrder, RepairOrderState nextState){
-        if(nextState == RepairOrderState.READY_FOR_APPROVAL){
-            if(repairOrder.getState() != RepairOrderState.NEWLY_CREATED)
-                return;
-            else
-                repairOrder.setState(nextState);
-        } else if(nextState == RepairOrderState.ACCEPTED){
-            if(repairOrder.getState() != RepairOrderState.READY_FOR_APPROVAL)
-                return;
-            else
-                repairOrder.setState(nextState);
-        }
-    }
 
     private BikeRepairConsultationEntity selectFirstUnhandledConsultation (CustomerDetailsEntity customerDetailsEntity){
         List<BikeRepairConsultationEntity> consultations = customerDetailsEntity.getConsultations();
@@ -146,12 +133,6 @@ public class Service {
                 Util.generateRandomId());
     }
 
-    private double calculateTotalCost (RepairOrder repairOrder){
-        double totalCost = 0.0;
-        for (RepairTask repairTask : repairOrder.getRepairTasks()){
-            totalCost += repairTask.getCost();
-        }
-         return totalCost;
-    }
+
 
 }

@@ -16,7 +16,7 @@ public class Mapper {
     }
 
     static class Dto{
-        List<RepairTask> toDomain(List<RepairTaskDTO> repairTaskDTOS){
+        List<RepairTask> repairTaskDTOToDomain(List<RepairTaskDTO> repairTaskDTOS){
             List<RepairTask> repairTasks = new ArrayList<>();
             for (RepairTaskDTO repairTaskDTO : repairTaskDTOS){
                 RepairTask repairTask = new RepairTask(repairTaskDTO.getCost(),repairTaskDTO.getDescription());

@@ -52,7 +52,4 @@ public class CustomerDetails {
         return consultationId;
     }
 
-    public void setConsultationId(String consultationId) {
-        this.consultationId = consultationId;
-    }
 }
