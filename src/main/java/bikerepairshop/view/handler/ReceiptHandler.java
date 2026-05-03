@@ -8,7 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import bikerepairshop.model.dto.DiagnosticReportDTO;
 import bikerepairshop.model.dto.ReceiptDTO;
-import bikerepairshop.model.dto.RepairTaskDTO;
+import bikerepairshop.model.dto.common.RepairTaskDTO;
 
 /**
  * Handler for the receipt popup.

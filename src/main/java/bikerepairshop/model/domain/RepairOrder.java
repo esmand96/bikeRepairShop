@@ -26,16 +26,8 @@ public class RepairOrder {
         return date;
       }
 
-      public void setDate(String date) {
-          this.date = date;
-      }
-
       public String getProblemDescription() {
           return problemDescription;
-      }
-
-      public void setProblemDescription(String problemDescription) {
-          this.problemDescription = problemDescription;
       }
 
       public RepairOrderState getState() {
@@ -70,10 +62,30 @@ public class RepairOrder {
           this.diagnosticReport = diagnosticReport;
       }
 
+     public double calculateTotalCost (){
+        double totalCost = 0.0;
+        if(repairTasks == null)
+            return totalCost;
+        for (RepairTask repairTask : repairTasks){
+            totalCost += repairTask.getCost();
+        }
+        return totalCost;
+    }
+
+    public void transitionState(RepairOrderState nextState){
+        if(nextState == RepairOrderState.READY_FOR_APPROVAL){
+            if(state != RepairOrderState.NEWLY_CREATED)
+                return;
+            else
+                setState(nextState);
+        } else if(nextState == RepairOrderState.ACCEPTED){
+            if(state!= RepairOrderState.READY_FOR_APPROVAL)
+                return;
+            else
+                setState(nextState);
+        }
+    }
     public String getId() {
         return id;
-    }
-    public void setId(String id) {
-        this.id = id;
     }
 }

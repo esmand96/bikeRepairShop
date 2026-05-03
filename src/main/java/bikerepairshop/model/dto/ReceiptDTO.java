@@ -1,5 +1,7 @@
 package bikerepairshop.model.dto;
 
+import bikerepairshop.model.dto.common.RepairTaskDTO;
+
 import java.util.List;
 
 public class ReceiptDTO {

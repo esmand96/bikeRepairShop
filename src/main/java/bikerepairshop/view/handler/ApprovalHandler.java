@@ -14,7 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import bikerepairshop.model.dto.PresentRepairOrderForApprovalDTO;
 import bikerepairshop.model.dto.ReceiptDTO;
-import bikerepairshop.model.dto.RepairTaskDTO;
+import bikerepairshop.model.dto.common.RepairTaskDTO;
 
 /**
  * FXML handler for the recepti

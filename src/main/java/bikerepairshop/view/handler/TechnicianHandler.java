@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import bikerepairshop.model.dto.PresentNewlyCreatedRepairOrderDTO;
-import bikerepairshop.model.dto.RepairTaskDTO;
+import bikerepairshop.model.dto.common.RepairTaskDTO;
 
 import java.time.LocalDateTime;
 import java.util.List;

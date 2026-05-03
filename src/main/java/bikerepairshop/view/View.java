@@ -2,6 +2,7 @@ package bikerepairshop.view;
 
 import bikerepairshop.controller.Controller;
 import bikerepairshop.model.dto.*;
+import bikerepairshop.model.dto.common.RepairTaskDTO;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

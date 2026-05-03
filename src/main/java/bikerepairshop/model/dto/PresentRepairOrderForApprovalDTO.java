@@ -1,5 +1,7 @@
 package bikerepairshop.model.dto;
 
+import bikerepairshop.model.dto.common.RepairTaskDTO;
+
 import java.util.List;
 
 public class PresentRepairOrderForApprovalDTO {
@@ -12,7 +14,14 @@ public class PresentRepairOrderForApprovalDTO {
     private final String bikeSerialNumber;
     private final String bikeBrand;
 
-    public PresentRepairOrderForApprovalDTO(DiagnosticReportDTO diagnosticReport, double totalCost, List<RepairTaskDTO> proposedRepairTasks, String repairOrderId, String customerPhoneNumber, String bikeModel, String bikeSerialNumber, String bikeBrand) {
+    public PresentRepairOrderForApprovalDTO(DiagnosticReportDTO diagnosticReport,
+                                            double totalCost,
+                                            List<RepairTaskDTO> proposedRepairTasks,
+                                            String repairOrderId,
+                                            String customerPhoneNumber,
+                                            String bikeModel,
+                                            String bikeSerialNumber,
+                                            String bikeBrand) {
         this.diagnosticReport = diagnosticReport;
         this.totalCost = totalCost;
         this.proposedRepairTasks = proposedRepairTasks;

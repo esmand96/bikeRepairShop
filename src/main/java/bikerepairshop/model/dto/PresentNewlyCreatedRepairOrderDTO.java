@@ -11,7 +11,15 @@ public class PresentNewlyCreatedRepairOrderDTO {
     private final String state;
     private final String repairOrderId;
 
-    public PresentNewlyCreatedRepairOrderDTO(String name, String email, String phoneNumber, String bikeBrand, String bikeModel, String bikeSerialNumber, String problemDescription, String state, String repairOrderId) {
+    public PresentNewlyCreatedRepairOrderDTO(String name,
+                                             String email,
+                                             String phoneNumber,
+                                             String bikeBrand,
+                                             String bikeModel,
+                                             String bikeSerialNumber,
+                                             String problemDescription,
+                                             String state,
+                                             String repairOrderId) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;

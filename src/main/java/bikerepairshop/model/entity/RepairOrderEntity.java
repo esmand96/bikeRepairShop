@@ -17,7 +17,19 @@ public class RepairOrderEntity {
     private String name;
     private String email;
 
-    public RepairOrderEntity(String date, String problemDescription, String state, DiagnosticReportEntity diagnosticReport, List<RepairTaskEntity> repairTasks, String customerPhoneNumber, String bikeBrand, String bikeSerialNumber, String consultationId, String id, String bikeModel, String name, String email) {
+    public RepairOrderEntity(String date,
+                             String problemDescription,
+                             String state,
+                             DiagnosticReportEntity diagnosticReport,
+                             List<RepairTaskEntity> repairTasks,
+                             String bikeBrand,
+                             String bikeSerialNumber,
+                             String bikeModel,
+                             String consultationId,
+                             String id,
+                             String name,
+                             String customerPhoneNumber,
+                             String email) {
         this.date = date;
         this.problemDescription = problemDescription;
         this.state = state;
