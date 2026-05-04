@@ -8,10 +8,19 @@ import bikerepairshop.service.Mapper;
 import bikerepairshop.service.Service;
 import bikerepairshop.view.View;
 
-public class BikeRepairShopApplication  {
+/**
+ * Starts the bike repair shop application by creating and wiring together the central
+ * objects of the system, and then handing control over to the view.
+ */
+public class BikeRepairShopApplication {
 
-
-    public static void main(String[] args)  {
+    /**
+     * Application entry point. Instantiates the integrations, the mapper, the service,
+     * the controller and the view, and starts the main flow.
+     *
+     * @param args Command line arguments, not used.
+     */
+    public static void main(String[] args) {
         PrinterIntegration printerIntegration = new PrinterIntegration();
         CustomerRegistryIntegration customerRegistryIntegration = new CustomerRegistryIntegration();
         Mapper mapper = new Mapper();
@@ -20,6 +29,5 @@ public class BikeRepairShopApplication  {
         Controller controller = new Controller(service);
         View view = new View(controller);
         view.askForPhoneNumber();
-
     }
 }

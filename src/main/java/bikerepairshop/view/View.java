@@ -77,6 +77,8 @@ public class View {
         controller.approveRepairOrder(repairOrderId);
         printReceipt(repairOrderId);
     }
+
+    ///BORDE vi ha en metod getReceipt? eller vad händer ?
     public void printReceipt(String repairOrderId) {
         ReceiptDTO receiptDTO = controller.getReceipt(repairOrderId);
         System.out.println("CUSTOMER");
