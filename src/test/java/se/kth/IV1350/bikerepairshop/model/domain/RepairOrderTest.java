@@ -16,7 +16,6 @@ public class RepairOrderTest {
         return new RepairOrder(null, null, RepairOrderState.NEWLY_CREATED, null, tasks, null, null);
     }
 
-    // calculateTotalCost
 
     @Test
     void calculateTotalCost_shouldReturnSumOfAllTaskCosts_whenMultipleTasksExist() {
