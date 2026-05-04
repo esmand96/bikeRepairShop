@@ -5,6 +5,7 @@ import se.kth.IV1350.bikerepairshop.model.entity.CustomerDetailsEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static se.kth.IV1350.bikerepairshop.TestUtil.CUSTOMER_NAME;
 
 
 public class CustomerRegistryIntegrationTest {
@@ -20,7 +21,7 @@ public class CustomerRegistryIntegrationTest {
         CustomerDetailsEntity customer = customerRegistry.findCustomerEntityByPhoneNumber("070123");
 
         assertNotNull(customer, "Customer not found");
-        assertEquals("Esmeralda", customer.getName(), "Name does not match");
+        assertEquals(CUSTOMER_NAME, customer.getName(), "Name does not match");
         assertEquals("first@customer.now", customer.getEmail(), "email does not match");
     }
 

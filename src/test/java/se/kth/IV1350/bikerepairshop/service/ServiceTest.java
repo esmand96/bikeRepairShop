@@ -124,7 +124,7 @@ public class ServiceTest {
         ReceiptDTO result = service.getReceipt(repairOrderId);
 
         assertNotNull(result);
-        assertEquals("Esmeralda", result.getName());
+        assertEquals(CUSTOMER_NAME, result.getName());
         assertEquals(ORDER_PROBLEM_DESCRIPTION, result.getProblemDescription());
         assertEquals(2 * TASK_COST, result.getTotalCost());
         assertEquals(2, result.getRepairTasks().size());

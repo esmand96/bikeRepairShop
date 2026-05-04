@@ -15,7 +15,7 @@ public class CustomerRegistryIntegration {
         customerDetailsList = new ArrayList<>();
         List<BikeRepairConsultationEntity> consultationEntities = new ArrayList<>();
         consultationEntities.add(new BikeRepairConsultationEntity("24jan", Util.generateRandomId(), "someModel", "someBrand", "serial123"));
-        CustomerDetailsEntity firstCustomer = new CustomerDetailsEntity("Esmeralda", "first@customer.now", "070123", consultationEntities);
+        CustomerDetailsEntity firstCustomer = new CustomerDetailsEntity("Customer Customersson", "first@customer.now", "070123", consultationEntities);
         customerDetailsList.add(firstCustomer);
     }
 

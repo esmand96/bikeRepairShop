@@ -8,6 +8,7 @@ import se.kth.IV1350.bikerepairshop.model.dto.ReceiptDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,70 +20,156 @@ public class View {
         this.controller = controller;
     }
 
-    public void askForPhoneNumber(){
-        System.out.println("Enter phone number: ");
-        Scanner scanner = new Scanner(System.in);
-        String phoneNumber =  scanner.nextLine();
+    public void askForPhoneNumber() {
+        String phoneNumber = "070123";
+
         CustomerDetailsDTO customerDetailsDTO = controller.findCustomer(phoneNumber);
-        String consultationId = customerDetailsDTO.getConsultationId();
-        enterDescription(consultationId);
+
+        if (customerDetailsDTO != null) {
+            printCustomerInfo(customerDetailsDTO);
+
+            String consultationId = customerDetailsDTO.getConsultationId();
+            enterDescription(consultationId);
+        } else {
+            System.out.println("Ingen kund hittades med telefonnummer: " + phoneNumber);
+        }
     }
 
-    public void enterDescription(String consultationId){
-        System.out.println("Enter problem description: ");
-        Scanner scanner = new Scanner(System.in);
-        String description =  scanner.nextLine();
+    private void printCustomerInfo(CustomerDetailsDTO dto) {
+        System.out.println("\n========================================");
+        System.out.println(" RECEPTIONIST HÄMTAR KUNDINFORMATION FÖR 070123 ");
+        System.out.println("========================================");
+        System.out.printf("%-18s %s%n", "Namn:", dto.getName());
+        System.out.printf("%-18s %s%n", "E-post:", dto.getEmail());
+        System.out.printf("%-18s %s%n", "Telefon:", dto.getPhoneNumber());
+        System.out.println("----------------------------------------");
+        System.out.printf("%-18s %s %s%n", "Cykel:", dto.getBikeBrand(), dto.getBikeModel());
+        System.out.printf("%-18s %s%n", "Serienummer:", dto.getBikeSerialNumber());
+        System.out.println("----------------------------------------");
+        System.out.printf("%-18s %s%n", "Konsultations-ID:", dto.getConsultationId());
+        System.out.println("========================================\n");
+    }
+
+    public void enterDescription(String consultationId) {
+        String description = "Punktering på bakhjulet.";
+
+        System.out.println("\n----------------------------------------");
+        System.out.println("   RECEPTIONIST REGISTRERAR NY REPAIR ORDER   ");
+        System.out.println("----------------------------------------");
+        System.out.printf("%-20s %s%n", "Beskrivning:", description);
+        System.out.println("----------------------------------------\n");
+
         controller.enterCustomerDescription(consultationId, description);
+
         technicianChooseNewlyCreatedRepairOrders();
     }
 
-    public void technicianChooseNewlyCreatedRepairOrders(){
-       List<PresentNewlyCreatedRepairOrderDTO> newlyCreatedRepairOrderDTOS = controller.getAllNewlyCreatedRepairOrders();
-        System.out.println("ALL NEWLY CREATED : ");
-        for (PresentNewlyCreatedRepairOrderDTO presentNewlyCreatedRepairOrderDTO : newlyCreatedRepairOrderDTOS){
-           System.out.println(presentNewlyCreatedRepairOrderDTO.getRepairOrderId());
-       }
-       technicianEntersDiagnosticReportAndRepairTasks(newlyCreatedRepairOrderDTOS.getFirst().getRepairOrderId());
-    }
+    public void technicianChooseNewlyCreatedRepairOrders() {
+        List<PresentNewlyCreatedRepairOrderDTO> newlyCreatedRepairOrderDTOS = controller.getAllNewlyCreatedRepairOrders();
 
-    public void technicianEntersDiagnosticReportAndRepairTasks(String repairOrderId){
-        System.out.println("ENTERING DIAGNOSTICREPORT AND REPAIR TASK FOR: " + repairOrderId);
-        String diagnosticReportDescription = "Broken wheel";
-        System.out.println("Diagnostic Report: " + diagnosticReportDescription);
+        System.out.println("\n========================================================================");
+        System.out.println("            TEKNIKER  HÄMTAR ALLA NYA REPARATIONSORDRAR       ");
+        System.out.println("========================================================================");
 
-        List <RepairTaskDTO> repairTasks = new ArrayList<>();
-        RepairTaskDTO repairTask1 = new RepairTaskDTO("fix broken wheel", 75.84);
-        RepairTaskDTO repairTask2 = new RepairTaskDTO("fix flat tire", 5.9);
-        repairTasks.add(repairTask1);
-        repairTasks.add(repairTask2);
-        System.out.println("Repair Tasks Added:");
-        for (RepairTaskDTO task : repairTasks) {
-            System.out.println("  - " + task.getDescription() + " | Cost: " + task.getCost() + " SEK");
+        for (PresentNewlyCreatedRepairOrderDTO dto : newlyCreatedRepairOrderDTOS) {
+            System.out.println("  ORDER ID: " + dto.getRepairOrderId());
+            System.out.println("  ----------------------------------------------------------------------");
+            System.out.printf("  %-16s %s%n", "Kund:", dto.getName() + " (" + dto.getPhoneNumber() + ")");
+            System.out.printf("  %-16s %s%n", "E-post:", dto.getEmail());
+            System.out.printf("  %-16s %s %s (%s)%n", "Cykel:", dto.getBikeBrand(), dto.getBikeModel(), dto.getBikeSerialNumber());
+            System.out.printf("  %-16s %s%n", "Beskrivning:", dto.getProblemDescription());
+            System.out.printf("  %-16s %s%n", "Status:", dto.getState());
+            System.out.println("========================================================================");
         }
 
+        String selectedOrderId = newlyCreatedRepairOrderDTOS.getFirst().getRepairOrderId();
+        System.out.println("Väljer automatiskt Order ID: " + selectedOrderId + "\n");
+
+        technicianEntersDiagnosticReportAndRepairTasks(selectedOrderId);
+    }
+    public void technicianEntersDiagnosticReportAndRepairTasks(String repairOrderId) {
+        System.out.println("\n========================================================================");
+        System.out.println("            TEKNIKER SKAPAR DIAGNOSRAPPORT OCH REPARATIONSÅTGÄRDER              ");
+        System.out.println("========================================================================");
+        System.out.printf("%-20s %s%n", "Order ID:", repairOrderId);
+
+        String diagnosticReportDescription = "Brustet hjul och punktering";
+        System.out.printf("%-20s %s%n", "Diagnos:", diagnosticReportDescription);
+        System.out.println("------------------------------------------------------------------------");
+
+        List<RepairTaskDTO> repairTasks = new ArrayList<>();
+        RepairTaskDTO repairTask1 = new RepairTaskDTO("Laga brustet hjul", 75.84);
+        RepairTaskDTO repairTask2 = new RepairTaskDTO("Laga punktering", 5.9);
+        repairTasks.add(repairTask1);
+        repairTasks.add(repairTask2);
+
+        System.out.println("Repair Tasks:");
+        for (RepairTaskDTO task : repairTasks) {
+            System.out.printf("  - %-35s Pris: %6.2f SEK%n", task.getDescription(), task.getCost());
+        }
+        System.out.println("------------------------------------------------------------------------");
+
         LocalDateTime estimatedRepairTime = LocalDateTime.now().plusDays(3);
-        System.out.println("Estimated Repair Date: " + estimatedRepairTime);
+
+        java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        System.out.printf("%-20s %s%n", "Beräknas klar:", estimatedRepairTime.format(formatter));
+        System.out.println("========================================================================\n");
 
         controller.enterDiagnosticReportAndRepairTasks(repairOrderId, diagnosticReportDescription, repairTasks, estimatedRepairTime);
+
         receptionistGetAllReadyForApprovalOrders();
     }
 
-    public void receptionistGetAllReadyForApprovalOrders(){
+    public void receptionistGetAllReadyForApprovalOrders() {
         List<PresentRepairOrderForApprovalDTO> repairOrderForApprovalDTOS = controller.getAllReadyForApprovalOrders();
-        System.out.println("RECEPTIONIST GETS ALL READY FOR APPROVAL : ");
-        for(PresentRepairOrderForApprovalDTO repairOrderForApprovalDTO : repairOrderForApprovalDTOS){
-            System.out.println(repairOrderForApprovalDTO.getRepairOrderId());
+
+        System.out.println("\n========================================================================");
+        System.out.println("    RECEPTIONIST HÄMTAR  ORDRAR KLARA FÖR GODKÄNNANDE ");
+        System.out.println("========================================================================");
+
+        DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        for (PresentRepairOrderForApprovalDTO dto : repairOrderForApprovalDTOS) {
+            System.out.println("  ORDER ID: " + dto.getRepairOrderId());
+            System.out.println("  ----------------------------------------------------------------------");
+            System.out.printf("  %-18s %s%n", "Telefon:", dto.getCustomerPhoneNumber());
+            System.out.printf("  %-18s %s %s (%s)%n", "Cykel:", dto.getBikeBrand(), dto.getBikeModel(), dto.getBikeSerialNumber());
+            System.out.printf("  %-18s %s%n", "Diagnos:", dto.getDiagnosticReport().getDescription());
+            System.out.printf("  %-18s %s%n", ":", dto.getDiagnosticReport().getDescription());
+            System.out.printf("  %-18s %s%n", "Beräknas klar:", dto.getDiagnosticReport().getEstimatedRepairTime().format(formatter));
+            System.out.println(" Repair Tasks:");
+            if (dto.proposedRepairTasks() != null) {
+                for (RepairTaskDTO task : dto.proposedRepairTasks()) {
+                    System.out.printf("    - %-31s Pris: %6.2f SEK%n", task.getDescription(), task.getCost());
+                }
+            }
+
+            System.out.printf("  %-18s %6.2f SEK%n", "Total kostnad:", dto.getTotalCost());
+            System.out.println("========================================================================");
         }
-        approveRepairOrder(repairOrderForApprovalDTOS.getFirst().getRepairOrderId());
+
+        String selectedOrderId = repairOrderForApprovalDTOS.getFirst().getRepairOrderId();
+        System.out.println("Väljer automatiskt Order ID för godkännande: " + selectedOrderId + "\n");
+
+        approveRepairOrder(selectedOrderId);
     }
 
-    public void approveRepairOrder (String repairOrderId){
+    public void approveRepairOrder(String repairOrderId) {
+        System.out.println("\n========================================================================");
+        System.out.println("                     GODKÄNNER REPARATIONSORDER                         ");
+        System.out.println("========================================================================");
+        System.out.printf("  %-20s %s%n", "Godkänner Order ID:", repairOrderId);
+        System.out.println("  Status uppdaterad till: GODKÄND/PÅGÅENDE");
+        System.out.println("========================================================================\n");
+
         controller.approveRepairOrder(repairOrderId);
+
         printReceipt(repairOrderId);
     }
 
-    ///BORDE vi ha en metod getReceipt? eller vad händer ?
     public void printReceipt(String repairOrderId) {
+        System.out.println("\n========================================================================");
+        System.out.println("   SYSTEMET SKRIVER UT KVITTO FÖR " + repairOrderId);
+        System.out.println("========================================================================");
         ReceiptDTO receiptDTO = controller.getReceipt(repairOrderId);
         System.out.println("CUSTOMER");
         System.out.println("  Name:         " + receiptDTO.getName());
