@@ -1,40 +1,57 @@
 package se.kth.IV1350.bikerepairshop.model.domain;
 
 import org.junit.jupiter.api.Test;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RepairOrderTest {
 
-    private static final String DATE = "2026-05-04";
-    private static final String PROBLEM_DESCRIPTION = "Flat tire";
-    private static final String ORDER_ID = "order-1";
+    private RepairOrder createRepairOrderWithState(RepairOrderState state) {
+        return new RepairOrder(null, null, state, null, null, null, null);
+    }
+
+    private RepairOrder createRepairOrderWithTasks(List<RepairTask> tasks) {
+        return new RepairOrder(null, null, RepairOrderState.NEWLY_CREATED, null, tasks, null, null);
+    }
+
+    // calculateTotalCost
 
     @Test
-    public void calculateTotalCost_shouldReturnSumOfAllRepairTaskCosts() {
-        RepairTask task1 = new RepairTask(500.0, "Replace tire");
-        RepairTask task2 = new RepairTask(150.0, "Adjust brakes");
-        RepairOrder repairOrder = createRepairOrder(List.of(task1, task2), RepairOrderState.READY_FOR_APPROVAL);
+    void calculateTotalCost_shouldReturnSumOfAllTaskCosts_whenMultipleTasksExist() {
+        RepairTask task1 = new RepairTask(100.0, "Change tire");
+        RepairTask task2 = new RepairTask(50.5, "Adjust gears");
+        RepairOrder repairOrder = createRepairOrderWithTasks(List.of(task1, task2));
 
-        double result = repairOrder.calculateTotalCost();
+        double totalCost = repairOrder.calculateTotalCost();
 
-        assertEquals(650.0, result);
+        assertEquals(150.5, totalCost);
     }
 
     @Test
-    public void calculateTotalCost_shouldReturnZeroWhenRepairTasksIsNull() {
-        RepairOrder repairOrder = createRepairOrder(null, RepairOrderState.NEWLY_CREATED);
+    void calculateTotalCost_shouldReturnZero_whenRepairTasksIsNull() {
+        RepairOrder repairOrder = createRepairOrderWithTasks(null);
 
-        double result = repairOrder.calculateTotalCost();
+        double totalCost = repairOrder.calculateTotalCost();
 
-        assertEquals(0.0, result);
+        assertEquals(0.0, totalCost);
     }
 
     @Test
-    public void transitionState_shouldTransitionFromNewlyCreatedToReadyForApproval() {
-        RepairOrder repairOrder = createRepairOrder(null, RepairOrderState.NEWLY_CREATED);
+    void calculateTotalCost_shouldReturnZero_whenRepairTasksIsEmpty() {
+        RepairOrder repairOrder = createRepairOrderWithTasks(new ArrayList<>());
+
+        double totalCost = repairOrder.calculateTotalCost();
+
+        assertEquals(0.0, totalCost);
+    }
+
+    // transitionState - allowed transitions
+
+    @Test
+    void transitionState_shouldChangeStateToReadyForApproval_whenCurrentStateIsNewlyCreated() {
+        RepairOrder repairOrder = createRepairOrderWithState(RepairOrderState.NEWLY_CREATED);
 
         repairOrder.transitionState(RepairOrderState.READY_FOR_APPROVAL);
 
@@ -42,17 +59,19 @@ public class RepairOrderTest {
     }
 
     @Test
-    public void transitionState_shouldTransitionFromReadyForApprovalToAccepted() {
-        RepairOrder repairOrder = createRepairOrder(null, RepairOrderState.READY_FOR_APPROVAL);
+    void transitionState_shouldChangeStateToAccepted_whenCurrentStateIsReadyForApproval() {
+        RepairOrder repairOrder = createRepairOrderWithState(RepairOrderState.READY_FOR_APPROVAL);
 
         repairOrder.transitionState(RepairOrderState.ACCEPTED);
 
         assertEquals(RepairOrderState.ACCEPTED, repairOrder.getState());
     }
 
+    // transitionState - disallowed transitions
+
     @Test
-    public void transitionState_shouldNotTransitionToAcceptedFromNewlyCreated() {
-        RepairOrder repairOrder = createRepairOrder(null, RepairOrderState.NEWLY_CREATED);
+    void transitionState_shouldNotChangeState_whenTryingToGoFromNewlyCreatedDirectlyToAccepted() {
+        RepairOrder repairOrder = createRepairOrderWithState(RepairOrderState.NEWLY_CREATED);
 
         repairOrder.transitionState(RepairOrderState.ACCEPTED);
 
@@ -60,15 +79,11 @@ public class RepairOrderTest {
     }
 
     @Test
-    public void transitionState_shouldNotTransitionToReadyForApprovalFromAccepted() {
-        RepairOrder repairOrder = createRepairOrder(null, RepairOrderState.ACCEPTED);
+    void transitionState_shouldNotChangeState_whenTryingToGoBackFromAcceptedToReadyForApproval() {
+        RepairOrder repairOrder = createRepairOrderWithState(RepairOrderState.ACCEPTED);
 
         repairOrder.transitionState(RepairOrderState.READY_FOR_APPROVAL);
 
         assertEquals(RepairOrderState.ACCEPTED, repairOrder.getState());
-    }
-
-    private RepairOrder createRepairOrder(List<RepairTask> repairTasks, RepairOrderState state) {
-        return new RepairOrder(DATE, PROBLEM_DESCRIPTION, state, null, repairTasks, null, ORDER_ID);
     }
 }
