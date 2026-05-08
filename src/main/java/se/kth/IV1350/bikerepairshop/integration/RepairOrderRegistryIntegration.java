@@ -44,12 +44,8 @@ public class RepairOrderRegistryIntegration {
     *
     * @param repairOrderId The id of the repair order to retrieve.
     * @return The matching repair order, or {@code null} if no repair order has the specified id.
-    * @throws DatabaseFailureException if the repair order registry cannot be accessed.
     */
-   public RepairOrderEntity getRepairOrderById(String repairOrderId) throws DatabaseFailureException {
-       if (repairOrderId.equals("2")) {
-           throw new DatabaseFailureException("Repair order registry är inte tillgänglig");
-       }
+   public RepairOrderEntity getRepairOrderById(String repairOrderId){
        for (RepairOrderEntity entity : repairOrders) {
            if (entity.getId().equals(repairOrderId)) {
                return entity;

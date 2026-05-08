@@ -26,11 +26,12 @@ public class View {
         this.controller = controller;
     }
 
-    // customer registry databas exception skriv 1, för repair order registry skriv 2
+    // För att simulera ett databas fel, ange 1 som phoneNumber
     public void askForPhoneNumber() {
         try {
-            String phoneNumber = "070123"; // databas exeception skriv in 1/2
+            String phoneNumber = "1"; //
             CustomerDetailsDTO customerDetailsDTO = controller.findCustomer(phoneNumber);
+            printCustomerInfo(customerDetailsDTO);
             String consultationId = customerDetailsDTO.getConsultationId();
             enterDescription(consultationId);
         } catch (CustomerNotFoundException e) {
@@ -41,28 +42,6 @@ public class View {
         }
 
     }
-
-/*    public void askForPhoneNumber() {
-        boolean found = false;
-        while (!found) {
-            System.out.print("Ange ett telefonnummer: ");
-            String phoneNumber = scanner.nextLine();
-
-            try {
-                CustomerDetailsDTO customerDetailsDTO = controller.findCustomer(phoneNumber);
-                String consultationId = customerDetailsDTO.getConsultationId();
-                enterDescription(consultationId);
-                found = true;
-            } catch (CustomerNotFoundException e) {
-                System.out.println(e.getMessage());
-            } catch (DatabaseFailureException e) {
-            fileLogger.log(e.getMessage());
-            System.out.println("Systemfel: Databasen är inte tillgänglig. Försök igen senare.");
-            }
-        }
-    }
-
- */
 
     private void printCustomerInfo(CustomerDetailsDTO dto) {
         System.out.println("\n========================================");
@@ -178,22 +157,48 @@ public class View {
         }
 
         String selectedOrderId = repairOrderForApprovalDTOS.getFirst().getRepairOrderId();
-        System.out.println("Väljer automatiskt Order ID för godkännande: " + selectedOrderId + "\n");
+        boolean approved = getApproveOrRejected();
+        if (approved)
+            approveRepairOrder(selectedOrderId);
+        else
+            rejectRepairOrder(selectedOrderId);
 
-        approveRepairOrder(selectedOrderId);
+    }
+
+    private boolean getApproveOrRejected (){
+        System.out.println("ÄR REPAIR ORDER GODKÄND AV KUND? VÄNLIGEN ANGE J FÖR JA OCH N FÖR NEJ ");
+        String approved = scanner.nextLine();
+        if (approved.toUpperCase().equals("J"))
+            return true;
+        else if (approved.toUpperCase().equals("N")) {
+             return false;
+        }
+        else {
+            System.out.println("OGILTIG INPUT! SVARA MED J/N");
+            return getApproveOrRejected();
+        }
     }
 
     public void approveRepairOrder(String repairOrderId) {
         System.out.println("\n========================================================================");
         System.out.println("                     GODKÄNNER REPARATIONSORDER                         ");
         System.out.println("========================================================================");
+        controller.approveRepairOrder(repairOrderId);
         System.out.printf("  %-20s %s%n", "Godkänner Order ID:", repairOrderId);
         System.out.println("  Status uppdaterad till: GODKÄND/PÅGÅENDE");
         System.out.println("========================================================================\n");
-
-        controller.approveRepairOrder(repairOrderId);
-
         printReceipt(repairOrderId);
+    }
+
+    public void rejectRepairOrder(String repairOrderId) {
+        System.out.println("\n========================================================================");
+        System.out.println("                     NEKAR REPARATIONSORDER                         ");
+        System.out.println("========================================================================");
+
+        controller.rejectRepairOrder(repairOrderId);
+        System.out.printf("  %-20s %s%n", "nEKAR Order ID:", repairOrderId);
+        System.out.println("  Status uppdaterad till: REJECTED");
+        System.out.println("========================================================================\n");
     }
 
     public void printReceipt(String repairOrderId) {

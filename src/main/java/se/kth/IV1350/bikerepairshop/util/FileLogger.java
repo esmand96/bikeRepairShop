@@ -3,22 +3,22 @@ package se.kth.IV1350.bikerepairshop.util;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-/**
- * Prints log messages to a file. The log file will be in the
- * current directory and will be called log.txt.
- */
 public class FileLogger {
     private PrintWriter logStream;
+    private static final DateTimeFormatter FORMATTER =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     /**
-     * Creates a new instance and also creates a new log file.
-     * An existing log file will be deleted.
+     * Creates a new instance. Appends to an existing log file,
+     * or creates a new one if it doesn't exist.
      */
     public FileLogger() {
         try {
             logStream = new PrintWriter(
-                    new FileWriter("log.txt"), true);
+                    new FileWriter("src/main/resources/log.txt", true), true);
         } catch (IOException ioe) {
             System.out.println("CAN NOT LOG.");
             ioe.printStackTrace();
@@ -26,11 +26,12 @@ public class FileLogger {
     }
 
     /**
-     * Prints the specified string to the log file.
+     * Prints the specified string to the log file with a timestamp.
      *
      * @param message The string that will be printed to the log file.
      */
     public void log(String message) {
-        logStream.println(message);
+        String timestamp = LocalDateTime.now().format(FORMATTER);
+        logStream.println("[" + timestamp + "] " + message);
     }
 }

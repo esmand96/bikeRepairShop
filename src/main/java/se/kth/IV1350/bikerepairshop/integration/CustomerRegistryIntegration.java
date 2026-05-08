@@ -35,7 +35,7 @@ public class CustomerRegistryIntegration {
      * @throws CustomerNotFoundException if no customer has the specified phone number.
      * @throws DatabaseFailureException if the customer registry cannot be accessed.
      */
-    public CustomerDetailsEntity findCustomerEntityByPhoneNumber(String phoneNumber) throws CustomerNotFoundException, DatabaseFailureException {
+    public CustomerDetailsEntity findCustomerEntityByPhoneNumber(String phoneNumber) throws DatabaseFailureException {
         if (phoneNumber.equals("1")) {
             throw new DatabaseFailureException("Customer registry är inte tillgänlig");
         }
@@ -43,7 +43,7 @@ public class CustomerRegistryIntegration {
             if (customerDetailsEntity.getPhoneNumber().equals(phoneNumber))
                 return customerDetailsEntity;
         }
-        throw new CustomerNotFoundException("Ingen kund hittades med telefonnumret: " + phoneNumber);
+        return null; 
     }
 
     /**

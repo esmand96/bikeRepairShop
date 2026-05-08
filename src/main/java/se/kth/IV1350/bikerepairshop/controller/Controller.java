@@ -99,5 +99,9 @@ public class Controller {
     public ReceiptDTO getReceipt(String repairOrderId) {
         return service.getReceipt(repairOrderId);
     }
+
+    public void rejectRepairOrder(String repairOrderId) {
+        service.rejectRepairOrder(repairOrderId);
+    }
 }
 
