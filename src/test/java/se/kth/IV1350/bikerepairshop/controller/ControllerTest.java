@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import se.kth.IV1350.bikerepairshop.exceptions.CustomerNotFoundException;
 import se.kth.IV1350.bikerepairshop.model.dto.CustomerDetailsDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.PresentNewlyCreatedRepairOrderDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.PresentRepairOrderForApprovalDTO;
@@ -32,7 +33,7 @@ public class ControllerTest {
     private Controller controller;
 
     @Test
-    void findCustomer_shouldDelegateToService_andReturnTheResult() {
+    void findCustomer_shouldDelegateToService_andReturnTheResult() throws CustomerNotFoundException {
         String phoneNumber = CUSTOMER_PHONE;
         CustomerDetailsDTO expectedDto = mock(CustomerDetailsDTO.class);
         when(service.findCustomerByPhoneNumber(phoneNumber)).thenReturn(expectedDto);

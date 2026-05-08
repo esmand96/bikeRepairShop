@@ -1,11 +1,14 @@
 package se.kth.IV1350.bikerepairshop.view;
 
 import se.kth.IV1350.bikerepairshop.controller.Controller;
+import se.kth.IV1350.bikerepairshop.exceptions.CustomerNotFoundException;
+import se.kth.IV1350.bikerepairshop.exceptions.DatabaseFailureException;
 import se.kth.IV1350.bikerepairshop.model.dto.CustomerDetailsDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.PresentNewlyCreatedRepairOrderDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.PresentRepairOrderForApprovalDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.ReceiptDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO;
+import se.kth.IV1350.bikerepairshop.util.FileLogger;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,24 +19,50 @@ import java.util.Scanner;
 
 public class View {
     private final Controller controller;
+    private final Scanner scanner = new Scanner(System.in);
+    private final FileLogger fileLogger = new FileLogger();
+
     public View(Controller controller) {
         this.controller = controller;
     }
 
+    // customer registry databas exception skriv 1, för repair order registry skriv 2
     public void askForPhoneNumber() {
-        String phoneNumber = "070123";
-
-        CustomerDetailsDTO customerDetailsDTO = controller.findCustomer(phoneNumber);
-
-        if (customerDetailsDTO != null) {
-            printCustomerInfo(customerDetailsDTO);
-
+        try {
+            String phoneNumber = "070123"; // databas exeception skriv in 1/2
+            CustomerDetailsDTO customerDetailsDTO = controller.findCustomer(phoneNumber);
             String consultationId = customerDetailsDTO.getConsultationId();
             enterDescription(consultationId);
-        } else {
-            System.out.println("Ingen kund hittades med telefonnummer: " + phoneNumber);
+        } catch (CustomerNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (DatabaseFailureException e) {
+            fileLogger.log(e.getMessage());
+            System.out.println("Systemfel: Databasen är inte tillgänglig. Försök igen senare.");
+        }
+
+    }
+
+/*    public void askForPhoneNumber() {
+        boolean found = false;
+        while (!found) {
+            System.out.print("Ange ett telefonnummer: ");
+            String phoneNumber = scanner.nextLine();
+
+            try {
+                CustomerDetailsDTO customerDetailsDTO = controller.findCustomer(phoneNumber);
+                String consultationId = customerDetailsDTO.getConsultationId();
+                enterDescription(consultationId);
+                found = true;
+            } catch (CustomerNotFoundException e) {
+                System.out.println(e.getMessage());
+            } catch (DatabaseFailureException e) {
+            fileLogger.log(e.getMessage());
+            System.out.println("Systemfel: Databasen är inte tillgänglig. Försök igen senare.");
+            }
         }
     }
+
+ */
 
     private void printCustomerInfo(CustomerDetailsDTO dto) {
         System.out.println("\n========================================");
@@ -87,6 +116,7 @@ public class View {
 
         technicianEntersDiagnosticReportAndRepairTasks(selectedOrderId);
     }
+
     public void technicianEntersDiagnosticReportAndRepairTasks(String repairOrderId) {
         System.out.println("\n========================================================================");
         System.out.println("            TEKNIKER SKAPAR DIAGNOSRAPPORT OCH REPARATIONSÅTGÄRDER              ");

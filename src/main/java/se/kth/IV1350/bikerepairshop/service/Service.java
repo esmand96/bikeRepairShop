@@ -1,5 +1,7 @@
 package se.kth.IV1350.bikerepairshop.service;
 
+import se.kth.IV1350.bikerepairshop.exceptions.CustomerNotFoundException;
+import se.kth.IV1350.bikerepairshop.exceptions.DatabaseFailureException;
 import se.kth.IV1350.bikerepairshop.integration.CustomerRegistryIntegration;
 import se.kth.IV1350.bikerepairshop.integration.PrinterIntegration;
 import se.kth.IV1350.bikerepairshop.integration.RepairOrderRegistryIntegration;
@@ -51,8 +53,10 @@ public class Service {
      *
      * @param phoneNumber The phone number used to identify the customer.
      * @return A DTO containing the customer's details and the selected consultation.
+     * @throws CustomerNotFoundException if no customer has the specified phone number.
+     * @throws DatabaseFailureException if the customer registry cannot be accessed.
      */
-    public CustomerDetailsDTO findCustomerByPhoneNumber(String phoneNumber) {
+    public CustomerDetailsDTO findCustomerByPhoneNumber(String phoneNumber) throws CustomerNotFoundException, DatabaseFailureException {
         CustomerDetailsEntity customerDetailsEntity = customerRegistryIntegration.findCustomerEntityByPhoneNumber(phoneNumber);
         BikeRepairConsultationEntity bikeRepairConsultationEntity = selectFirstUnhandledConsultation(customerDetailsEntity);
         CustomerDetails customerDetails = mapper.ENTITY.mergeCustomerDetailsEntityAndBikeConsultationEntityToCustomerDetails(customerDetailsEntity, bikeRepairConsultationEntity);
@@ -195,6 +199,7 @@ public class Service {
                 customerDetails,
                 null,
                 null,
-                Util.generateRandomId());
+//                "2");
+                Util.generateRandomId()); // kommentera denna och sätt på övre för att testa RepairOrder
     }
 }

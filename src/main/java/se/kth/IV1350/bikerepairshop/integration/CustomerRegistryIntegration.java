@@ -1,5 +1,7 @@
 package se.kth.IV1350.bikerepairshop.integration;
 
+import se.kth.IV1350.bikerepairshop.exceptions.CustomerNotFoundException;
+import se.kth.IV1350.bikerepairshop.exceptions.DatabaseFailureException;
 import se.kth.IV1350.bikerepairshop.model.entity.BikeRepairConsultationEntity;
 import se.kth.IV1350.bikerepairshop.model.entity.CustomerDetailsEntity;
 import se.kth.IV1350.bikerepairshop.util.Util;
@@ -29,14 +31,19 @@ public class CustomerRegistryIntegration {
      * Finds the customer registered with the specified phone number.
      *
      * @param phoneNumber The phone number used to identify the customer.
-     * @return The matching customer entity, or {@code null} if no customer has the specified phone number.
+     * @return The matching customer entity.
+     * @throws CustomerNotFoundException if no customer has the specified phone number.
+     * @throws DatabaseFailureException if the customer registry cannot be accessed.
      */
-    public CustomerDetailsEntity findCustomerEntityByPhoneNumber(String phoneNumber) {
+    public CustomerDetailsEntity findCustomerEntityByPhoneNumber(String phoneNumber) throws CustomerNotFoundException, DatabaseFailureException {
+        if (phoneNumber.equals("1")) {
+            throw new DatabaseFailureException("Customer registry är inte tillgänlig");
+        }
         for (CustomerDetailsEntity customerDetailsEntity : customerDetailsList) {
             if (customerDetailsEntity.getPhoneNumber().equals(phoneNumber))
                 return customerDetailsEntity;
         }
-        return null;
+        throw new CustomerNotFoundException("Ingen kund hittades med telefonnumret: " + phoneNumber);
     }
 
     /**

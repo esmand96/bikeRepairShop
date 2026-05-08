@@ -1,5 +1,7 @@
 package se.kth.IV1350.bikerepairshop.controller;
 
+import se.kth.IV1350.bikerepairshop.exceptions.CustomerNotFoundException;
+import se.kth.IV1350.bikerepairshop.exceptions.DatabaseFailureException;
 import se.kth.IV1350.bikerepairshop.model.dto.CustomerDetailsDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.PresentNewlyCreatedRepairOrderDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.PresentRepairOrderForApprovalDTO;
@@ -30,8 +32,10 @@ public class Controller {
      *
      * @param phoneNumber The phone number used to identify the customer.
      * @return A DTO containing the customer's details and the selected consultation.
+     * @throws CustomerNotFoundException if no customer has the specified phone number.
+     * @throws DatabaseFailureException if the customer registry cannot be accessed.
      */
-    public CustomerDetailsDTO findCustomer(String phoneNumber) {
+    public CustomerDetailsDTO findCustomer(String phoneNumber) throws CustomerNotFoundException, DatabaseFailureException {
         return service.findCustomerByPhoneNumber(phoneNumber);
     }
 
