@@ -9,6 +9,8 @@ import se.kth.IV1350.bikerepairshop.model.dto.PresentRepairOrderForApprovalDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.ReceiptDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO;
 import se.kth.IV1350.bikerepairshop.model.entity.CustomerDetailsEntity;
+import se.kth.IV1350.bikerepairshop.exceptions.CustomerNotFoundException;
+import se.kth.IV1350.bikerepairshop.exceptions.DatabaseFailureException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,13 +33,11 @@ public class ServiceTest {
     private String phoneNumber;
     private String consultationId;
 
-    // ej skriver ut output
     private static class SilentPrinterIntegration extends PrinterIntegration {
         @Override
         public void printReceipt(ReceiptDTO receiptDTO) {
         }
     }
-    // testar att en kund kan hittas via telefonnummer och att första obehandlade konsultationen returneras
 
     @BeforeEach
     public void setUp() {
@@ -66,7 +66,7 @@ public class ServiceTest {
 
 
     @Test
-    public void testFindCustomerByPhoneNumber_whenAllConsultationsHandled() {
+    public void testFindCustomerByPhoneNumber_whenAllConsultationsHandled() throws CustomerNotFoundException, DatabaseFailureException {  //la till throws för d blev rött annars
         CustomerDetailsEntity customer = customerRegistryIntegration.findCustomerEntityByPhoneNumber(phoneNumber);
 
         for (var consultation : customer.getConsultations()) {
@@ -79,7 +79,13 @@ public class ServiceTest {
         assertNull(result);
     }
 
-    // testar att en repairorder är skapad och listas bland newly created orders
+    @Test
+    void testFindCustomerByPhoneNumber_shouldThrowCustomerNotFoundException_whenCustomerDoesNotExist() throws DatabaseFailureException{
+        String phoneNumber = "070789"; //måste va ett telefonnummer som ej finns
+        CustomerNotFoundException exception = assertThrows(CustomerNotFoundException.class, () -> {service.findCustomerByPhoneNumber(phoneNumber);});
+        assertEquals("Ingen kund kopplad till telefonnummer" + phoneNumber, exception.getMessage(), "error message does not match");
+    }
+
     @Test
     public void testCreateRepairOrder() {
         service.createRepairOrder(consultationId, "Flat tire");
@@ -95,7 +101,6 @@ public class ServiceTest {
         assertEquals("070123", repairOrder.getPhoneNumber());
     }
 
-    // testar att inskriven diagreport och repairtasks gör repairorder ready for approval
     @Test
     public void testEnterDiagnosticReportAndRepairTasks() {
         service.createRepairOrder(consultationId, TASK_DESCRIPTION);
@@ -112,7 +117,7 @@ public class ServiceTest {
         assertEquals(ORDER_PROBLEM_DESCRIPTION, repairOrder.getDiagnosticReport().getDescription());
     }
 
-    // testar att receipt går att hämta efter att repairorder blivit accepterad
+
     @Test
     public void testApproveRepairOrderAndGetReceipt() {
         service.createRepairOrder(consultationId, ORDER_PROBLEM_DESCRIPTION);
@@ -130,7 +135,7 @@ public class ServiceTest {
         assertEquals(2, result.getRepairTasks().size());
     }
 
-    // testar att inget kvitto returneras om order ej blivit approved
+
     @Test
     public void testGetReceiptReturnsNullWhenRepairOrderIsNotApproved() {
         service.createRepairOrder(consultationId, "Flat tire");

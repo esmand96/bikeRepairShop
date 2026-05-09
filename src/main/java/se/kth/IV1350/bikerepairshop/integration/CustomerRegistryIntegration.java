@@ -32,8 +32,7 @@ public class CustomerRegistryIntegration {
      *
      * @param phoneNumber The phone number used to identify the customer.
      * @return The matching customer entity.
-     * @throws CustomerNotFoundException if no customer has the specified phone number.
-     * @throws DatabaseFailureException if the customer registry cannot be accessed.
+     * * @throws DatabaseFailureException if the customer registry cannot be accessed.
      */
     public CustomerDetailsEntity findCustomerEntityByPhoneNumber(String phoneNumber) throws DatabaseFailureException {
         if (phoneNumber.equals("1")) {
