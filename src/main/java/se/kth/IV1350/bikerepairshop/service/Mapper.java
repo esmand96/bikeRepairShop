@@ -243,20 +243,20 @@ public class Mapper {
             String phoneNumber = customerDetails.getPhoneNumber();
             BikeDetails bikeDetails = customerDetails.getBikeDetails();
 
-            return new RepairOrderEntity(date,
-                    problemDescription,
-                    state,
-                    diagnosticReportEntity,
-                    repairTaskEntities,
-                    bikeDetails.getBrand(),
-                    bikeDetails.getSerialNumber(),
-                    bikeDetails.getModel(),
-                    consultationId,
-                    repairOrder.getId(),
-                    customerDetails.getName(),
-                    phoneNumber,
-                    customerDetails.getEmail()
-            );
+            return new RepairOrderEntity.Builder().date(date)
+                    .problemDescription(problemDescription)
+                    .state(state)
+                    .diagnosticReport(diagnosticReportEntity)
+                    .repairTasks(repairTaskEntities)
+                    .bikeBrand(bikeDetails.getBrand())
+                    .bikeSerialNumber(bikeDetails.getSerialNumber())
+                    .bikeModel(bikeDetails.getModel())
+                    .consultationId(consultationId)
+                    .id(repairOrder.getId())
+                    .name(customerDetails.getName())
+                    .customerPhoneNumber(phoneNumber)
+                    .email(customerDetails.getEmail())
+                    .build();
         }
 
         /**

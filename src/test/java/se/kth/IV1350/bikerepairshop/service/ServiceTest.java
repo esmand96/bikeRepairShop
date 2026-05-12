@@ -83,7 +83,7 @@ public class ServiceTest {
     void testFindCustomerByPhoneNumber_shouldThrowCustomerNotFoundException_whenCustomerDoesNotExist() throws DatabaseFailureException{
         String phoneNumber = "070789"; //måste va ett telefonnummer som ej finns
         CustomerNotFoundException exception = assertThrows(CustomerNotFoundException.class, () -> {service.findCustomerByPhoneNumber(phoneNumber);});
-        assertEquals("Ingen kund kopplad till telefonnummer" + phoneNumber, exception.getMessage(), "error message does not match");
+        assertEquals("Ingen kund kopplad till telefonnummer " + phoneNumber, exception.getMessage(), "error message does not match");
     }
 
     @Test

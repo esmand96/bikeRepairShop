@@ -36,7 +36,7 @@ public class CustomerRegistryIntegration {
      */
     public CustomerDetailsEntity findCustomerEntityByPhoneNumber(String phoneNumber) throws DatabaseFailureException {
         if (phoneNumber.equals("1")) {
-            throw new DatabaseFailureException("Customer registry är inte tillgänlig");
+            throw new DatabaseFailureException("Customer registry är inte tillgänglig");
         }
         for (CustomerDetailsEntity customerDetailsEntity : customerDetailsList) {
             if (customerDetailsEntity.getPhoneNumber().equals(phoneNumber))

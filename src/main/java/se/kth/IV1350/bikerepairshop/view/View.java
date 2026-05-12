@@ -144,7 +144,6 @@ public class View {
             System.out.printf("  %-18s %s%n", "Telefon:", dto.getCustomerPhoneNumber());
             System.out.printf("  %-18s %s %s (%s)%n", "Cykel:", dto.getBikeBrand(), dto.getBikeModel(), dto.getBikeSerialNumber());
             System.out.printf("  %-18s %s%n", "Diagnos:", dto.getDiagnosticReport().getDescription());
-            System.out.printf("  %-18s %s%n", ":", dto.getDiagnosticReport().getDescription());
             System.out.printf("  %-18s %s%n", "Beräknas klar:", dto.getDiagnosticReport().getEstimatedRepairTime().format(formatter));
             System.out.println(" Repair Tasks:");
             if (dto.proposedRepairTasks() != null) {
@@ -197,7 +196,7 @@ public class View {
         System.out.println("========================================================================");
 
         controller.rejectRepairOrder(repairOrderId);
-        System.out.printf("  %-20s %s%n", "nEKAR Order ID:", repairOrderId);
+        System.out.printf("  %-20s %s%n", "Nekar Order ID:", repairOrderId);
         System.out.println("  Status uppdaterad till: REJECTED");
         System.out.println("========================================================================\n");
     }

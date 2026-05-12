@@ -49,62 +49,60 @@ public class TestUtil {
         // Arrange
         RepairTaskEntity repairTaskEntity = new RepairTaskEntity(TASK_DESCRIPTION, TASK_COST);
         DiagnosticReportEntity diagnosticReportEntity = new DiagnosticReportEntity(TASK_DESCRIPTION, TASK_ESTIMATED_REPAIR_TIME);
-        return  new RepairOrderEntity(
-                DATE,
-                ORDER_PROBLEM_DESCRIPTION,
-                ORDER_STATE.name(),
-                diagnosticReportEntity,
-                List.of(repairTaskEntity),
-                BIKE_BRAND,
-                BIKE_SERIAL_NUMBER,
-                BIKE_MODEL,
-                CONSULTATION_ID,
-                ORDER_ID,
-                CUSTOMER_NAME,
-                CUSTOMER_PHONE,
-                CUSTOMER_EMAIL
-        );
+        return  new RepairOrderEntity.Builder().date(DATE)
+                .problemDescription(ORDER_PROBLEM_DESCRIPTION)
+                .state(ORDER_STATE.name())
+                .diagnosticReport(diagnosticReportEntity)
+                .repairTasks(List.of(repairTaskEntity))
+                .bikeBrand(BIKE_BRAND)
+                .bikeSerialNumber(BIKE_SERIAL_NUMBER)
+                .bikeModel(BIKE_MODEL)
+                .consultationId(CONSULTATION_ID)
+                .id(ORDER_ID)
+                .name(CUSTOMER_NAME)
+                .customerPhoneNumber(CUSTOMER_PHONE)
+                .email(CUSTOMER_EMAIL)
+                .build();
     }
 
     public static RepairOrderEntity createRepairOrderEntityWithId (String id){
         // Arrange
         RepairTaskEntity repairTaskEntity = new RepairTaskEntity(TASK_DESCRIPTION, TASK_COST);
         DiagnosticReportEntity diagnosticReportEntity = new DiagnosticReportEntity(TASK_DESCRIPTION, TASK_ESTIMATED_REPAIR_TIME);
-        return  new RepairOrderEntity(
-                DATE,
-                ORDER_PROBLEM_DESCRIPTION,
-                ORDER_STATE.name(),
-                diagnosticReportEntity,
-                List.of(repairTaskEntity),
-                BIKE_BRAND,
-                BIKE_SERIAL_NUMBER,
-                BIKE_MODEL,
-                CONSULTATION_ID,
-                id,
-                CUSTOMER_NAME,
-                CUSTOMER_PHONE,
-                CUSTOMER_EMAIL
-        );
+        return  new RepairOrderEntity.Builder().date(DATE)
+                .problemDescription(ORDER_PROBLEM_DESCRIPTION)
+                .state(ORDER_STATE.name())
+                .diagnosticReport(diagnosticReportEntity)
+                .repairTasks(List.of(repairTaskEntity))
+                .bikeBrand(BIKE_BRAND)
+                .bikeSerialNumber(BIKE_SERIAL_NUMBER)
+                .bikeModel(BIKE_MODEL)
+                .consultationId(CONSULTATION_ID)
+                .id(id)
+                .name(CUSTOMER_NAME)
+                .customerPhoneNumber(CUSTOMER_PHONE)
+                .email(CUSTOMER_EMAIL)
+                .build();
     }
+
     public static RepairOrderEntity createRepairOrderEntity (String state){
         // Arrange
         RepairTaskEntity repairTaskEntity = new RepairTaskEntity(TASK_DESCRIPTION, TASK_COST);
         DiagnosticReportEntity diagnosticReportEntity = new DiagnosticReportEntity(TASK_DESCRIPTION, TASK_ESTIMATED_REPAIR_TIME);
-        return  new RepairOrderEntity(
-                DATE,
-                ORDER_PROBLEM_DESCRIPTION,
-                state,
-                diagnosticReportEntity,
-                List.of(repairTaskEntity),
-                BIKE_BRAND,
-                BIKE_SERIAL_NUMBER,
-                BIKE_MODEL,
-                CONSULTATION_ID,
-                ORDER_ID,
-                CUSTOMER_NAME,
-                CUSTOMER_PHONE,
-                CUSTOMER_EMAIL
-        );
+        return  new RepairOrderEntity.Builder().date(DATE)
+                .problemDescription(ORDER_PROBLEM_DESCRIPTION)
+                .state(state)
+                .diagnosticReport(diagnosticReportEntity)
+                .repairTasks(List.of(repairTaskEntity))
+                .bikeBrand(BIKE_BRAND)
+                .bikeSerialNumber(BIKE_SERIAL_NUMBER)
+                .bikeModel(BIKE_MODEL)
+                .consultationId(CONSULTATION_ID)
+                .id(ORDER_ID)
+                .name(CUSTOMER_NAME)
+                .customerPhoneNumber(CUSTOMER_PHONE)
+                .email(CUSTOMER_EMAIL)
+                .build();
     }
 
 }
