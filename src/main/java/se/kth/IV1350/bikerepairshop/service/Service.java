@@ -5,7 +5,6 @@ import se.kth.IV1350.bikerepairshop.exceptions.DatabaseFailureException;
 import se.kth.IV1350.bikerepairshop.integration.CustomerRegistryIntegration;
 import se.kth.IV1350.bikerepairshop.integration.PrinterIntegration;
 import se.kth.IV1350.bikerepairshop.integration.RepairOrderRegistryIntegration;
-
 import se.kth.IV1350.bikerepairshop.model.domain.*;
 import se.kth.IV1350.bikerepairshop.model.dto.CustomerDetailsDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.PresentNewlyCreatedRepairOrderDTO;

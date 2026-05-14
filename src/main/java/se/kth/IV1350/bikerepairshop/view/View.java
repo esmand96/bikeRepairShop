@@ -8,7 +8,7 @@ import se.kth.IV1350.bikerepairshop.model.dto.PresentNewlyCreatedRepairOrderDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.PresentRepairOrderForApprovalDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.ReceiptDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO;
-import se.kth.IV1350.bikerepairshop.util.FileLogger;
+import se.kth.IV1350.bikerepairshop.logging.Logger;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,16 +20,17 @@ import java.util.Scanner;
 public class View {
     private final Controller controller;
     private final Scanner scanner = new Scanner(System.in);
-    private final FileLogger fileLogger = new FileLogger();
+    private final Logger logger;
 
-    public View(Controller controller) {
+    public View(Controller controller, Logger logger) {
         this.controller = controller;
+        this.logger = logger;
     }
 
     // För att simulera ett databas fel, ange 1 som phoneNumber
     public void askForPhoneNumber() {
         try {
-            String phoneNumber = "1"; //
+            String phoneNumber = "070123"; //
             CustomerDetailsDTO customerDetailsDTO = controller.findCustomer(phoneNumber);
             printCustomerInfo(customerDetailsDTO);
             String consultationId = customerDetailsDTO.getConsultationId();
@@ -37,7 +38,7 @@ public class View {
         } catch (CustomerNotFoundException e) {
             System.out.println(e.getMessage());
         } catch (DatabaseFailureException e) {
-            fileLogger.log(e.getMessage());
+            logger.logg(e.getMessage());
             System.out.println("Systemfel: Databasen är inte tillgänglig. Försök igen senare.");
         }
 

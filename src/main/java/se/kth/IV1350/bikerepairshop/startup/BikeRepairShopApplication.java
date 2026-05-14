@@ -6,6 +6,8 @@ import se.kth.IV1350.bikerepairshop.integration.PrinterIntegration;
 import se.kth.IV1350.bikerepairshop.integration.RepairOrderRegistryIntegration;
 import se.kth.IV1350.bikerepairshop.service.Mapper;
 import se.kth.IV1350.bikerepairshop.service.Service;
+import se.kth.IV1350.bikerepairshop.logging.FileLogger;
+import se.kth.IV1350.bikerepairshop.logging.Logger;
 import se.kth.IV1350.bikerepairshop.view.View;
 
 /**
@@ -27,7 +29,8 @@ public class BikeRepairShopApplication {
         RepairOrderRegistryIntegration repairOrderRegistryIntegration = new RepairOrderRegistryIntegration();
         Service service = new Service(repairOrderRegistryIntegration, customerRegistryIntegration, printerIntegration, mapper);
         Controller controller = new Controller(service);
-        View view = new View(controller);
+        Logger logger = new FileLogger();
+        View view = new View(controller, logger);
         view.askForPhoneNumber();
     }
 }
