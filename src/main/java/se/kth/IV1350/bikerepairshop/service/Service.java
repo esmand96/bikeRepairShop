@@ -1,5 +1,7 @@
 package se.kth.IV1350.bikerepairshop.service;
 
+import se.kth.IV1350.bikerepairshop.exceptions.CustomerNotFoundException;
+import se.kth.IV1350.bikerepairshop.exceptions.DatabaseFailureException;
 import se.kth.IV1350.bikerepairshop.integration.CustomerRegistryIntegration;
 import se.kth.IV1350.bikerepairshop.integration.PrinterIntegration;
 import se.kth.IV1350.bikerepairshop.integration.RepairOrderRegistryIntegration;
@@ -44,16 +46,19 @@ public class Service {
         this.printerIntegration = printerIntegration;
         this.mapper = mapper;
     }
-
     /**
      * Finds the customer registered with the specified phone number, including the
      * customer's first unhandled consultation.
      *
      * @param phoneNumber The phone number used to identify the customer.
      * @return A DTO containing the customer's details and the selected consultation.
+     * @throws CustomerNotFoundException if no customer has the specified phone number.
+     * @throws DatabaseFailureException if the customer registry cannot be accessed.
      */
-    public CustomerDetailsDTO findCustomerByPhoneNumber(String phoneNumber) {
+    public CustomerDetailsDTO findCustomerByPhoneNumber(String phoneNumber) throws CustomerNotFoundException, DatabaseFailureException {
         CustomerDetailsEntity customerDetailsEntity = customerRegistryIntegration.findCustomerEntityByPhoneNumber(phoneNumber);
+        if (customerDetailsEntity == null)
+            throw new CustomerNotFoundException("Ingen kund kopplad till telefonnummer " + phoneNumber );
         BikeRepairConsultationEntity bikeRepairConsultationEntity = selectFirstUnhandledConsultation(customerDetailsEntity);
         CustomerDetails customerDetails = mapper.ENTITY.mergeCustomerDetailsEntityAndBikeConsultationEntityToCustomerDetails(customerDetailsEntity, bikeRepairConsultationEntity);
         return mapper.DOMAIN.customerDetailsToDTO(customerDetails);
@@ -138,11 +143,7 @@ public class Service {
      * @param repairOrderId The id of the repair order to approve.
      */
     public void approveRepairOrder(String repairOrderId) {
-        RepairOrderEntity repairOrderEntity = repairOrderRegistryIntegration.getRepairOrderById(repairOrderId);
-        RepairOrder repairOrder = mapper.ENTITY.repairOrderEntityToDomain(repairOrderEntity);
-        repairOrder.transitionState(RepairOrderState.ACCEPTED);
-        RepairOrderEntity updatedRepairOrderEntity = mapper.DOMAIN.repairOrderToEntity(repairOrder);
-        repairOrderRegistryIntegration.saveRepairOrder(updatedRepairOrderEntity);
+        updateRepairOrderState(repairOrderId, RepairOrderState.ACCEPTED);
     }
 
     /**
@@ -163,6 +164,19 @@ public class Service {
         ReceiptDTO receiptDTO = mapper.DOMAIN.createReceiptDTO(repairOrder, totalCost);
         printerIntegration.printReceipt(receiptDTO);
         return receiptDTO;
+    }
+
+
+    public void rejectRepairOrder(String repairOrderId) {
+      updateRepairOrderState(repairOrderId, RepairOrderState.REJECTED);
+    }
+
+    private void updateRepairOrderState(String repairOrderId, RepairOrderState repairOrderState){
+        RepairOrderEntity repairOrderEntity = repairOrderRegistryIntegration.getRepairOrderById(repairOrderId);
+        RepairOrder repairOrder = mapper.ENTITY.repairOrderEntityToDomain(repairOrderEntity);
+        repairOrder.transitionState(repairOrderState);
+        RepairOrderEntity updatedRepairOrderEntity = mapper.DOMAIN.repairOrderToEntity(repairOrder);
+        repairOrderRegistryIntegration.saveRepairOrder(updatedRepairOrderEntity);
     }
 
     private BikeRepairConsultationEntity selectFirstUnhandledConsultation(CustomerDetailsEntity customerDetailsEntity) {

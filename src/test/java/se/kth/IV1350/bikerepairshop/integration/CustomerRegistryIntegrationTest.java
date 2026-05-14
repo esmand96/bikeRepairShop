@@ -1,6 +1,8 @@
 package se.kth.IV1350.bikerepairshop.integration;
 
 import se.kth.IV1350.bikerepairshop.model.entity.CustomerDetailsEntity;
+import se.kth.IV1350.bikerepairshop.exceptions.CustomerNotFoundException;
+import se.kth.IV1350.bikerepairshop.exceptions.DatabaseFailureException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +25,13 @@ public class CustomerRegistryIntegrationTest {
         assertNotNull(customer, "Customer not found");
         assertEquals(CUSTOMER_NAME, customer.getName(), "Name does not match");
         assertEquals("first@customer.now", customer.getEmail(), "email does not match");
+    }
+
+    @Test //la till test för exception handling
+    void testFindCustomerEntityByPhoneNumber_shouldThrowDatabaseFailureException_whenDatabaseFails(){
+        String phoneNumber = "1";
+        DatabaseFailureException exception = assertThrows(DatabaseFailureException.class, () -> {customerRegistry.findCustomerEntityByPhoneNumber(phoneNumber);});
+        assertEquals("Customer registry är inte tillgänglig", exception.getMessage(), "error message does not match");
     }
 
     @Test

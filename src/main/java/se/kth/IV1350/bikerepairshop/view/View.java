@@ -1,11 +1,14 @@
 package se.kth.IV1350.bikerepairshop.view;
 
 import se.kth.IV1350.bikerepairshop.controller.Controller;
+import se.kth.IV1350.bikerepairshop.exceptions.CustomerNotFoundException;
+import se.kth.IV1350.bikerepairshop.exceptions.DatabaseFailureException;
 import se.kth.IV1350.bikerepairshop.model.dto.CustomerDetailsDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.PresentNewlyCreatedRepairOrderDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.PresentRepairOrderForApprovalDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.ReceiptDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO;
+import se.kth.IV1350.bikerepairshop.util.FileLogger;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,23 +19,28 @@ import java.util.Scanner;
 
 public class View {
     private final Controller controller;
+    private final Scanner scanner = new Scanner(System.in);
+    private final FileLogger fileLogger = new FileLogger();
+
     public View(Controller controller) {
         this.controller = controller;
     }
 
+    // För att simulera ett databas fel, ange 1 som phoneNumber
     public void askForPhoneNumber() {
-        String phoneNumber = "070123";
-
-        CustomerDetailsDTO customerDetailsDTO = controller.findCustomer(phoneNumber);
-
-        if (customerDetailsDTO != null) {
+        try {
+            String phoneNumber = "1"; //
+            CustomerDetailsDTO customerDetailsDTO = controller.findCustomer(phoneNumber);
             printCustomerInfo(customerDetailsDTO);
-
             String consultationId = customerDetailsDTO.getConsultationId();
             enterDescription(consultationId);
-        } else {
-            System.out.println("Ingen kund hittades med telefonnummer: " + phoneNumber);
+        } catch (CustomerNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (DatabaseFailureException e) {
+            fileLogger.log(e.getMessage());
+            System.out.println("Systemfel: Databasen är inte tillgänglig. Försök igen senare.");
         }
+
     }
 
     private void printCustomerInfo(CustomerDetailsDTO dto) {
@@ -87,6 +95,7 @@ public class View {
 
         technicianEntersDiagnosticReportAndRepairTasks(selectedOrderId);
     }
+
     public void technicianEntersDiagnosticReportAndRepairTasks(String repairOrderId) {
         System.out.println("\n========================================================================");
         System.out.println("            TEKNIKER SKAPAR DIAGNOSRAPPORT OCH REPARATIONSÅTGÄRDER              ");
@@ -148,22 +157,48 @@ public class View {
         }
 
         String selectedOrderId = repairOrderForApprovalDTOS.getFirst().getRepairOrderId();
-        System.out.println("Väljer automatiskt Order ID för godkännande: " + selectedOrderId + "\n");
+        boolean approved = getApproveOrRejected();
+        if (approved)
+            approveRepairOrder(selectedOrderId);
+        else
+            rejectRepairOrder(selectedOrderId);
 
-        approveRepairOrder(selectedOrderId);
+    }
+
+    private boolean getApproveOrRejected (){
+        System.out.println("ÄR REPAIR ORDER GODKÄND AV KUND? VÄNLIGEN ANGE J FÖR JA OCH N FÖR NEJ ");
+        String approved = scanner.nextLine();
+        if (approved.toUpperCase().equals("J"))
+            return true;
+        else if (approved.toUpperCase().equals("N")) {
+             return false;
+        }
+        else {
+            System.out.println("OGILTIG INPUT! SVARA MED J/N");
+            return getApproveOrRejected();
+        }
     }
 
     public void approveRepairOrder(String repairOrderId) {
         System.out.println("\n========================================================================");
         System.out.println("                     GODKÄNNER REPARATIONSORDER                         ");
         System.out.println("========================================================================");
+        controller.approveRepairOrder(repairOrderId);
         System.out.printf("  %-20s %s%n", "Godkänner Order ID:", repairOrderId);
         System.out.println("  Status uppdaterad till: GODKÄND/PÅGÅENDE");
         System.out.println("========================================================================\n");
-
-        controller.approveRepairOrder(repairOrderId);
-
         printReceipt(repairOrderId);
+    }
+
+    public void rejectRepairOrder(String repairOrderId) {
+        System.out.println("\n========================================================================");
+        System.out.println("                     NEKAR REPARATIONSORDER                         ");
+        System.out.println("========================================================================");
+
+        controller.rejectRepairOrder(repairOrderId);
+        System.out.printf("  %-20s %s%n", "nEKAR Order ID:", repairOrderId);
+        System.out.println("  Status uppdaterad till: REJECTED");
+        System.out.println("========================================================================\n");
     }
 
     public void printReceipt(String repairOrderId) {

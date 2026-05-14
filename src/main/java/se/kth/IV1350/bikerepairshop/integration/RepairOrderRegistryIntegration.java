@@ -1,6 +1,8 @@
 package se.kth.IV1350.bikerepairshop.integration;
 
+import se.kth.IV1350.bikerepairshop.exceptions.DatabaseFailureException;
 import se.kth.IV1350.bikerepairshop.model.entity.RepairOrderEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,21 +39,20 @@ public class RepairOrderRegistryIntegration {
         }
         return false;
     }
-
     /**
-     * Retrieves the repair order with the specified id.
-     *
-     * @param repairOrderId The id of the repair order to retrieve.
-     * @return The matching repair order, or {@code null} if no repair order has the specified id.
-     */
-    public RepairOrderEntity getRepairOrderById(String repairOrderId) {
-        for (RepairOrderEntity entity : repairOrders) {
-            if (entity.getId().equals(repairOrderId)) {
-                return entity;
-            }
-        }
-        return null;
-    }
+    * Retrieves the repair order with the specified id.
+    *
+    * @param repairOrderId The id of the repair order to retrieve.
+    * @return The matching repair order, or {@code null} if no repair order has the specified id.
+    */
+   public RepairOrderEntity getRepairOrderById(String repairOrderId){
+       for (RepairOrderEntity entity : repairOrders) {
+           if (entity.getId().equals(repairOrderId)) {
+               return entity;
+           }
+       }
+       return null;
+   }
 
     /**
      * Retrieves all repair orders that have been created but not yet diagnosed.

@@ -6,6 +6,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import se.kth.IV1350.bikerepairshop.exceptions.CustomerNotFoundException;
+import se.kth.IV1350.bikerepairshop.exceptions.DatabaseFailureException;
 import se.kth.IV1350.bikerepairshop.model.dto.CustomerDetailsDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.PresentNewlyCreatedRepairOrderDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.PresentRepairOrderForApprovalDTO;
@@ -17,6 +19,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -32,7 +36,7 @@ public class ControllerTest {
     private Controller controller;
 
     @Test
-    void findCustomer_shouldDelegateToService_andReturnTheResult() {
+    void findCustomer_shouldDelegateToService_andReturnTheResult() throws CustomerNotFoundException {
         String phoneNumber = CUSTOMER_PHONE;
         CustomerDetailsDTO expectedDto = mock(CustomerDetailsDTO.class);
         when(service.findCustomerByPhoneNumber(phoneNumber)).thenReturn(expectedDto);
@@ -40,6 +44,15 @@ public class ControllerTest {
         CustomerDetailsDTO result = controller.findCustomer(phoneNumber);
 
         assertSame(expectedDto, result, "Controller should return the DTO from Service");
+        verify(service).findCustomerByPhoneNumber(phoneNumber);
+    }
+
+    @Test //la till testet fÃ¶r exception handling
+    void findCustomer_shouldThrowCustomerNotFoundException_whenServiceThrowsIt() throws CustomerNotFoundException, DatabaseFailureException {
+        String phoneNumber = CUSTOMER_PHONE;
+        when(service.findCustomerByPhoneNumber(phoneNumber)).thenThrow(new CustomerNotFoundException("Customer not found"));
+        CustomerNotFoundException exception = assertThrows(CustomerNotFoundException.class, () -> {controller.findCustomer(phoneNumber);});
+        assertEquals("Customer not found", exception.getMessage(), "error message does not match");
         verify(service).findCustomerByPhoneNumber(phoneNumber);
     }
 
