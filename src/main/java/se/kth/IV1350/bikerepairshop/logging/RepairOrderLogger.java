@@ -1,6 +1,6 @@
 package se.kth.IV1350.bikerepairshop.logging;
 
-import se.kth.IV1350.bikerepairshop.model.dto.RepairOrderUpdatedDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.common.RepairOrderUpdatedDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO;
 import se.kth.IV1350.bikerepairshop.observer.RepairOrderObserver;
 

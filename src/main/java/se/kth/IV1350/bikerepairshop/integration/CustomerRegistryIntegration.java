@@ -16,14 +16,14 @@ public class CustomerRegistryIntegration {
     static {
         customerDetailsList = new ArrayList<>();
         List<BikeRepairConsultationEntity> consultationEntities = new ArrayList<>();
-        consultationEntities.add(new BikeRepairConsultationEntity.Builder()
+        consultationEntities.add(BikeRepairConsultationEntity.builder()
                 .date("24jan")
                 .id(Util.generateRandomId())
                 .model("someModel")
                 .brand("someBrand")
                 .serialNumber("serial123")
                 .build());
-        CustomerDetailsEntity firstCustomer = new CustomerDetailsEntity.Builder()
+        CustomerDetailsEntity firstCustomer = CustomerDetailsEntity.builder()
                 .name("Customer Customersson")
                 .email("first@customer.now")
                 .phoneNumber("070123")

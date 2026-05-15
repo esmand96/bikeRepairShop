@@ -1,8 +1,7 @@
 package se.kth.IV1350.bikerepairshop.service;
 
 import se.kth.IV1350.bikerepairshop.model.domain.*;
-import se.kth.IV1350.bikerepairshop.model.dto.*;
-import se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.common.*;
 import se.kth.IV1350.bikerepairshop.model.entity.*;
 
 import java.time.LocalDateTime;
@@ -118,7 +117,7 @@ public class Mapper {
             List<RepairTask> repairTasks = repairTaskEntityToDomain(repairOrderEntity.getRepairTasks());
             DiagnosticReport diagnosticReport = diagnosticReportEntityToDomain(repairOrderEntity.getDiagnosticReport());
 
-            return new RepairOrder.Builder()
+            return RepairOrder.builder()
                     .date(date)
                     .problemDescription(repairOrderEntity.getProblemDescription())
                     .state(repairOrderState)
@@ -140,7 +139,7 @@ public class Mapper {
             String serialNumber = repairOrderEntity.getBikeSerialNumber();
             String brand = repairOrderEntity.getBikeBrand();
             String model = repairOrderEntity.getBikeModel();
-            return new BikeDetails.Builder()
+            return BikeDetails.builder()
                     .brand(brand)
                     .model(model)
                     .serialNumber(serialNumber)
@@ -158,7 +157,7 @@ public class Mapper {
             String serialNumber = consultationEntity.getSerialNumber();
             String brand = consultationEntity.getBrand();
             String model = consultationEntity.getModel();
-            return new BikeDetails.Builder()
+            return BikeDetails.builder()
                     .brand(brand)
                     .model(model)
                     .serialNumber(serialNumber)
@@ -177,7 +176,7 @@ public class Mapper {
             BikeDetails bikeDetails = repairOrderEntityToBikeDetails(repairOrderEntity);
             String name = repairOrderEntity.getName();
             String email = repairOrderEntity.getEmail();
-            return new CustomerDetails.Builder()
+            return CustomerDetails.builder()
                     .name(name)
                     .email(email)
                     .phoneNumber(phoneNumber)
@@ -203,7 +202,7 @@ public class Mapper {
             String name = customerDetailsEntity.getName();
             BikeDetails bikeDetails = bikeRepairConsultationEntityToBikeDetails(consultationEntity);
             String consultationId = consultationEntity.getId();
-            return new CustomerDetails.Builder()
+            return CustomerDetails.builder()
                     .name(name)
                     .email(email)
                     .phoneNumber(phoneNumber)
@@ -228,7 +227,7 @@ public class Mapper {
             if (customerDetails == null)
                 return null;
 
-            return new CustomerDetailsDTO.Builder()
+            return CustomerDetailsDTO.builder()
                     .name(customerDetails.getName())
                     .email(customerDetails.getEmail())
                     .phoneNumber(customerDetails.getPhoneNumber())
@@ -288,7 +287,7 @@ public class Mapper {
             if(repairTasks == null)
                 return repairTaskDTOs;
             for (RepairTask repairTask : repairTasks) {
-                RepairTaskDTO repairTaskDTO = new RepairTaskDTO.Builder()
+                RepairTaskDTO repairTaskDTO = RepairTaskDTO.builder()
                         .description(repairTask.getDescription())
                         .cost(repairTask.getCost())
                         .build();
@@ -321,7 +320,8 @@ public class Mapper {
             String phoneNumber = customerDetails.getPhoneNumber();
             BikeDetails bikeDetails = customerDetails.getBikeDetails();
 
-            return new RepairOrderEntity.Builder().date(date)
+            return RepairOrderEntity.builder()
+                    .date(date)
                     .problemDescription(problemDescription)
                     .state(state)
                     .diagnosticReport(diagnosticReportEntity)
@@ -348,7 +348,7 @@ public class Mapper {
                 return null;
             List<RepairTaskEntity> repairTaskEntities = new ArrayList<>();
             for (RepairTask repairTask : repairTasks) {
-                RepairTaskEntity repairTaskEntity = new RepairTaskEntity.Builder()
+                RepairTaskEntity repairTaskEntity = RepairTaskEntity.builder()
                         .description(repairTask.getDescription())
                         .cost(repairTask.getCost())
                         .build();
@@ -369,7 +369,7 @@ public class Mapper {
 
             String description = diagnosticReport.getDescription();
             LocalDateTime estimatedTime = diagnosticReport.getEstimatedRepairTime();
-            return new DiagnosticReportEntity.Builder()
+            return DiagnosticReportEntity.builder()
                     .description(description)
                     .estimatedRepairTime(estimatedTime)
                     .build();
@@ -386,13 +386,14 @@ public class Mapper {
          * @return A DTO ready to be presented to the receptionist.
          */
         PresentRepairOrderForApprovalDTO createPresentRepairOrderForApprovalDTO(RepairOrder repairOrder, double totalCost) {
-            DiagnosticReportDTO diagnosticReportDTO = new DiagnosticReportDTO.Builder()
+            DiagnosticReportDTO diagnosticReportDTO = DiagnosticReportDTO.builder()
                     .description(repairOrder.getDiagnosticReport().getDescription())
                     .estimatedRepairTime(repairOrder.getDiagnosticReport().getEstimatedRepairTime())
                     .build();
             List<RepairTaskDTO> repairTaskDTOs = repairTaskToDTO(repairOrder.getRepairTasks());
 
-            return new PresentRepairOrderForApprovalDTO.Builder().diagnosticReport(diagnosticReportDTO)
+            return PresentRepairOrderForApprovalDTO.builder()
+                    .diagnosticReport(diagnosticReportDTO)
                     .totalCost(totalCost)
                     .proposedRepairTasks(repairTaskDTOs)
                     .repairOrderId(repairOrder.getId())
@@ -411,7 +412,7 @@ public class Mapper {
          * @return A DTO ready to be presented to the technician.
          */
         PresentNewlyCreatedRepairOrderDTO createPresentNewlyCreatedRepairOrderDTO(RepairOrder repairOrder) {
-            return new PresentNewlyCreatedRepairOrderDTO.Builder()
+            return PresentNewlyCreatedRepairOrderDTO.builder()
                     .name(repairOrder.getCustomerDetails().getName())
                     .email(repairOrder.getCustomerDetails().getEmail())
                     .phoneNumber(repairOrder.getCustomerDetails().getPhoneNumber())
@@ -434,13 +435,13 @@ public class Mapper {
         ReceiptDTO createReceiptDTO(RepairOrder repairOrder, double totalCost) {
             List<RepairTaskDTO> repairTaskDTOs = repairTaskToDTO(repairOrder.getRepairTasks());
 
-            DiagnosticReportDTO diagnosticReportDTO = new DiagnosticReportDTO.Builder()
+            DiagnosticReportDTO diagnosticReportDTO = DiagnosticReportDTO.builder()
                     .description(repairOrder.getDiagnosticReport().getDescription())
                     .estimatedRepairTime(repairOrder.getDiagnosticReport().getEstimatedRepairTime())
                     .build();
 
 
-            return new ReceiptDTO.Builder()
+            return ReceiptDTO.builder()
                     .name(repairOrder.getCustomerDetails().getName())
                     .email(repairOrder.getCustomerDetails().getEmail())
                     .phoneNumber(repairOrder.getCustomerDetails().getPhoneNumber())

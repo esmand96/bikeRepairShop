@@ -1,4 +1,4 @@
-package se.kth.IV1350.bikerepairshop.model.dto;
+package se.kth.IV1350.bikerepairshop.model.dto.common;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +15,12 @@ public class DiagnosticReportDTO {
         this.description = builder.description;
         this.estimatedRepairTime = builder.estimatedRepairTime;
     }
-    public static Builder builder (){
+    /**
+     * Creates and returns a new {@link Builder} instance.
+     *
+     * @return a new {@link Builder}
+     */
+    public static Builder builder() {
         return new Builder();
     }
     /**

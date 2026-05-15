@@ -1,6 +1,4 @@
-package se.kth.IV1350.bikerepairshop.model.dto;
-
-import se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO;
+package se.kth.IV1350.bikerepairshop.model.dto.common;
 
 import java.util.List;
 

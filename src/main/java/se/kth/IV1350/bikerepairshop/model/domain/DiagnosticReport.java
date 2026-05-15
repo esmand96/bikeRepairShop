@@ -14,7 +14,17 @@ public class DiagnosticReport {
         this.description = builder.description;
         this.estimatedRepairTime = builder.estimatedRepairTime;
     }
-    public static Builder builder (){
+    /**
+     * Creates and returns a new {@link Builder} instance.
+     *
+     * @return a new {@link Builder}
+     */
+    /**
+     * Creates and returns a new {@link Builder} instance.
+     *
+     * @return a new {@link Builder}
+     */
+    public static Builder builder() {
         return new Builder();
     }
 

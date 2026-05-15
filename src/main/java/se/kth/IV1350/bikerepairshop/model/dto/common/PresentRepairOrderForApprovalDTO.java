@@ -1,6 +1,4 @@
-package se.kth.IV1350.bikerepairshop.model.dto;
-
-import se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO;
+package se.kth.IV1350.bikerepairshop.model.dto.common;
 
 import java.util.List;
 
@@ -28,6 +26,15 @@ public class PresentRepairOrderForApprovalDTO {
         this.bikeModel = builder.bikeModel;
         this.bikeSerialNumber = builder.bikeSerialNumber;
         this.bikeBrand = builder.bikeBrand;
+    }
+
+    /**
+     * Creates and returns a new {@link Builder} instance.
+     *
+     * @return a new {@link Builder}
+     */
+    public static Builder builder() {
+        return new Builder();
     }
 
     /**

@@ -9,13 +9,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class RepairOrderTest {
 
     private RepairOrder createRepairOrderWithState(RepairOrderState state) {
-        return new RepairOrder.Builder()
+        return RepairOrder.builder()
                 .state(state)
                 .build();
     }
 
     private RepairOrder createRepairOrderWithTasks(List<RepairTask> tasks) {
-        return new RepairOrder.Builder()
+        return RepairOrder.builder()
                 .state(RepairOrderState.NEWLY_CREATED)
                 .repairTasks(tasks)
                 .build();
@@ -24,11 +24,11 @@ public class RepairOrderTest {
 
     @Test
     void calculateTotalCost_shouldReturnSumOfAllTaskCosts_whenMultipleTasksExist() {
-        RepairTask task1 = new RepairTask.Builder()
+        RepairTask task1 = RepairTask.builder()
                 .cost(100.0)
                 .description("Change tire")
                 .build();
-        RepairTask task2 = new RepairTask.Builder()
+        RepairTask task2 = RepairTask.builder()
                 .cost(50.5)
                 .description("Adjust gears")
                 .build();

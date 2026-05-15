@@ -44,7 +44,7 @@ Problem description
   Punktering på bakhjulet.
 
 Diagnostic report
-  se.kth.IV1350.bikerepairshop.model.dto.DiagnosticReportDTO@5e265ba4
+  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@5e265ba4
 
 Proposed repair tasks
   - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@156643d4
@@ -97,7 +97,7 @@ Problem description
   Punktering på bakhjulet.
 
 Diagnostic report
-  se.kth.IV1350.bikerepairshop.model.dto.DiagnosticReportDTO@36aa7bc2
+  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@36aa7bc2
 
 Proposed repair tasks
   - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@76ccd017
@@ -124,7 +124,7 @@ Problem description
   Punktering på bakhjulet.
 
 Diagnostic report
-  se.kth.IV1350.bikerepairshop.model.dto.DiagnosticReportDTO@2401f4c3
+  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@2401f4c3
 
 Proposed repair tasks
   - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@7637f22
@@ -177,7 +177,7 @@ Problem description
   Punktering på bakhjulet.
 
 Diagnostic report
-  se.kth.IV1350.bikerepairshop.model.dto.DiagnosticReportDTO@73a28541
+  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@73a28541
 
 Proposed repair tasks
   - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@6f75e721
@@ -204,10 +204,170 @@ Problem description
   Punktering på bakhjulet.
 
 Diagnostic report
-  se.kth.IV1350.bikerepairshop.model.dto.DiagnosticReportDTO@33833882
+  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@33833882
 
 Proposed repair tasks
   - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@200a570f
   - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@16b3fc9e
+========================================================
+
+========================================================
+Time of log entry: 2026-05-15 18:38:50
+--------------------------------------------------------
+Repair order ID : b91acb51-7796-4d71-a070-121ae39207e3
+State           : NEWLY_CREATED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+  (none)
+
+Proposed repair tasks
+  (none)
+========================================================
+
+========================================================
+Time of log entry: 2026-05-15 18:38:50
+--------------------------------------------------------
+Repair order ID : b91acb51-7796-4d71-a070-121ae39207e3
+State           : READY_FOR_APPROVAL
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@71dac704
+
+Proposed repair tasks
+  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@123772c4
+  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@2d363fb3
+========================================================
+
+========================================================
+Time of log entry: 2026-05-15 18:38:57
+--------------------------------------------------------
+Repair order ID : b91acb51-7796-4d71-a070-121ae39207e3
+State           : ACCEPTED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@69222c14
+
+Proposed repair tasks
+  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@606d8acf
+  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@782830e
+========================================================
+
+========================================================
+Time of log entry: 2026-05-15 18:45:33
+--------------------------------------------------------
+Repair order ID : 40669bad-b4de-4fbf-89a3-77ac207c5567
+State           : NEWLY_CREATED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+  (none)
+
+Proposed repair tasks
+  (none)
+========================================================
+
+========================================================
+Time of log entry: 2026-05-15 18:45:33
+--------------------------------------------------------
+Repair order ID : 40669bad-b4de-4fbf-89a3-77ac207c5567
+State           : READY_FOR_APPROVAL
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@71dac704
+
+Proposed repair tasks
+  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@123772c4
+  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@2d363fb3
+========================================================
+
+========================================================
+Time of log entry: 2026-05-15 18:45:36
+--------------------------------------------------------
+Repair order ID : 40669bad-b4de-4fbf-89a3-77ac207c5567
+State           : ACCEPTED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@69222c14
+
+Proposed repair tasks
+  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@606d8acf
+  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@782830e
 ========================================================
 

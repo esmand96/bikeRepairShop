@@ -26,15 +26,15 @@ public class TestUtil {
     public static final String BIKE_MODEL = "Elda";
 
     public static RepairOrder createRepairOrder(CustomerDetails customerDetails){
-        DiagnosticReport diagnosticReport = new DiagnosticReport.Builder()
+        DiagnosticReport diagnosticReport = DiagnosticReport.builder()
                 .description(TASK_DESCRIPTION)
                 .estimatedRepairTime(TASK_ESTIMATED_REPAIR_TIME)
                 .build();
-        RepairTask repairTask = new RepairTask.Builder()
+        RepairTask repairTask = RepairTask.builder()
                 .cost(TASK_COST)
                 .description(TASK_DESCRIPTION)
                 .build();
-        return new RepairOrder.Builder()
+        return RepairOrder.builder()
                 .date(DATE)
                 .problemDescription(ORDER_PROBLEM_DESCRIPTION)
                 .state(ORDER_STATE)
@@ -46,13 +46,13 @@ public class TestUtil {
     }
 
     public static CustomerDetails createCustomerDetails () {
-        BikeDetails bikeDetails = new BikeDetails.Builder()
+        BikeDetails bikeDetails = BikeDetails.builder()
                 .brand(BIKE_BRAND)
                 .model(BIKE_MODEL)
                 .serialNumber(BIKE_SERIAL_NUMBER)
                 .build();
 
-        return new CustomerDetails.Builder()
+        return CustomerDetails.builder()
                 .name(CUSTOMER_NAME)
                 .email(CUSTOMER_EMAIL)
                 .phoneNumber(CUSTOMER_PHONE)
@@ -63,15 +63,15 @@ public class TestUtil {
 
     public static RepairOrderEntity createRepairOrderEntity (){
         // Arrange
-        RepairTaskEntity repairTaskEntity = new RepairTaskEntity.Builder()
+        RepairTaskEntity repairTaskEntity = RepairTaskEntity.builder()
                 .description(TASK_DESCRIPTION)
                 .cost(TASK_COST)
                 .build();
-        DiagnosticReportEntity diagnosticReportEntity = new DiagnosticReportEntity.Builder()
+        DiagnosticReportEntity diagnosticReportEntity = DiagnosticReportEntity.builder()
                 .description(TASK_DESCRIPTION)
                 .estimatedRepairTime(TASK_ESTIMATED_REPAIR_TIME)
                 .build();
-        return new RepairOrderEntity.Builder()
+        return RepairOrderEntity.builder()
                 .date(DATE)
                 .problemDescription(ORDER_PROBLEM_DESCRIPTION)
                 .state(ORDER_STATE.name())
@@ -90,15 +90,15 @@ public class TestUtil {
 
     public static RepairOrderEntity createRepairOrderEntityWithId (String id){
         // Arrange
-        RepairTaskEntity repairTaskEntity = new RepairTaskEntity.Builder()
+        RepairTaskEntity repairTaskEntity = RepairTaskEntity.builder()
                 .description(TASK_DESCRIPTION)
                 .cost(TASK_COST)
                 .build();
-        DiagnosticReportEntity diagnosticReportEntity = new DiagnosticReportEntity.Builder()
+        DiagnosticReportEntity diagnosticReportEntity = DiagnosticReportEntity.builder()
                 .description(TASK_DESCRIPTION)
                 .estimatedRepairTime(TASK_ESTIMATED_REPAIR_TIME)
                 .build();
-        return new RepairOrderEntity.Builder()
+        return RepairOrderEntity.builder()
                 .date(DATE)
                 .problemDescription(ORDER_PROBLEM_DESCRIPTION)
                 .state(ORDER_STATE.name())
@@ -117,15 +117,15 @@ public class TestUtil {
 
     public static RepairOrderEntity createRepairOrderEntity (String state){
         // Arrange
-        RepairTaskEntity repairTaskEntity = new RepairTaskEntity.Builder()
+        RepairTaskEntity repairTaskEntity = RepairTaskEntity.builder()
                 .description(TASK_DESCRIPTION)
                 .cost(TASK_COST)
                 .build();
-        DiagnosticReportEntity diagnosticReportEntity = new DiagnosticReportEntity.Builder()
+        DiagnosticReportEntity diagnosticReportEntity = DiagnosticReportEntity.builder()
                 .description(TASK_DESCRIPTION)
                 .estimatedRepairTime(TASK_ESTIMATED_REPAIR_TIME)
                 .build();
-        return new RepairOrderEntity.Builder()
+        return RepairOrderEntity.builder()
                 .date(DATE)
                 .problemDescription(ORDER_PROBLEM_DESCRIPTION)
                 .state(state)

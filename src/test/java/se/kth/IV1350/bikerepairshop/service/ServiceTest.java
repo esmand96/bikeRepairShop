@@ -3,10 +3,10 @@ package se.kth.IV1350.bikerepairshop.service;
 import se.kth.IV1350.bikerepairshop.integration.CustomerRegistryIntegration;
 import se.kth.IV1350.bikerepairshop.integration.PrinterIntegration;
 import se.kth.IV1350.bikerepairshop.integration.RepairOrderRegistryIntegration;
-import se.kth.IV1350.bikerepairshop.model.dto.CustomerDetailsDTO;
-import se.kth.IV1350.bikerepairshop.model.dto.PresentNewlyCreatedRepairOrderDTO;
-import se.kth.IV1350.bikerepairshop.model.dto.PresentRepairOrderForApprovalDTO;
-import se.kth.IV1350.bikerepairshop.model.dto.ReceiptDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.common.CustomerDetailsDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.common.PresentNewlyCreatedRepairOrderDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.common.PresentRepairOrderForApprovalDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.common.ReceiptDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO;
 import se.kth.IV1350.bikerepairshop.model.entity.CustomerDetailsEntity;
 import se.kth.IV1350.bikerepairshop.exceptions.CustomerNotFoundException;
@@ -53,11 +53,11 @@ public class ServiceTest {
                 mapper
         );
 
-        repairTask1 = new RepairTaskDTO.Builder()
+        repairTask1 = RepairTaskDTO.builder()
                 .description(TASK_DESCRIPTION)
                 .cost(TASK_COST)
                 .build();
-        repairTask2 = new RepairTaskDTO.Builder()
+        repairTask2 = RepairTaskDTO.builder()
                 .description(TASK_DESCRIPTION)
                 .cost(TASK_COST)
                 .build();

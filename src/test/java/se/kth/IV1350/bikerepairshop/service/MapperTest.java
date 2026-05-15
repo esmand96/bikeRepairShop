@@ -2,10 +2,10 @@ package se.kth.IV1350.bikerepairshop.service;
 
 
 import se.kth.IV1350.bikerepairshop.model.domain.*;
-import se.kth.IV1350.bikerepairshop.model.dto.CustomerDetailsDTO;
-import se.kth.IV1350.bikerepairshop.model.dto.PresentNewlyCreatedRepairOrderDTO;
-import se.kth.IV1350.bikerepairshop.model.dto.PresentRepairOrderForApprovalDTO;
-import se.kth.IV1350.bikerepairshop.model.dto.ReceiptDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.common.CustomerDetailsDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.common.PresentNewlyCreatedRepairOrderDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.common.PresentRepairOrderForApprovalDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.common.ReceiptDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO;
 import org.junit.jupiter.api.Test;
 import se.kth.IV1350.bikerepairshop.model.entity.*;
@@ -20,7 +20,7 @@ public class MapperTest {
 
     @Test
     void repairTaskDTOToDomain_shouldMapCostAndDescription_forSingleDto() {
-        RepairTaskDTO dto = new RepairTaskDTO.Builder()
+        RepairTaskDTO dto = RepairTaskDTO.builder()
                 .description(TASK_DESCRIPTION)
                 .cost(TASK_COST)
                 .build();
@@ -35,7 +35,7 @@ public class MapperTest {
 
     @Test
     void repairTaskEntityToDomain_shouldMapCostAndDescription_forSingleEntity() {
-        RepairTaskEntity entity = new RepairTaskEntity.Builder()
+        RepairTaskEntity entity = RepairTaskEntity.builder()
                 .description(TASK_DESCRIPTION)
                 .cost(TASK_COST)
                 .build();
@@ -50,7 +50,7 @@ public class MapperTest {
 
     @Test
     void diagnosticReportEntityToDomain_shouldMapDescriptionAndEstimatedRepairTime_forDiagnosticReportEntity() {
-        DiagnosticReportEntity entity = new DiagnosticReportEntity.Builder()
+        DiagnosticReportEntity entity = DiagnosticReportEntity.builder()
                 .description(TASK_DESCRIPTION)
                 .estimatedRepairTime(TASK_ESTIMATED_REPAIR_TIME)
                 .build();
@@ -96,7 +96,7 @@ public class MapperTest {
 
     @Test
     void repairTaskToEntity_shouldMapDescriptionAndCost_forSingleRepairTask() {
-        RepairTask repairTask = new RepairTask.Builder()
+        RepairTask repairTask = RepairTask.builder()
                 .cost(TASK_COST)
                 .description(TASK_DESCRIPTION)
                 .build();
@@ -111,7 +111,7 @@ public class MapperTest {
 
     @Test
     void diagnosticReportToEntity_shouldMapDescriptionAndEstimatedRepairTime_forDiagnosticReport() {
-        DiagnosticReport diagnosticReport = new DiagnosticReport.Builder()
+        DiagnosticReport diagnosticReport = DiagnosticReport.builder()
                 .description(TASK_DESCRIPTION)
                 .estimatedRepairTime(TASK_ESTIMATED_REPAIR_TIME)
                 .build();
@@ -125,11 +125,12 @@ public class MapperTest {
     @Test
     void createPresentRepairOrderForApprovalDTO_shouldMapAllFields() {
 
-        BikeDetails bikeDetails = new BikeDetails.Builder().brand(BIKE_BRAND)
+        BikeDetails bikeDetails = BikeDetails.builder()
+                .brand(BIKE_BRAND)
                 .model(BIKE_MODEL)
                 .serialNumber(BIKE_SERIAL_NUMBER)
                 .build();
-        CustomerDetails customerDetails = new CustomerDetails.Builder()
+        CustomerDetails customerDetails = CustomerDetails.builder()
                 .name(CUSTOMER_NAME)
                 .email(CUSTOMER_EMAIL)
                 .phoneNumber(CUSTOMER_PHONE)
@@ -242,7 +243,7 @@ public class MapperTest {
 
     @Test
     void bikeRepairConsultationEntityToBikeDetails_shouldMapBrandModelAndSerialNumber_fromBikeRepairConsultationEntity() {
-        BikeRepairConsultationEntity consultationEntity = new BikeRepairConsultationEntity.Builder()
+        BikeRepairConsultationEntity consultationEntity = BikeRepairConsultationEntity.builder()
                 .date(DATE)
                 .id(CONSULTATION_ID)
                 .model(BIKE_MODEL)
@@ -259,7 +260,7 @@ public class MapperTest {
 
     @Test
     void mergeCustomerDetailsEntityAndBikeConsultationEntityToCustomerDetails_shouldMapAllFields() {
-        BikeRepairConsultationEntity consultationEntity = new BikeRepairConsultationEntity.Builder()
+        BikeRepairConsultationEntity consultationEntity = BikeRepairConsultationEntity.builder()
                 .date(DATE)
                 .id(CONSULTATION_ID)
                 .model(BIKE_MODEL)
@@ -267,7 +268,7 @@ public class MapperTest {
                 .serialNumber(BIKE_SERIAL_NUMBER)
                 .build();
 
-        CustomerDetailsEntity customerDetailsEntity = new CustomerDetailsEntity.Builder()
+        CustomerDetailsEntity customerDetailsEntity = CustomerDetailsEntity.builder()
                 .name(CUSTOMER_NAME)
                 .email(CUSTOMER_EMAIL)
                 .phoneNumber(CUSTOMER_PHONE)

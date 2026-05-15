@@ -17,6 +17,15 @@ public class DiagnosticReportEntity {
     }
 
     /**
+     * Creates and returns a new {@link Builder} instance.
+     *
+     * @return a new {@link Builder}
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
      * Builder for creating instances of {@link DiagnosticReportEntity}.
      * Provides a clear and consistent way to create diagnostic report entity objects.
      */

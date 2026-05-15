@@ -3,10 +3,10 @@ package se.kth.IV1350.bikerepairshop.view;
 import se.kth.IV1350.bikerepairshop.controller.Controller;
 import se.kth.IV1350.bikerepairshop.exceptions.CustomerNotFoundException;
 import se.kth.IV1350.bikerepairshop.exceptions.DatabaseFailureException;
-import se.kth.IV1350.bikerepairshop.model.dto.CustomerDetailsDTO;
-import se.kth.IV1350.bikerepairshop.model.dto.PresentNewlyCreatedRepairOrderDTO;
-import se.kth.IV1350.bikerepairshop.model.dto.PresentRepairOrderForApprovalDTO;
-import se.kth.IV1350.bikerepairshop.model.dto.ReceiptDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.common.CustomerDetailsDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.common.PresentNewlyCreatedRepairOrderDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.common.PresentRepairOrderForApprovalDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.common.ReceiptDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO;
 import se.kth.IV1350.bikerepairshop.logging.Logger;
 
@@ -95,11 +95,11 @@ public class View {
         System.out.println("------------------------------------------------------------------------");
 
         List<RepairTaskDTO> repairTasks = new ArrayList<>();
-        RepairTaskDTO repairTask1 = new RepairTaskDTO.Builder()
+        RepairTaskDTO repairTask1 = RepairTaskDTO.builder()
                 .description("Laga brustet hjul")
                 .cost(75.84)
                 .build();
-        RepairTaskDTO repairTask2 = new RepairTaskDTO.Builder()
+        RepairTaskDTO repairTask2 = RepairTaskDTO.builder()
                 .description("Laga punktering")
                 .cost(5.9)
                 .build();

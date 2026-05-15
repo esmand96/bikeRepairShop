@@ -1,6 +1,4 @@
-package se.kth.IV1350.bikerepairshop.model.dto;
-
-import se.kth.IV1350.bikerepairshop.model.domain.CustomerDetails;
+package se.kth.IV1350.bikerepairshop.model.dto.common;
 
 /**
  * Carries customer details together with the bike data and the consultation id, for
@@ -25,6 +23,14 @@ public class CustomerDetailsDTO {
         this.bikeSerialNumber = builder.bikeSerialNumber;
         this.consultationId = builder.consultationId;
     }
+
+    /**
+     * Creates and returns a new {@link Builder} instance.
+     *
+     * @return a new {@link Builder}
+     */
+    public static Builder builder() {
+        return new Builder();}
 
     /**
      * Builder for creating instances of {@link CustomerDetailsDTO}.

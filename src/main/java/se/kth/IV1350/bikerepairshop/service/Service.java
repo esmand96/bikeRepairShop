@@ -6,8 +6,7 @@ import se.kth.IV1350.bikerepairshop.integration.CustomerRegistryIntegration;
 import se.kth.IV1350.bikerepairshop.integration.PrinterIntegration;
 import se.kth.IV1350.bikerepairshop.integration.RepairOrderRegistryIntegration;
 import se.kth.IV1350.bikerepairshop.model.domain.*;
-import se.kth.IV1350.bikerepairshop.model.dto.*;
-import se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.common.*;
 import se.kth.IV1350.bikerepairshop.model.entity.BikeRepairConsultationEntity;
 import se.kth.IV1350.bikerepairshop.model.entity.CustomerDetailsEntity;
 import se.kth.IV1350.bikerepairshop.model.entity.RepairOrderEntity;
@@ -128,7 +127,10 @@ public class Service {
     public void enterDiagnosticReportAndRepairTasks(String repairOrderId, String diagnosticReportDescription, List<RepairTaskDTO> repairTaskDTOs, LocalDateTime estimatedRepairTime) {
         RepairOrderEntity repairOrderEntity = repairOrderRegistryIntegration.getRepairOrderById(repairOrderId);
         RepairOrder repairOrder = mapper.ENTITY.repairOrderEntityToDomain(repairOrderEntity);
-        DiagnosticReport diagnosticReport = new DiagnosticReport.Builder().description(diagnosticReportDescription).estimatedRepairTime(estimatedRepairTime).build();
+        DiagnosticReport diagnosticReport = DiagnosticReport.builder()
+                .description(diagnosticReportDescription)
+                .estimatedRepairTime(estimatedRepairTime)
+                .build();
         List<RepairTask> repairTasks = mapper.DTO.repairTaskDTOToDomain(repairTaskDTOs);
         repairOrder.setDiagnosticReport(diagnosticReport);
         repairOrder.setRepairTasks(repairTasks);
@@ -210,7 +212,7 @@ public class Service {
     private RepairOrder createNewRepairOrder(String problemDescription, CustomerDetails customerDetails) {
         RepairOrderState repairOrderState = RepairOrderState.NEWLY_CREATED;
         String date = LocalDateTime.now().toString();
-        return new RepairOrder.Builder()
+        return RepairOrder.builder()
                 .date(date)
                 .problemDescription(problemDescription)
                 .state(repairOrderState)

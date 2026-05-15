@@ -21,6 +21,15 @@ public class CustomerDetails {
     }
 
     /**
+     * Creates and returns a new {@link Builder} instance.
+     *
+     * @return a new {@link Builder}
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
      * Builder for creating instances of {@link CustomerDetails}.
      * Used to avoid constructors with many parameters of the same type,
      * which makes it easy to accidentally pass arguments in the wrong order.

@@ -1,6 +1,6 @@
 package se.kth.IV1350.bikerepairshop.integration;
 
-import se.kth.IV1350.bikerepairshop.model.dto.ReceiptDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.common.ReceiptDTO;
 
 /**
  * Provides access to the external printer used to print receipts. The actual printing
