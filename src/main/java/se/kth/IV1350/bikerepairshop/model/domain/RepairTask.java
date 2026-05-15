@@ -1,5 +1,7 @@
 package se.kth.IV1350.bikerepairshop.model.domain;
 
+import se.kth.IV1350.bikerepairshop.model.dto.DiagnosticReportDTO;
+
 /**
  * Represents a single repair task that is part of a repair order, including its
  * description and the cost of performing it.
@@ -14,6 +16,9 @@ public class RepairTask {
         this.description = builder.description;
     }
 
+    public static Builder builder (){
+        return new Builder();
+    }
     /**
      * Builder for creating instances of {@link RepairTask}.
      * Provides a clear and consistent way to create repair task objects.

@@ -52,7 +52,7 @@ public class Mapper {
         List<RepairTask> repairTaskDTOToDomain(List<RepairTaskDTO> repairTaskDTOS) {
             List<RepairTask> repairTasks = new ArrayList<>();
             for (RepairTaskDTO repairTaskDTO : repairTaskDTOS) {
-                RepairTask repairTask = new RepairTask.Builder()
+                RepairTask repairTask = RepairTask.builder()
                         .cost(repairTaskDTO.getCost())
                         .description(repairTaskDTO.getDescription())
                         .build();
@@ -79,7 +79,7 @@ public class Mapper {
                 return repairTasks;
 
             for (RepairTaskEntity repairTaskEntity : repairTaskEntities) {
-                RepairTask repairTask = new RepairTask.Builder()
+                RepairTask repairTask = RepairTask.builder()
                         .cost(repairTaskEntity.getCost())
                         .description(repairTaskEntity.getDescription())
                         .build();
@@ -98,7 +98,7 @@ public class Mapper {
             if (diagnosticReportEntity == null)
                 return null;
 
-            return new DiagnosticReport.Builder()
+            return DiagnosticReport.builder()
                     .description(diagnosticReportEntity.getDescription())
                     .estimatedRepairTime(diagnosticReportEntity.getEstimatedRepairTime())
                     .build();
