@@ -22,49 +22,180 @@ public class RepairOrderEntity {
     private String name;
     private String email;
 
+    private RepairOrderEntity(Builder builder) {
+        this.date = builder.date;
+        this.problemDescription = builder.problemDescription;
+        this.state = builder.state;
+        this.diagnosticReport = builder.diagnosticReport;
+        this.repairTasks = builder.repairTasks;
+        this.customerPhoneNumber = builder.customerPhoneNumber;
+        this.bikeBrand = builder.bikeBrand;
+        this.bikeSerialNumber = builder.bikeSerialNumber;
+        this.consultationId = builder.consultationId;
+        this.id = builder.id;
+        this.bikeModel = builder.bikeModel;
+        this.name = builder.name;
+        this.email = builder.email;
+    }
+
     /**
-     * Creates a new instance with the specified data.
-     *
-     * @param date The date the order was created.
-     * @param problemDescription The customer's description of the problem.
-     * @param state The state of the order.
-     * @param diagnosticReport The technician's diagnosis, or {@code null} if no diagnosis has been added yet.
-     * @param repairTasks The repair tasks associated with the order, or {@code null} if no tasks have been added yet.
-     * @param bikeBrand The brand of the bike.
-     * @param bikeSerialNumber The serial number of the bike.
-     * @param bikeModel The model of the bike.
-     * @param consultationId The id of the consultation the order is based on.
-     * @param id The unique id of the order.
-     * @param name The customer's name.
-     * @param customerPhoneNumber The customer's phone number.
-     * @param email The customer's email address.
+     * Builder for creating instances of {@link RepairOrderEntity}.
+     * Used to avoid constructors with many parameters of the same type,
+     * which makes it easy to accidentally pass arguments in the wrong order.
      */
-    public RepairOrderEntity(String date,
-                             String problemDescription,
-                             String state,
-                             DiagnosticReportEntity diagnosticReport,
-                             List<RepairTaskEntity> repairTasks,
-                             String bikeBrand,
-                             String bikeSerialNumber,
-                             String bikeModel,
-                             String consultationId,
-                             String id,
-                             String name,
-                             String customerPhoneNumber,
-                             String email) {
-        this.date = date;
-        this.problemDescription = problemDescription;
-        this.state = state;
-        this.diagnosticReport = diagnosticReport;
-        this.repairTasks = repairTasks;
-        this.customerPhoneNumber = customerPhoneNumber;
-        this.bikeBrand = bikeBrand;
-        this.bikeSerialNumber = bikeSerialNumber;
-        this.consultationId = consultationId;
-        this.id = id;
-        this.bikeModel = bikeModel;
-        this.name = name;
-        this.email = email;
+    public static class Builder {
+        private String date;
+        private String problemDescription;
+        private String state;
+        private DiagnosticReportEntity diagnosticReport;
+        private List<RepairTaskEntity> repairTasks;
+        private String customerPhoneNumber;
+        private String bikeBrand;
+        private String bikeSerialNumber;
+        private String bikeModel;
+        private String consultationId;
+        private String id;
+        private String name;
+        private String email;
+
+        /**
+         * Sets the date of the repair order.
+         * @param date The date the order was created.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder date(String date) {
+            this.date = date;
+            return this;
+        }
+
+        /**
+         * Sets the problem description of the repair order.
+         * @param problemDescription The customer's description of the problem.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder problemDescription(String problemDescription) {
+            this.problemDescription = problemDescription;
+            return this;
+        }
+
+        /**
+         * Sets the state of the repair order.
+         * @param state The state of the order.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder state(String state) {
+            this.state = state;
+            return this;
+        }
+
+        /**
+         * Sets the diagnostic report of the repair order.
+         * @param diagnosticReport The technician's diagnosis.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder diagnosticReport(DiagnosticReportEntity diagnosticReport) {
+            this.diagnosticReport = diagnosticReport;
+            return this;
+        }
+
+        /**
+         * Sets the repair tasks of the repair order.
+         * @param repairTasks The repair tasks associated with the order.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder repairTasks(List<RepairTaskEntity> repairTasks) {
+            this.repairTasks = repairTasks;
+            return this;
+        }
+
+        /**
+         * Sets the customer's phone number.
+         * @param customerPhoneNumber The customer's phone number.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder customerPhoneNumber(String customerPhoneNumber) {
+            this.customerPhoneNumber = customerPhoneNumber;
+            return this;
+        }
+
+        /**
+         * Sets the bike brand.
+         * @param bikeBrand The brand of the bike.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder bikeBrand(String bikeBrand) {
+            this.bikeBrand = bikeBrand;
+            return this;
+        }
+
+        /**
+         * Sets the bike serial number.
+         * @param bikeSerialNumber The serial number of the bike.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder bikeSerialNumber(String bikeSerialNumber) {
+            this.bikeSerialNumber = bikeSerialNumber;
+            return this;
+        }
+
+        /**
+         * Sets the bike model.
+         * @param bikeModel The model of the bike.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder bikeModel(String bikeModel) {
+            this.bikeModel = bikeModel;
+            return this;
+        }
+
+        /**
+         * Sets the consultation id.
+         * @param consultationId The id of the consultation the order is based on.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder consultationId(String consultationId) {
+            this.consultationId = consultationId;
+            return this;
+        }
+
+        /**
+         * Sets the id of the repair order.
+         * @param id The unique id of the order.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
+         * Sets the customer's name.
+         * @param name The customer's name.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        /**
+         * Sets the customer's email address.
+         * @param email The customer's email address.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        /**
+         * Creates and returns a new {@link RepairOrderEntity} with the values
+         * set on this builder.
+         * @return A new RepairOrderEntity instance.
+         */
+        public RepairOrderEntity build() {
+            return new RepairOrderEntity(this);
+        }
     }
 
     /**

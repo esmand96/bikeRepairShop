@@ -10,15 +10,51 @@ public class DiagnosticReportEntity {
     private String description;
     private LocalDateTime estimatedRepairTime;
 
+
+    private DiagnosticReportEntity(Builder builder) {
+        this.description = builder.description;
+        this.estimatedRepairTime = builder.estimatedRepairTime;
+    }
+
     /**
-     * Creates a new instance with the specified data.
-     *
-     * @param description The technician's description of the diagnosis.
-     * @param estimatedRepairTime The estimated time when the repair will be completed.
+     * Builder for creating instances of {@link DiagnosticReportEntity}.
+     * Provides a clear and consistent way to create diagnostic report entity objects.
      */
-    public DiagnosticReportEntity(String description, LocalDateTime estimatedRepairTime) {
-        this.description = description;
-        this.estimatedRepairTime = estimatedRepairTime;
+    public static class Builder {
+        private String description;
+        private LocalDateTime estimatedRepairTime;
+
+        /**
+         * Sets the description of the diagnosis.
+         *
+         * @param description The technician's description of the diagnosis.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        /**
+         * Sets the estimated repair time.
+         *
+         * @param estimatedRepairTime The estimated time when the repair will be completed.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder estimatedRepairTime(LocalDateTime estimatedRepairTime) {
+            this.estimatedRepairTime = estimatedRepairTime;
+            return this;
+        }
+
+        /**
+         * Creates and returns a new {@link DiagnosticReportEntity} with the values
+         * set on this builder.
+         *
+         * @return A new DiagnosticReportEntity instance.
+         */
+        public DiagnosticReportEntity build() {
+            return new DiagnosticReportEntity(this);
+        }
     }
 
     /**

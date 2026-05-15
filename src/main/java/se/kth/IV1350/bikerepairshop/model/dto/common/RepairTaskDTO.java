@@ -9,15 +9,51 @@ public class RepairTaskDTO {
     private final String description;
     private final double cost;
 
+
+    private RepairTaskDTO(Builder builder) {
+        this.description = builder.description;
+        this.cost = builder.cost;
+    }
+
     /**
-     * Creates a new instance with the specified data.
-     *
-     * @param description The description of the task.
-     * @param cost The cost of performing the task.
+     * Builder for creating instances of {@link RepairTaskDTO}.
+     * Provides a clear and consistent way to create repair task DTO objects.
      */
-    public RepairTaskDTO(String description, double cost) {
-        this.description = description;
-        this.cost = cost;
+    public static class Builder {
+        private String description;
+        private double cost;
+
+        /**
+         * Sets the description of the repair task.
+         *
+         * @param description The description of the task.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        /**
+         * Sets the cost of the repair task.
+         *
+         * @param cost The cost of performing the task.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder cost(double cost) {
+            this.cost = cost;
+            return this;
+        }
+
+        /**
+         * Creates and returns a new {@link RepairTaskDTO} with the values
+         * set on this builder.
+         *
+         * @return A new RepairTaskDTO instance.
+         */
+        public RepairTaskDTO build() {
+            return new RepairTaskDTO(this);
+        }
     }
 
     /**

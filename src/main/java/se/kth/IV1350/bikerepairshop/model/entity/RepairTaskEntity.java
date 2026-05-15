@@ -8,16 +8,53 @@ public class RepairTaskEntity {
     private String description;
     private double cost;
 
-    /**
-     * Creates a new instance with the specified data.
-     *
-     * @param description The description of the task.
-     * @param cost The cost of performing the task.
-     */
-    public RepairTaskEntity(String description, double cost) {
-        this.description = description;
-        this.cost = cost;
+
+    private RepairTaskEntity(Builder builder) {
+        this.description = builder.description;
+        this.cost = builder.cost;
     }
+
+    /**
+     * Builder for creating instances of {@link RepairTaskEntity}.
+     * Provides a clear and consistent way to create repair task entity objects.
+     */
+    public static class Builder {
+        private String description;
+        private double cost;
+
+        /**
+         * Sets the description of the repair task.
+         *
+         * @param description The description of the task.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        /**
+         * Sets the cost of the repair task.
+         *
+         * @param cost The cost of performing the task.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder cost(double cost) {
+            this.cost = cost;
+            return this;
+        }
+
+        /**
+         * Creates and returns a new {@link RepairTaskEntity} with the values
+         * set on this builder.
+         *
+         * @return A new RepairTaskEntity instance.
+         */
+        public RepairTaskEntity build() {
+            return new RepairTaskEntity(this);
+        }
+    }
+
 
     /**
      * @return The cost of performing the task.

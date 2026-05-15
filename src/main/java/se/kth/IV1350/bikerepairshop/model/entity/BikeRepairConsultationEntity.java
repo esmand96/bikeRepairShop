@@ -12,21 +12,89 @@ public class BikeRepairConsultationEntity {
     private String model;
     private String id;
 
+    private BikeRepairConsultationEntity(Builder builder) {
+        this.date = builder.date;
+        this.id = builder.id;
+        this.model = builder.model;
+        this.brand = builder.brand;
+        this.serialNumber = builder.serialNumber;
+    }
+
     /**
-     * Creates a new instance with the specified data.
-     *
-     * @param date The date of the consultation.
-     * @param id The unique id of the consultation.
-     * @param model The model of the bike.
-     * @param brand The brand of the bike.
-     * @param serialNumber The serial number of the bike.
+     * Builder for creating instances of {@link BikeRepairConsultationEntity}.
+     * Provides a clear and consistent way to create bike repair consultation entity objects.
      */
-    public BikeRepairConsultationEntity(String date, String id, String model, String brand, String serialNumber) {
-        this.date = date;
-        this.id = id;
-        this.model = model;
-        this.brand = brand;
-        this.serialNumber = serialNumber;
+    public static class Builder {
+        private String date;
+        private String serialNumber;
+        private String brand;
+        private String model;
+        private String id;
+
+        /**
+         * Sets the date of the consultation.
+         *
+         * @param date The date of the consultation.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder date(String date) {
+            this.date = date;
+            return this;
+        }
+
+        /**
+         * Sets the serial number of the bike.
+         *
+         * @param serialNumber The serial number of the bike.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder serialNumber(String serialNumber) {
+            this.serialNumber = serialNumber;
+            return this;
+        }
+
+        /**
+         * Sets the brand of the bike.
+         *
+         * @param brand The brand of the bike.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder brand(String brand) {
+            this.brand = brand;
+            return this;
+        }
+
+        /**
+         * Sets the model of the bike.
+         *
+         * @param model The model of the bike.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder model(String model) {
+            this.model = model;
+            return this;
+        }
+
+        /**
+         * Sets the unique id of the consultation.
+         *
+         * @param id The unique id of the consultation.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
+         * Creates and returns a new {@link BikeRepairConsultationEntity} with the values
+         * set on this builder.
+         *
+         * @return A new BikeRepairConsultationEntity instance.
+         */
+        public BikeRepairConsultationEntity build() {
+            return new BikeRepairConsultationEntity(this);
+        }
     }
 
     /**

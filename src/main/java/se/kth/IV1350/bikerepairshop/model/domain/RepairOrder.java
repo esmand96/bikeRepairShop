@@ -16,25 +16,110 @@ public class RepairOrder {
     private DiagnosticReport diagnosticReport;
     private String id;
 
+
+    private RepairOrder(Builder builder) {
+        this.date = builder.date;
+        this.problemDescription = builder.problemDescription;
+        this.state = builder.state;
+        this.customerDetails = builder.customerDetails;
+        this.repairTasks = builder.repairTasks;
+        this.diagnosticReport = builder.diagnosticReport;
+        this.id = builder.id;
+    }
+
     /**
-     * Creates a new repair order with the specified data.
-     *
-     * @param date The date the order was created.
-     * @param problemDescription The customer's description of the problem.
-     * @param state The initial state of the order.
-     * @param customerDetails The customer's contact and bike details.
-     * @param repairTasks The proposed repair tasks, or {@code null} if none have been added yet.
-     * @param diagnosticReport The technician's diagnosis, or {@code null} if no diagnosis has been added yet.
-     * @param id The unique id of the order.
+     * Builder for creating instances of {@link RepairOrder}.
+     * Used to avoid constructors with many parameters of the same type,
+     * which makes it easy to accidentally pass arguments in the wrong order.
      */
-    public RepairOrder(String date, String problemDescription, RepairOrderState state, CustomerDetails customerDetails, List<RepairTask> repairTasks, DiagnosticReport diagnosticReport, String id) {
-        this.date = date;
-        this.problemDescription = problemDescription;
-        this.state = state;
-        this.customerDetails = customerDetails;
-        this.repairTasks = repairTasks;
-        this.diagnosticReport = diagnosticReport;
-        this.id = id;
+    public static class Builder {
+        private String date;
+        private String problemDescription;
+        private RepairOrderState state;
+        private CustomerDetails customerDetails;
+        private List<RepairTask> repairTasks;
+        private DiagnosticReport diagnosticReport;
+        private String id;
+
+        /**
+         * Sets the date of the repair order.
+         * @param date The date the order was created.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder date(String date) {
+            this.date = date;
+            return this;
+        }
+
+        /**
+         * Sets the problem description of the repair order.
+         * @param problemDescription The customer's description of the problem.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder problemDescription(String problemDescription) {
+            this.problemDescription = problemDescription;
+            return this;
+        }
+
+        /**
+         * Sets the state of the repair order.
+         * @param state The state of the order.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder state(RepairOrderState state) {
+            this.state = state;
+            return this;
+        }
+
+        /**
+         * Sets the customer details of the repair order.
+         * @param customerDetails The customer's contact and bike details.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder customerDetails(CustomerDetails customerDetails) {
+            this.customerDetails = customerDetails;
+            return this;
+        }
+
+        /**
+         * Sets the repair tasks of the repair order.
+         * @param repairTasks The proposed repair tasks, or {@code null} if none have been added yet.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder repairTasks(List<RepairTask> repairTasks) {
+            this.repairTasks = repairTasks;
+            return this;
+        }
+
+        /**
+         * Sets the diagnostic report of the repair order.
+         * @param diagnosticReport The technician's diagnosis, or {@code null} if no diagnosis has been added yet.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder diagnosticReport(DiagnosticReport diagnosticReport) {
+            this.diagnosticReport = diagnosticReport;
+            return this;
+        }
+
+        /**
+         * Sets the id of the repair order.
+         * @param id The unique id of the order.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
+         * Creates and returns a new {@link RepairOrder} with the values
+         * set on this builder.
+         * @return A new RepairOrder instance.
+         */
+        public RepairOrder build() {
+            return new RepairOrder(this);
+        }
+
     }
 
     /**

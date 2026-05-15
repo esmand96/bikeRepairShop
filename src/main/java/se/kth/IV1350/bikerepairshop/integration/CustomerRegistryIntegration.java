@@ -16,8 +16,19 @@ public class CustomerRegistryIntegration {
     static {
         customerDetailsList = new ArrayList<>();
         List<BikeRepairConsultationEntity> consultationEntities = new ArrayList<>();
-        consultationEntities.add(new BikeRepairConsultationEntity("24jan", Util.generateRandomId(), "someModel", "someBrand", "serial123"));
-        CustomerDetailsEntity firstCustomer = new CustomerDetailsEntity("Customer Customersson", "first@customer.now", "070123", consultationEntities);
+        consultationEntities.add(new BikeRepairConsultationEntity.Builder()
+                .date("24jan")
+                .id(Util.generateRandomId())
+                .model("someModel")
+                .brand("someBrand")
+                .serialNumber("serial123")
+                .build());
+        CustomerDetailsEntity firstCustomer = new CustomerDetailsEntity.Builder()
+                .name("Customer Customersson")
+                .email("first@customer.now")
+                .phoneNumber("070123")
+                .consultations(consultationEntities)
+                .build();
         customerDetailsList.add(firstCustomer);
     }
 
@@ -36,7 +47,7 @@ public class CustomerRegistryIntegration {
      */
     public CustomerDetailsEntity findCustomerEntityByPhoneNumber(String phoneNumber) throws DatabaseFailureException {
         if (phoneNumber.equals("1")) {
-            throw new DatabaseFailureException("Customer registry är inte tillgänlig");
+            throw new DatabaseFailureException("Customer registry är inte tillgänglig");
         }
         for (CustomerDetailsEntity customerDetailsEntity : customerDetailsList) {
             if (customerDetailsEntity.getPhoneNumber().equals(phoneNumber))

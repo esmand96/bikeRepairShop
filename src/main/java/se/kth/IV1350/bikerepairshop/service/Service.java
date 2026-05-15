@@ -15,6 +15,7 @@ import se.kth.IV1350.bikerepairshop.model.entity.BikeRepairConsultationEntity;
 import se.kth.IV1350.bikerepairshop.model.entity.CustomerDetailsEntity;
 import se.kth.IV1350.bikerepairshop.model.entity.RepairOrderEntity;
 import se.kth.IV1350.bikerepairshop.util.Util;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -31,20 +32,16 @@ public class Service {
     private final PrinterIntegration printerIntegration;
     private final Mapper mapper;
 
-    /**
-     * Creates a new instance using the specified integrations and mapper.
-     *
-     * @param repairOrderRegistryIntegration The integration used to access the repair order registry.
-     * @param customerRegistryIntegration The integration used to access the customer registry.
-     * @param printerIntegration The integration used to print receipts.
-     * @param mapper The mapper used to convert between model representations.
-     */
-    public Service(RepairOrderRegistryIntegration repairOrderRegistryIntegration, CustomerRegistryIntegration customerRegistryIntegration, PrinterIntegration printerIntegration, Mapper mapper) {
+    public Service(RepairOrderRegistryIntegration repairOrderRegistryIntegration,
+                   CustomerRegistryIntegration customerRegistryIntegration,
+                   PrinterIntegration printerIntegration,
+                   Mapper mapper) {
         this.repairOrderRegistryIntegration = repairOrderRegistryIntegration;
         this.customerRegistryIntegration = customerRegistryIntegration;
         this.printerIntegration = printerIntegration;
         this.mapper = mapper;
     }
+
     /**
      * Finds the customer registered with the specified phone number, including the
      * customer's first unhandled consultation.
@@ -52,12 +49,12 @@ public class Service {
      * @param phoneNumber The phone number used to identify the customer.
      * @return A DTO containing the customer's details and the selected consultation.
      * @throws CustomerNotFoundException if no customer has the specified phone number.
-     * @throws DatabaseFailureException if the customer registry cannot be accessed.
+     * @throws DatabaseFailureException  if the customer registry cannot be accessed.
      */
     public CustomerDetailsDTO findCustomerByPhoneNumber(String phoneNumber) throws CustomerNotFoundException, DatabaseFailureException {
         CustomerDetailsEntity customerDetailsEntity = customerRegistryIntegration.findCustomerEntityByPhoneNumber(phoneNumber);
         if (customerDetailsEntity == null)
-            throw new CustomerNotFoundException("Ingen kund kopplad till telefonnummer " + phoneNumber );
+            throw new CustomerNotFoundException("Ingen kund kopplad till telefonnummer " + phoneNumber);
         BikeRepairConsultationEntity bikeRepairConsultationEntity = selectFirstUnhandledConsultation(customerDetailsEntity);
         CustomerDetails customerDetails = mapper.ENTITY.mergeCustomerDetailsEntityAndBikeConsultationEntityToCustomerDetails(customerDetailsEntity, bikeRepairConsultationEntity);
         return mapper.DOMAIN.customerDetailsToDTO(customerDetails);
@@ -68,7 +65,7 @@ public class Service {
      * specified problem description. The order is initialized in the
      * {@code NEWLY_CREATED} state and saved to the repair order registry.
      *
-     * @param consultationId The id of the consultation the repair order is created for.
+     * @param consultationId     The id of the consultation the repair order is created for.
      * @param problemDescription The customer's description of the problem.
      */
     public void createRepairOrder(String consultationId, String problemDescription) {
@@ -118,15 +115,15 @@ public class Service {
      * Adds a diagnostic report and a list of repair tasks to the repair order with the
      * specified id, and transitions the order to the {@code READY_FOR_APPROVAL} state.
      *
-     * @param repairOrderId The id of the repair order to update.
+     * @param repairOrderId               The id of the repair order to update.
      * @param diagnosticReportDescription The technician's description of the diagnosis.
-     * @param repairTaskDTOs The proposed repair tasks with their associated costs.
-     * @param estimatedRepairTime The estimated time when the repair will be completed.
+     * @param repairTaskDTOs              The proposed repair tasks with their associated costs.
+     * @param estimatedRepairTime         The estimated time when the repair will be completed.
      */
     public void enterDiagnosticReportAndRepairTasks(String repairOrderId, String diagnosticReportDescription, List<RepairTaskDTO> repairTaskDTOs, LocalDateTime estimatedRepairTime) {
         RepairOrderEntity repairOrderEntity = repairOrderRegistryIntegration.getRepairOrderById(repairOrderId);
         RepairOrder repairOrder = mapper.ENTITY.repairOrderEntityToDomain(repairOrderEntity);
-        DiagnosticReport diagnosticReport = new DiagnosticReport(diagnosticReportDescription, estimatedRepairTime);
+        DiagnosticReport diagnosticReport = new DiagnosticReport.Builder().description(diagnosticReportDescription).estimatedRepairTime(estimatedRepairTime).build();
         List<RepairTask> repairTasks = mapper.DTO.repairTaskDTOToDomain(repairTaskDTOs);
         repairOrder.setDiagnosticReport(diagnosticReport);
         repairOrder.setRepairTasks(repairTasks);
@@ -167,10 +164,10 @@ public class Service {
 
 
     public void rejectRepairOrder(String repairOrderId) {
-      updateRepairOrderState(repairOrderId, RepairOrderState.REJECTED);
+        updateRepairOrderState(repairOrderId, RepairOrderState.REJECTED);
     }
 
-    private void updateRepairOrderState(String repairOrderId, RepairOrderState repairOrderState){
+    private void updateRepairOrderState(String repairOrderId, RepairOrderState repairOrderState) {
         RepairOrderEntity repairOrderEntity = repairOrderRegistryIntegration.getRepairOrderById(repairOrderId);
         RepairOrder repairOrder = mapper.ENTITY.repairOrderEntityToDomain(repairOrderEntity);
         repairOrder.transitionState(repairOrderState);
@@ -201,13 +198,12 @@ public class Service {
     private RepairOrder createNewRepairOrder(String problemDescription, CustomerDetails customerDetails) {
         RepairOrderState repairOrderState = RepairOrderState.NEWLY_CREATED;
         String date = LocalDateTime.now().toString();
-        return new RepairOrder(
-                date,
-                problemDescription,
-                repairOrderState,
-                customerDetails,
-                null,
-                null,
-                Util.generateRandomId());
+        return new RepairOrder.Builder()
+                .date(date)
+                .problemDescription(problemDescription)
+                .state(repairOrderState)
+                .customerDetails(customerDetails)
+                .id(Util.generateRandomId())
+                .build();
     }
 }

@@ -108,8 +108,14 @@ public class View {
         System.out.println("------------------------------------------------------------------------");
 
         List<RepairTaskDTO> repairTasks = new ArrayList<>();
-        RepairTaskDTO repairTask1 = new RepairTaskDTO("Laga brustet hjul", 75.84);
-        RepairTaskDTO repairTask2 = new RepairTaskDTO("Laga punktering", 5.9);
+        RepairTaskDTO repairTask1 = new RepairTaskDTO.Builder()
+                .description("Laga brustet hjul")
+                .cost(75.84)
+                .build();
+        RepairTaskDTO repairTask2 = new RepairTaskDTO.Builder()
+                .description("Laga punktering")
+                .cost(5.9)
+                .build();
         repairTasks.add(repairTask1);
         repairTasks.add(repairTask2);
 
@@ -144,7 +150,6 @@ public class View {
             System.out.printf("  %-18s %s%n", "Telefon:", dto.getCustomerPhoneNumber());
             System.out.printf("  %-18s %s %s (%s)%n", "Cykel:", dto.getBikeBrand(), dto.getBikeModel(), dto.getBikeSerialNumber());
             System.out.printf("  %-18s %s%n", "Diagnos:", dto.getDiagnosticReport().getDescription());
-            System.out.printf("  %-18s %s%n", ":", dto.getDiagnosticReport().getDescription());
             System.out.printf("  %-18s %s%n", "Beräknas klar:", dto.getDiagnosticReport().getEstimatedRepairTime().format(formatter));
             System.out.println(" Repair Tasks:");
             if (dto.proposedRepairTasks() != null) {
@@ -166,15 +171,14 @@ public class View {
 
     }
 
-    private boolean getApproveOrRejected (){
+    private boolean getApproveOrRejected() {
         System.out.println("ÄR REPAIR ORDER GODKÄND AV KUND? VÄNLIGEN ANGE J FÖR JA OCH N FÖR NEJ ");
         String approved = scanner.nextLine();
         if (approved.toUpperCase().equals("J"))
             return true;
         else if (approved.toUpperCase().equals("N")) {
-             return false;
-        }
-        else {
+            return false;
+        } else {
             System.out.println("OGILTIG INPUT! SVARA MED J/N");
             return getApproveOrRejected();
         }
@@ -197,7 +201,7 @@ public class View {
         System.out.println("========================================================================");
 
         controller.rejectRepairOrder(repairOrderId);
-        System.out.printf("  %-20s %s%n", "nEKAR Order ID:", repairOrderId);
+        System.out.printf("  %-20s %s%n", "Nekar Order ID:", repairOrderId);
         System.out.println("  Status uppdaterad till: REJECTED");
         System.out.println("========================================================================\n");
     }
