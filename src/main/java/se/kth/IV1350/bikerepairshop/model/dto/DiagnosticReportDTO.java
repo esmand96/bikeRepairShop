@@ -15,7 +15,9 @@ public class DiagnosticReportDTO {
         this.description = builder.description;
         this.estimatedRepairTime = builder.estimatedRepairTime;
     }
-
+    public static Builder builder (){
+        return new Builder();
+    }
     /**
      * Builder for creating instances of {@link DiagnosticReportDTO}.
      * Provides a clear and consistent way to create diagnostic report DTO objects.

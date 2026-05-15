@@ -79,21 +79,8 @@ public class View {
         System.out.println("\n========================================================================");
         System.out.println("            TEKNIKER  HÄMTAR ALLA NYA REPARATIONSORDRAR       ");
         System.out.println("========================================================================");
-
-        for (PresentNewlyCreatedRepairOrderDTO dto : newlyCreatedRepairOrderDTOS) {
-            System.out.println("  ORDER ID: " + dto.getRepairOrderId());
-            System.out.println("  ----------------------------------------------------------------------");
-            System.out.printf("  %-16s %s%n", "Kund:", dto.getName() + " (" + dto.getPhoneNumber() + ")");
-            System.out.printf("  %-16s %s%n", "E-post:", dto.getEmail());
-            System.out.printf("  %-16s %s %s (%s)%n", "Cykel:", dto.getBikeBrand(), dto.getBikeModel(), dto.getBikeSerialNumber());
-            System.out.printf("  %-16s %s%n", "Beskrivning:", dto.getProblemDescription());
-            System.out.printf("  %-16s %s%n", "Status:", dto.getState());
-            System.out.println("========================================================================");
-        }
-
         String selectedOrderId = newlyCreatedRepairOrderDTOS.getFirst().getRepairOrderId();
-        System.out.println("Väljer automatiskt Order ID: " + selectedOrderId + "\n");
-
+        System.out.println("Väljer Order ID som visats på displayen : " + selectedOrderId + "\n");
         technicianEntersDiagnosticReportAndRepairTasks(selectedOrderId);
     }
 

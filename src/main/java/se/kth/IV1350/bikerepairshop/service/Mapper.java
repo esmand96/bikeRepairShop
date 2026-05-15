@@ -240,6 +240,43 @@ public class Mapper {
 
         }
 
+        RepairOrderUpdatedDTO repairOrderToRepairOrderUpdatedDTO(RepairOrder repairOrder){
+            String name = repairOrder.getCustomerDetails().getName();
+            String email = repairOrder.getCustomerDetails().getEmail();
+            String phoneNumber = repairOrder.getCustomerDetails().getPhoneNumber();
+            String bikeBrand = repairOrder.getCustomerDetails().getBikeDetails().getBrand();
+            String bikeModel = repairOrder.getCustomerDetails().getBikeDetails().getModel();
+            String bikeSerialNumber = repairOrder.getCustomerDetails().getBikeDetails().getSerialNumber();
+            DiagnosticReportDTO diagnosticReportDTO = toDiagnosticReportDTO(repairOrder.getDiagnosticReport());
+            String problemDescription = repairOrder.getProblemDescription();
+            String state = repairOrder.getState().name();
+            String repairOrderId = repairOrder.getId();
+            List<RepairTaskDTO> repairTaskDTOS = repairTaskToDTO(repairOrder.getRepairTasks());
+            return RepairOrderUpdatedDTO.builder()
+                    .name(name)
+                    .email(email)
+                    .phoneNumber(phoneNumber)
+                    .bikeBrand(bikeBrand)
+                    .bikeModel(bikeModel)
+                    .bikeSerialNumber(bikeSerialNumber)
+                    .problemDescription(problemDescription)
+                    .state(state)
+                    .repairOrderId(repairOrderId)
+                    .diagnosticReport(diagnosticReportDTO)
+                    .proposedRepairTasks(repairTaskDTOS)
+                    .build();
+
+        }
+        DiagnosticReportDTO toDiagnosticReportDTO(DiagnosticReport diagnosticReport){
+            if(diagnosticReport == null)
+                return null;
+
+            return DiagnosticReportDTO.builder()
+                    .description(diagnosticReport.getDescription())
+                    .estimatedRepairTime(diagnosticReport.getEstimatedRepairTime())
+                    .build();
+
+        }
         /**
          * Converts the specified list of domain repair tasks to a list of repair task DTOs.
          *
@@ -248,6 +285,8 @@ public class Mapper {
          */
         List<RepairTaskDTO> repairTaskToDTO(List<RepairTask> repairTasks) {
             List<RepairTaskDTO> repairTaskDTOs = new ArrayList<>();
+            if(repairTasks == null)
+                return repairTaskDTOs;
             for (RepairTask repairTask : repairTasks) {
                 RepairTaskDTO repairTaskDTO = new RepairTaskDTO.Builder()
                         .description(repairTask.getDescription())

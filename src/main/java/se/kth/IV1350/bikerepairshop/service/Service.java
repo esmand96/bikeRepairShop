@@ -6,14 +6,12 @@ import se.kth.IV1350.bikerepairshop.integration.CustomerRegistryIntegration;
 import se.kth.IV1350.bikerepairshop.integration.PrinterIntegration;
 import se.kth.IV1350.bikerepairshop.integration.RepairOrderRegistryIntegration;
 import se.kth.IV1350.bikerepairshop.model.domain.*;
-import se.kth.IV1350.bikerepairshop.model.dto.CustomerDetailsDTO;
-import se.kth.IV1350.bikerepairshop.model.dto.PresentNewlyCreatedRepairOrderDTO;
-import se.kth.IV1350.bikerepairshop.model.dto.PresentRepairOrderForApprovalDTO;
-import se.kth.IV1350.bikerepairshop.model.dto.ReceiptDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.*;
 import se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO;
 import se.kth.IV1350.bikerepairshop.model.entity.BikeRepairConsultationEntity;
 import se.kth.IV1350.bikerepairshop.model.entity.CustomerDetailsEntity;
 import se.kth.IV1350.bikerepairshop.model.entity.RepairOrderEntity;
+import se.kth.IV1350.bikerepairshop.observer.RepairOrderObserver;
 import se.kth.IV1350.bikerepairshop.util.Util;
 
 import java.time.LocalDateTime;
@@ -31,6 +29,7 @@ public class Service {
     private final CustomerRegistryIntegration customerRegistryIntegration;
     private final PrinterIntegration printerIntegration;
     private final Mapper mapper;
+    private final List <RepairOrderObserver> repairOrderObservers = new ArrayList<>();
 
     public Service(RepairOrderRegistryIntegration repairOrderRegistryIntegration,
                    CustomerRegistryIntegration customerRegistryIntegration,
@@ -40,6 +39,10 @@ public class Service {
         this.customerRegistryIntegration = customerRegistryIntegration;
         this.printerIntegration = printerIntegration;
         this.mapper = mapper;
+    }
+
+    public void addObserver(RepairOrderObserver repairOrderObserver){
+        repairOrderObservers.add(repairOrderObserver);
     }
 
     /**
@@ -75,6 +78,8 @@ public class Service {
         RepairOrder repairOrder = createNewRepairOrder(problemDescription, customerDetails);
         RepairOrderEntity repairOrderEntity = mapper.DOMAIN.repairOrderToEntity(repairOrder);
         repairOrderRegistryIntegration.saveRepairOrder(repairOrderEntity);
+        RepairOrderUpdatedDTO repairOrderUpdatedDTO = mapper.DOMAIN.repairOrderToRepairOrderUpdatedDTO(repairOrder);
+        notifyObservers(repairOrderUpdatedDTO);
     }
 
     /**
@@ -130,6 +135,8 @@ public class Service {
         repairOrder.transitionState(RepairOrderState.READY_FOR_APPROVAL);
         RepairOrderEntity updatedRepairOrderEntity = mapper.DOMAIN.repairOrderToEntity(repairOrder);
         repairOrderRegistryIntegration.saveRepairOrder(updatedRepairOrderEntity);
+        RepairOrderUpdatedDTO repairOrderUpdatedDTO = mapper.DOMAIN.repairOrderToRepairOrderUpdatedDTO(repairOrder);
+        notifyObservers(repairOrderUpdatedDTO);
     }
 
     /**
@@ -140,6 +147,7 @@ public class Service {
      */
     public void approveRepairOrder(String repairOrderId) {
         updateRepairOrderState(repairOrderId, RepairOrderState.ACCEPTED);
+
     }
 
     /**
@@ -167,12 +175,16 @@ public class Service {
         updateRepairOrderState(repairOrderId, RepairOrderState.REJECTED);
     }
 
-    private void updateRepairOrderState(String repairOrderId, RepairOrderState repairOrderState) {
+
+    private void updateRepairOrderState(String repairOrderId, RepairOrderState repairOrderState){
+
         RepairOrderEntity repairOrderEntity = repairOrderRegistryIntegration.getRepairOrderById(repairOrderId);
         RepairOrder repairOrder = mapper.ENTITY.repairOrderEntityToDomain(repairOrderEntity);
         repairOrder.transitionState(repairOrderState);
         RepairOrderEntity updatedRepairOrderEntity = mapper.DOMAIN.repairOrderToEntity(repairOrder);
         repairOrderRegistryIntegration.saveRepairOrder(updatedRepairOrderEntity);
+        RepairOrderUpdatedDTO repairOrderUpdatedDTO = mapper.DOMAIN.repairOrderToRepairOrderUpdatedDTO(repairOrder);
+        notifyObservers(repairOrderUpdatedDTO);
     }
 
     private BikeRepairConsultationEntity selectFirstUnhandledConsultation(CustomerDetailsEntity customerDetailsEntity) {
@@ -205,5 +217,11 @@ public class Service {
                 .customerDetails(customerDetails)
                 .id(Util.generateRandomId())
                 .build();
+    }
+
+    private void notifyObservers(RepairOrderUpdatedDTO repairOrderUpdatedDTO){
+        for (RepairOrderObserver repairOrderObserver : repairOrderObservers){
+            repairOrderObserver.stateHasChanged(repairOrderUpdatedDTO);
+        }
     }
 }
