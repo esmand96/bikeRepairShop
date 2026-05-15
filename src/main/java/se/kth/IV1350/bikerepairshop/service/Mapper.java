@@ -17,13 +17,19 @@ import java.util.List;
  * the public fields {@code DTO}, {@code ENTITY} and {@code DOMAIN}.
  */
 public class Mapper {
-    /** Entry point for conversions from domain objects. */
+    /**
+     * Entry point for conversions from domain objects.
+     */
     final Domain DOMAIN = new Mapper.Domain();
 
-    /** Entry point for conversions from entity objects. */
+    /**
+     * Entry point for conversions from entity objects.
+     */
     final Entity ENTITY = new Mapper.Entity();
 
-    /** Entry point for conversions from DTO objects. */
+    /**
+     * Entry point for conversions from DTO objects.
+     */
     final Dto DTO = new Mapper.Dto();
 
     /**
@@ -46,7 +52,10 @@ public class Mapper {
         List<RepairTask> repairTaskDTOToDomain(List<RepairTaskDTO> repairTaskDTOS) {
             List<RepairTask> repairTasks = new ArrayList<>();
             for (RepairTaskDTO repairTaskDTO : repairTaskDTOS) {
-                RepairTask repairTask = new RepairTask(repairTaskDTO.getCost(), repairTaskDTO.getDescription());
+                RepairTask repairTask = new RepairTask.Builder()
+                        .cost(repairTaskDTO.getCost())
+                        .description(repairTaskDTO.getDescription())
+                        .build();
                 repairTasks.add(repairTask);
             }
             return repairTasks;
@@ -70,7 +79,10 @@ public class Mapper {
                 return repairTasks;
 
             for (RepairTaskEntity repairTaskEntity : repairTaskEntities) {
-                RepairTask repairTask = new RepairTask(repairTaskEntity.getCost(), repairTaskEntity.getDescription());
+                RepairTask repairTask = new RepairTask.Builder()
+                        .cost(repairTaskEntity.getCost())
+                        .description(repairTaskEntity.getDescription())
+                        .build();
                 repairTasks.add(repairTask);
             }
             return repairTasks;
@@ -86,7 +98,10 @@ public class Mapper {
             if (diagnosticReportEntity == null)
                 return null;
 
-            return new DiagnosticReport(diagnosticReportEntity.getDescription(), diagnosticReportEntity.getEstimatedRepairTime());
+            return new DiagnosticReport.Builder()
+                    .description(diagnosticReportEntity.getDescription())
+                    .estimatedRepairTime(diagnosticReportEntity.getEstimatedRepairTime())
+                    .build();
         }
 
         /**
@@ -103,15 +118,15 @@ public class Mapper {
             List<RepairTask> repairTasks = repairTaskEntityToDomain(repairOrderEntity.getRepairTasks());
             DiagnosticReport diagnosticReport = diagnosticReportEntityToDomain(repairOrderEntity.getDiagnosticReport());
 
-            return new RepairOrder(
-                    date,
-                    repairOrderEntity.getProblemDescription(),
-                    repairOrderState,
-                    customerDetails,
-                    repairTasks,
-                    diagnosticReport,
-                    repairOrderEntity.getId()
-            );
+            return new RepairOrder.Builder()
+                    .date(date)
+                    .problemDescription(repairOrderEntity.getProblemDescription())
+                    .state(repairOrderState)
+                    .customerDetails(customerDetails)
+                    .repairTasks(repairTasks)
+                    .diagnosticReport(diagnosticReport)
+                    .id(repairOrderEntity.getId())
+                    .build();
         }
 
         /**
@@ -125,7 +140,11 @@ public class Mapper {
             String serialNumber = repairOrderEntity.getBikeSerialNumber();
             String brand = repairOrderEntity.getBikeBrand();
             String model = repairOrderEntity.getBikeModel();
-            return new BikeDetails(brand, model, serialNumber);
+            return new BikeDetails.Builder()
+                    .brand(brand)
+                    .model(model)
+                    .serialNumber(serialNumber)
+                    .build();
         }
 
         /**
@@ -139,7 +158,11 @@ public class Mapper {
             String serialNumber = consultationEntity.getSerialNumber();
             String brand = consultationEntity.getBrand();
             String model = consultationEntity.getModel();
-            return new BikeDetails(brand, model, serialNumber);
+            return new BikeDetails.Builder()
+                    .brand(brand)
+                    .model(model)
+                    .serialNumber(serialNumber)
+                    .build();
         }
 
         /**
@@ -154,7 +177,13 @@ public class Mapper {
             BikeDetails bikeDetails = repairOrderEntityToBikeDetails(repairOrderEntity);
             String name = repairOrderEntity.getName();
             String email = repairOrderEntity.getEmail();
-            return new CustomerDetails(name, email, phoneNumber, bikeDetails, repairOrderEntity.getConsultationId());
+            return new CustomerDetails.Builder()
+                    .name(name)
+                    .email(email)
+                    .phoneNumber(phoneNumber)
+                    .bikeDetails(bikeDetails)
+                    .consultationId(repairOrderEntity.getConsultationId())
+                    .build();
         }
 
         /**
@@ -162,9 +191,9 @@ public class Mapper {
          * customer details object.
          *
          * @param customerDetailsEntity The customer entity, or {@code null}.
-         * @param consultationEntity The consultation entity, or {@code null}.
+         * @param consultationEntity    The consultation entity, or {@code null}.
          * @return A domain customer details object combining the input, or {@code null}
-         *         if either input is {@code null}.
+         * if either input is {@code null}.
          */
         CustomerDetails mergeCustomerDetailsEntityAndBikeConsultationEntityToCustomerDetails(CustomerDetailsEntity customerDetailsEntity, BikeRepairConsultationEntity consultationEntity) {
             if (customerDetailsEntity == null || consultationEntity == null)
@@ -174,7 +203,13 @@ public class Mapper {
             String name = customerDetailsEntity.getName();
             BikeDetails bikeDetails = bikeRepairConsultationEntityToBikeDetails(consultationEntity);
             String consultationId = consultationEntity.getId();
-            return new CustomerDetails(name, email, phoneNumber, bikeDetails, consultationId);
+            return new CustomerDetails.Builder()
+                    .name(name)
+                    .email(email)
+                    .phoneNumber(phoneNumber)
+                    .bikeDetails(bikeDetails)
+                    .consultationId(consultationId)
+                    .build();
         }
     }
 
@@ -193,15 +228,16 @@ public class Mapper {
             if (customerDetails == null)
                 return null;
 
-            return new CustomerDetailsDTO(
-                    customerDetails.getName(),
-                    customerDetails.getEmail(),
-                    customerDetails.getPhoneNumber(),
-                    customerDetails.getBikeDetails().getBrand(),
-                    customerDetails.getBikeDetails().getModel(),
-                    customerDetails.getBikeDetails().getSerialNumber(),
-                    customerDetails.getConsultationId()
-            );
+            return new CustomerDetailsDTO.Builder()
+                    .name(customerDetails.getName())
+                    .email(customerDetails.getEmail())
+                    .phoneNumber(customerDetails.getPhoneNumber())
+                    .bikeBrand(customerDetails.getBikeDetails().getBrand())
+                    .bikeModel(customerDetails.getBikeDetails().getModel())
+                    .bikeSerialNumber(customerDetails.getBikeDetails().getSerialNumber())
+                    .consultationId(customerDetails.getConsultationId())
+                    .build();
+
         }
 
         /**
@@ -213,7 +249,10 @@ public class Mapper {
         List<RepairTaskDTO> repairTaskToDTO(List<RepairTask> repairTasks) {
             List<RepairTaskDTO> repairTaskDTOs = new ArrayList<>();
             for (RepairTask repairTask : repairTasks) {
-                RepairTaskDTO repairTaskDTO = new RepairTaskDTO(repairTask.getDescription(), repairTask.getCost());
+                RepairTaskDTO repairTaskDTO = new RepairTaskDTO.Builder()
+                        .description(repairTask.getDescription())
+                        .cost(repairTask.getCost())
+                        .build();
                 repairTaskDTOs.add(repairTaskDTO);
             }
             return repairTaskDTOs;
@@ -270,7 +309,10 @@ public class Mapper {
                 return null;
             List<RepairTaskEntity> repairTaskEntities = new ArrayList<>();
             for (RepairTask repairTask : repairTasks) {
-                RepairTaskEntity repairTaskEntity = new RepairTaskEntity(repairTask.getDescription(), repairTask.getCost());
+                RepairTaskEntity repairTaskEntity = new RepairTaskEntity.Builder()
+                        .description(repairTask.getDescription())
+                        .cost(repairTask.getCost())
+                        .build();
                 repairTaskEntities.add(repairTaskEntity);
             }
             return repairTaskEntities;
@@ -288,7 +330,10 @@ public class Mapper {
 
             String description = diagnosticReport.getDescription();
             LocalDateTime estimatedTime = diagnosticReport.getEstimatedRepairTime();
-            return new DiagnosticReportEntity(description, estimatedTime);
+            return new DiagnosticReportEntity.Builder()
+                    .description(description)
+                    .estimatedRepairTime(estimatedTime)
+                    .build();
         }
 
         /**
@@ -298,16 +343,25 @@ public class Mapper {
          * and the bike.
          *
          * @param repairOrder The repair order to present.
-         * @param totalCost The total cost of all repair tasks.
+         * @param totalCost   The total cost of all repair tasks.
          * @return A DTO ready to be presented to the receptionist.
          */
         PresentRepairOrderForApprovalDTO createPresentRepairOrderForApprovalDTO(RepairOrder repairOrder, double totalCost) {
-            DiagnosticReportDTO diagnosticReportDTO = new DiagnosticReportDTO(repairOrder.getDiagnosticReport().getDescription(), repairOrder.getDiagnosticReport().getEstimatedRepairTime());
+            DiagnosticReportDTO diagnosticReportDTO = new DiagnosticReportDTO.Builder()
+                    .description(repairOrder.getDiagnosticReport().getDescription())
+                    .estimatedRepairTime(repairOrder.getDiagnosticReport().getEstimatedRepairTime())
+                    .build();
             List<RepairTaskDTO> repairTaskDTOs = repairTaskToDTO(repairOrder.getRepairTasks());
 
-            return new PresentRepairOrderForApprovalDTO(diagnosticReportDTO, totalCost, repairTaskDTOs, repairOrder.getId(),
-                    repairOrder.getCustomerDetails().getPhoneNumber(), repairOrder.getCustomerDetails().getBikeDetails().getModel(),
-                    repairOrder.getCustomerDetails().getBikeDetails().getSerialNumber(), repairOrder.getCustomerDetails().getBikeDetails().getBrand());
+            return new PresentRepairOrderForApprovalDTO.Builder().diagnosticReport(diagnosticReportDTO)
+                    .totalCost(totalCost)
+                    .proposedRepairTasks(repairTaskDTOs)
+                    .repairOrderId(repairOrder.getId())
+                    .customerPhoneNumber(repairOrder.getCustomerDetails().getPhoneNumber())
+                    .bikeModel(repairOrder.getCustomerDetails().getBikeDetails().getModel())
+                    .bikeSerialNumber(repairOrder.getCustomerDetails().getBikeDetails().getSerialNumber())
+                    .bikeBrand(repairOrder.getCustomerDetails().getBikeDetails().getBrand())
+                    .build();
         }
 
         /**
@@ -318,39 +372,48 @@ public class Mapper {
          * @return A DTO ready to be presented to the technician.
          */
         PresentNewlyCreatedRepairOrderDTO createPresentNewlyCreatedRepairOrderDTO(RepairOrder repairOrder) {
-            String name = repairOrder.getCustomerDetails().getName();
-            String email = repairOrder.getCustomerDetails().getEmail();
-            String phoneNumber = repairOrder.getCustomerDetails().getPhoneNumber();
-            String bikeBrand = repairOrder.getCustomerDetails().getBikeDetails().getBrand();
-            String bikeModel = repairOrder.getCustomerDetails().getBikeDetails().getModel();
-            String bikeSerialNumber = repairOrder.getCustomerDetails().getBikeDetails().getSerialNumber();
-            String problemDescription = repairOrder.getProblemDescription();
-            String state = repairOrder.getState().name();
-            String repairOrderId = repairOrder.getId();
-            return new PresentNewlyCreatedRepairOrderDTO(name, email, phoneNumber,
-                    bikeBrand, bikeModel, bikeSerialNumber, problemDescription, state, repairOrderId);
+            return new PresentNewlyCreatedRepairOrderDTO.Builder()
+                    .name(repairOrder.getCustomerDetails().getName())
+                    .email(repairOrder.getCustomerDetails().getEmail())
+                    .phoneNumber(repairOrder.getCustomerDetails().getPhoneNumber())
+                    .bikeBrand(repairOrder.getCustomerDetails().getBikeDetails().getBrand())
+                    .bikeModel(repairOrder.getCustomerDetails().getBikeDetails().getModel())
+                    .bikeSerialNumber(repairOrder.getCustomerDetails().getBikeDetails().getSerialNumber())
+                    .problemDescription(repairOrder.getProblemDescription())
+                    .state(repairOrder.getState().name())
+                    .repairOrderId(repairOrder.getId())
+                    .build();
         }
 
         /**
          * Creates a receipt DTO for the specified approved repair order.
          *
          * @param repairOrder The approved repair order.
-         * @param totalCost The total cost of all repair tasks.
+         * @param totalCost   The total cost of all repair tasks.
          * @return A receipt DTO containing all data needed for the printout.
          */
         ReceiptDTO createReceiptDTO(RepairOrder repairOrder, double totalCost) {
-            String name = repairOrder.getCustomerDetails().getName();
-            String email = repairOrder.getCustomerDetails().getEmail();
-            String phoneNumber = repairOrder.getCustomerDetails().getPhoneNumber();
-            String bikeBrand = repairOrder.getCustomerDetails().getBikeDetails().getBrand();
-            String bikeModel = repairOrder.getCustomerDetails().getBikeDetails().getModel();
-            String bikeSerialNumber = repairOrder.getCustomerDetails().getBikeDetails().getSerialNumber();
-            String problemDescription = repairOrder.getProblemDescription();
-            String state = repairOrder.getState().name();
             List<RepairTaskDTO> repairTaskDTOs = repairTaskToDTO(repairOrder.getRepairTasks());
 
-            DiagnosticReportDTO diagnosticReportDTO = new DiagnosticReportDTO(repairOrder.getDiagnosticReport().getDescription(), repairOrder.getDiagnosticReport().getEstimatedRepairTime());
-            return new ReceiptDTO(name, email, phoneNumber, bikeBrand, bikeModel, bikeSerialNumber, problemDescription, state, repairTaskDTOs, diagnosticReportDTO, totalCost);
+            DiagnosticReportDTO diagnosticReportDTO = new DiagnosticReportDTO.Builder()
+                    .description(repairOrder.getDiagnosticReport().getDescription())
+                    .estimatedRepairTime(repairOrder.getDiagnosticReport().getEstimatedRepairTime())
+                    .build();
+
+
+            return new ReceiptDTO.Builder()
+                    .name(repairOrder.getCustomerDetails().getName())
+                    .email(repairOrder.getCustomerDetails().getEmail())
+                    .phoneNumber(repairOrder.getCustomerDetails().getPhoneNumber())
+                    .bikeBrand(repairOrder.getCustomerDetails().getBikeDetails().getBrand())
+                    .bikeModel(repairOrder.getCustomerDetails().getBikeDetails().getModel())
+                    .bikeSerialNumber(repairOrder.getCustomerDetails().getBikeDetails().getSerialNumber())
+                    .problemDescription(repairOrder.getProblemDescription())
+                    .state(repairOrder.getState().name())
+                    .repairTasks(repairTaskToDTO(repairOrder.getRepairTasks()))
+                    .diagnosticReport(diagnosticReportDTO)
+                    .totalCost(totalCost)
+                    .build();
         }
     }
 }

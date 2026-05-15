@@ -8,15 +8,48 @@ public class RepairTask {
     private double cost;
     private String description;
 
+
+    private RepairTask(Builder builder) {
+        this.cost = builder.cost;
+        this.description = builder.description;
+    }
+
     /**
-     * Creates a new repair task with the specified cost and description.
-     *
-     * @param cost The cost of performing the task.
-     * @param description The description of what the task involves.
+     * Builder for creating instances of {@link RepairTask}.
+     * Provides a clear and consistent way to create repair task objects.
      */
-    public RepairTask(double cost, String description) {
-        this.cost = cost;
-        this.description = description;
+    public static class Builder {
+        private double cost;
+        private String description;
+
+        /**
+         * Sets the cost of the repair task.
+         * @param cost The cost of performing the task.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder cost(double cost) {
+            this.cost = cost;
+            return this;
+        }
+
+        /**
+         * Sets the description of the repair task.
+         * @param description The description of what the task involves.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        /**
+         * Creates and returns a new {@link RepairTask} with the values
+         * set on this builder.
+         * @return A new RepairTask instance.
+         */
+        public RepairTask build() {
+            return new RepairTask(this);
+        }
     }
 
     /**

@@ -53,8 +53,14 @@ public class ServiceTest {
                 mapper
         );
 
-        repairTask1 = new RepairTaskDTO(TASK_DESCRIPTION, TASK_COST);
-        repairTask2 = new RepairTaskDTO(TASK_DESCRIPTION, TASK_COST);
+        repairTask1 = new RepairTaskDTO.Builder()
+                .description(TASK_DESCRIPTION)
+                .cost(TASK_COST)
+                .build();
+        repairTask2 = new RepairTaskDTO.Builder()
+                .description(TASK_DESCRIPTION)
+                .cost(TASK_COST)
+                .build();
         repairTasks = Arrays.asList(repairTask1, repairTask2);
 
         phoneNumber = "070123";

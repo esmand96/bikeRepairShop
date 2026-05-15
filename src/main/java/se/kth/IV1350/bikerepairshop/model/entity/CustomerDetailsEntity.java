@@ -12,19 +12,76 @@ public class CustomerDetailsEntity {
     private String phoneNumber;
     private List<BikeRepairConsultationEntity> consultations;
 
+    private CustomerDetailsEntity(Builder builder) {
+        this.name = builder.name;
+        this.email = builder.email;
+        this.phoneNumber = builder.phoneNumber;
+        this.consultations = builder.consultations;
+    }
+
     /**
-     * Creates a new instance with the specified data.
-     *
-     * @param name The customer's name.
-     * @param email The customer's email address.
-     * @param phoneNumber The customer's phone number.
-     * @param consultations The customer's previously booked consultations.
+     * Builder for creating instances of {@link CustomerDetailsEntity}.
+     * Provides a clear and consistent way to create customer details entity objects.
      */
-    public CustomerDetailsEntity(String name, String email, String phoneNumber, List<BikeRepairConsultationEntity> consultations) {
-        this.name = name;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.consultations = consultations;
+    public static class Builder {
+        private String name;
+        private String email;
+        private String phoneNumber;
+        private List<BikeRepairConsultationEntity> consultations;
+
+        /**
+         * Sets the customer's name.
+         *
+         * @param name The customer's full name.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        /**
+         * Sets the customer's email address.
+         *
+         * @param email The customer's email address.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        /**
+         * Sets the customer's phone number.
+         *
+         * @param phoneNumber The customer's phone number.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder phoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        /**
+         * Sets the customer's previously booked consultations.
+         *
+         * @param consultations The list of consultations.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder consultations(List<BikeRepairConsultationEntity> consultations) {
+            this.consultations = consultations;
+            return this;
+        }
+
+        /**
+         * Creates and returns a new {@link CustomerDetailsEntity} with the values
+         * set on this builder.
+         *
+         * @return A new CustomerDetailsEntity instance.
+         */
+        public CustomerDetailsEntity build() {
+            return new CustomerDetailsEntity(this);
+        }
     }
 
     /**

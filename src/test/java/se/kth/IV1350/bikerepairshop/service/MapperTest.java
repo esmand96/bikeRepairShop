@@ -17,9 +17,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MapperTest {
     private static final Mapper mapper = new Mapper();
+
     @Test
     void repairTaskDTOToDomain_shouldMapCostAndDescription_forSingleDto() {
-        RepairTaskDTO dto = new RepairTaskDTO(TASK_DESCRIPTION, TASK_COST);
+        RepairTaskDTO dto = new RepairTaskDTO.Builder()
+                .description(TASK_DESCRIPTION)
+                .cost(TASK_COST)
+                .build();
         List<RepairTaskDTO> dtos = List.of(dto);
 
         List<RepairTask> result = mapper.DTO.repairTaskDTOToDomain(dtos);
@@ -31,7 +35,10 @@ public class MapperTest {
 
     @Test
     void repairTaskEntityToDomain_shouldMapCostAndDescription_forSingleEntity() {
-        RepairTaskEntity entity = new RepairTaskEntity(TASK_DESCRIPTION,TASK_COST );
+        RepairTaskEntity entity = new RepairTaskEntity.Builder()
+                .description(TASK_DESCRIPTION)
+                .cost(TASK_COST)
+                .build();
         List<RepairTaskEntity> entities = List.of(entity);
 
         List<RepairTask> result = mapper.ENTITY.repairTaskEntityToDomain(entities);
@@ -40,9 +47,13 @@ public class MapperTest {
         assertEquals(TASK_COST, result.get(0).getCost());
         assertEquals(TASK_DESCRIPTION, result.get(0).getDescription());
     }
+
     @Test
     void diagnosticReportEntityToDomain_shouldMapDescriptionAndEstimatedRepairTime_forDiagnosticReportEntity() {
-        DiagnosticReportEntity entity = new DiagnosticReportEntity(TASK_DESCRIPTION, TASK_ESTIMATED_REPAIR_TIME);
+        DiagnosticReportEntity entity = new DiagnosticReportEntity.Builder()
+                .description(TASK_DESCRIPTION)
+                .estimatedRepairTime(TASK_ESTIMATED_REPAIR_TIME)
+                .build();
 
         DiagnosticReport result = mapper.ENTITY.diagnosticReportEntityToDomain(entity);
 
@@ -85,7 +96,10 @@ public class MapperTest {
 
     @Test
     void repairTaskToEntity_shouldMapDescriptionAndCost_forSingleRepairTask() {
-        RepairTask repairTask = new RepairTask(TASK_COST, TASK_DESCRIPTION);
+        RepairTask repairTask = new RepairTask.Builder()
+                .cost(TASK_COST)
+                .description(TASK_DESCRIPTION)
+                .build();
         List<RepairTask> repairTasks = List.of(repairTask);
 
         List<RepairTaskEntity> result = mapper.DOMAIN.repairTaskToEntity(repairTasks);
@@ -94,9 +108,13 @@ public class MapperTest {
         assertEquals(TASK_DESCRIPTION, result.get(0).getDescription());
         assertEquals(TASK_COST, result.get(0).getCost());
     }
+
     @Test
     void diagnosticReportToEntity_shouldMapDescriptionAndEstimatedRepairTime_forDiagnosticReport() {
-        DiagnosticReport diagnosticReport = new DiagnosticReport(TASK_DESCRIPTION, TASK_ESTIMATED_REPAIR_TIME);
+        DiagnosticReport diagnosticReport = new DiagnosticReport.Builder()
+                .description(TASK_DESCRIPTION)
+                .estimatedRepairTime(TASK_ESTIMATED_REPAIR_TIME)
+                .build();
 
         DiagnosticReportEntity result = mapper.DOMAIN.diagnosticReportToEntity(diagnosticReport);
 
@@ -107,8 +125,17 @@ public class MapperTest {
     @Test
     void createPresentRepairOrderForApprovalDTO_shouldMapAllFields() {
 
-        BikeDetails bikeDetails = new BikeDetails(BIKE_BRAND, BIKE_MODEL, BIKE_SERIAL_NUMBER);
-        CustomerDetails customerDetails = new CustomerDetails(CUSTOMER_NAME,  CUSTOMER_EMAIL, CUSTOMER_PHONE,bikeDetails, CONSULTATION_ID);
+        BikeDetails bikeDetails = new BikeDetails.Builder().brand(BIKE_BRAND)
+                .model(BIKE_MODEL)
+                .serialNumber(BIKE_SERIAL_NUMBER)
+                .build();
+        CustomerDetails customerDetails = new CustomerDetails.Builder()
+                .name(CUSTOMER_NAME)
+                .email(CUSTOMER_EMAIL)
+                .phoneNumber(CUSTOMER_PHONE)
+                .bikeDetails(bikeDetails)
+                .consultationId(CONSULTATION_ID)
+                .build();
 
         RepairOrder repairOrder = createRepairOrder(customerDetails);
 
@@ -129,6 +156,7 @@ public class MapperTest {
         assertEquals(TASK_COST, result.proposedRepairTasks().get(0).getCost());
         assertEquals(TASK_DESCRIPTION, result.proposedRepairTasks().get(0).getDescription());
     }
+
     @Test
     void createPresentNewlyCreatedRepairOrderDTO_shouldMapAllFields() {
         CustomerDetails customerDetails = createCustomerDetails();
@@ -211,15 +239,16 @@ public class MapperTest {
         assertEquals(BIKE_SERIAL_NUMBER, result.getBikeSerialNumber());
         assertEquals(CONSULTATION_ID, result.getConsultationId());
     }
+
     @Test
     void bikeRepairConsultationEntityToBikeDetails_shouldMapBrandModelAndSerialNumber_fromBikeRepairConsultationEntity() {
-        BikeRepairConsultationEntity consultationEntity = new BikeRepairConsultationEntity(
-                DATE,
-                CONSULTATION_ID,
-                BIKE_MODEL,
-                BIKE_BRAND,
-                BIKE_SERIAL_NUMBER
-        );
+        BikeRepairConsultationEntity consultationEntity = new BikeRepairConsultationEntity.Builder()
+                .date(DATE)
+                .id(CONSULTATION_ID)
+                .model(BIKE_MODEL)
+                .brand(BIKE_BRAND)
+                .serialNumber(BIKE_SERIAL_NUMBER)
+                .build();
 
         BikeDetails result = mapper.ENTITY.bikeRepairConsultationEntityToBikeDetails(consultationEntity);
 
@@ -230,9 +259,20 @@ public class MapperTest {
 
     @Test
     void mergeCustomerDetailsEntityAndBikeConsultationEntityToCustomerDetails_shouldMapAllFields() {
-        BikeRepairConsultationEntity consultationEntity = new BikeRepairConsultationEntity(DATE, CONSULTATION_ID, BIKE_MODEL, BIKE_BRAND, BIKE_SERIAL_NUMBER);
+        BikeRepairConsultationEntity consultationEntity = new BikeRepairConsultationEntity.Builder()
+                .date(DATE)
+                .id(CONSULTATION_ID)
+                .model(BIKE_MODEL)
+                .brand(BIKE_BRAND)
+                .serialNumber(BIKE_SERIAL_NUMBER)
+                .build();
 
-        CustomerDetailsEntity customerDetailsEntity = new CustomerDetailsEntity(CUSTOMER_NAME, CUSTOMER_EMAIL, CUSTOMER_PHONE, List.of(consultationEntity));
+        CustomerDetailsEntity customerDetailsEntity = new CustomerDetailsEntity.Builder()
+                .name(CUSTOMER_NAME)
+                .email(CUSTOMER_EMAIL)
+                .phoneNumber(CUSTOMER_PHONE)
+                .consultations(List.of(consultationEntity))
+                .build();
 
         CustomerDetails result = mapper.ENTITY.mergeCustomerDetailsEntityAndBikeConsultationEntityToCustomerDetails(
                 customerDetailsEntity, consultationEntity
@@ -246,7 +286,6 @@ public class MapperTest {
         assertEquals(BIKE_SERIAL_NUMBER, result.getBikeDetails().getSerialNumber());
         assertEquals(CONSULTATION_ID, result.getConsultationId());
     }
-
 
 
 }

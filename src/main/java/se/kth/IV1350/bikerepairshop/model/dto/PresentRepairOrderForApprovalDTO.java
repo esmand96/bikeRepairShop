@@ -19,35 +19,130 @@ public class PresentRepairOrderForApprovalDTO {
     private final String bikeSerialNumber;
     private final String bikeBrand;
 
-    /**
-     * Creates a new instance with the specified data.
-     *
-     * @param diagnosticReport The technician's diagnosis.
-     * @param totalCost The total cost of all proposed repair tasks.
-     * @param proposedRepairTasks The repair tasks proposed by the technician.
-     * @param repairOrderId The id of the repair order.
-     * @param customerPhoneNumber The customer's phone number.
-     * @param bikeModel The model of the bike.
-     * @param bikeSerialNumber The serial number of the bike.
-     * @param bikeBrand The brand of the bike.
-     */
-    public PresentRepairOrderForApprovalDTO(DiagnosticReportDTO diagnosticReport,
-                                            double totalCost,
-                                            List<RepairTaskDTO> proposedRepairTasks,
-                                            String repairOrderId,
-                                            String customerPhoneNumber,
-                                            String bikeModel,
-                                            String bikeSerialNumber,
-                                            String bikeBrand) {
-        this.diagnosticReport = diagnosticReport;
-        this.totalCost = totalCost;
-        this.proposedRepairTasks = proposedRepairTasks;
-        this.repairOrderId = repairOrderId;
-        this.customerPhoneNumber = customerPhoneNumber;
-        this.bikeModel = bikeModel;
-        this.bikeSerialNumber = bikeSerialNumber;
-        this.bikeBrand = bikeBrand;
+    private PresentRepairOrderForApprovalDTO(Builder builder) {
+        this.diagnosticReport = builder.diagnosticReport;
+        this.totalCost = builder.totalCost;
+        this.proposedRepairTasks = builder.proposedRepairTasks;
+        this.repairOrderId = builder.repairOrderId;
+        this.customerPhoneNumber = builder.customerPhoneNumber;
+        this.bikeModel = builder.bikeModel;
+        this.bikeSerialNumber = builder.bikeSerialNumber;
+        this.bikeBrand = builder.bikeBrand;
     }
+
+    /**
+     * Builder for creating instances of {@link PresentRepairOrderForApprovalDTO}.
+     * Provides a clear and consistent way to create repair order approval DTO objects.
+     */
+    public static class Builder {
+        private double totalCost;
+        private DiagnosticReportDTO diagnosticReport;
+        private List<RepairTaskDTO> proposedRepairTasks;
+        private String repairOrderId;
+        private String customerPhoneNumber;
+        private String bikeModel;
+        private String bikeSerialNumber;
+        private String bikeBrand;
+
+        /**
+         * Sets the total cost of all proposed repair tasks.
+         *
+         * @param totalCost The total cost of all proposed repair tasks.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder totalCost(double totalCost) {
+            this.totalCost = totalCost;
+            return this;
+        }
+
+        /**
+         * Sets the diagnostic report.
+         *
+         * @param diagnosticReport The technician's diagnosis.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder diagnosticReport(DiagnosticReportDTO diagnosticReport) {
+            this.diagnosticReport = diagnosticReport;
+            return this;
+        }
+
+        /**
+         * Sets the proposed repair tasks.
+         *
+         * @param proposedRepairTasks The repair tasks proposed by the technician.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder proposedRepairTasks(List<RepairTaskDTO> proposedRepairTasks) {
+            this.proposedRepairTasks = proposedRepairTasks;
+            return this;
+        }
+
+        /**
+         * Sets the repair order id.
+         *
+         * @param repairOrderId The id of the repair order.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder repairOrderId(String repairOrderId) {
+            this.repairOrderId = repairOrderId;
+            return this;
+        }
+
+        /**
+         * Sets the customer's phone number.
+         *
+         * @param customerPhoneNumber The customer's phone number.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder customerPhoneNumber(String customerPhoneNumber) {
+            this.customerPhoneNumber = customerPhoneNumber;
+            return this;
+        }
+
+        /**
+         * Sets the bike model.
+         *
+         * @param bikeModel The model of the bike.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder bikeModel(String bikeModel) {
+            this.bikeModel = bikeModel;
+            return this;
+        }
+
+        /**
+         * Sets the bike serial number.
+         *
+         * @param bikeSerialNumber The serial number of the bike.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder bikeSerialNumber(String bikeSerialNumber) {
+            this.bikeSerialNumber = bikeSerialNumber;
+            return this;
+        }
+
+        /**
+         * Sets the bike brand.
+         *
+         * @param bikeBrand The brand of the bike.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder bikeBrand(String bikeBrand) {
+            this.bikeBrand = bikeBrand;
+            return this;
+        }
+
+        /**
+         * Creates and returns a new {@link PresentRepairOrderForApprovalDTO} with the values
+         * set on this builder.
+         *
+         * @return A new PresentRepairOrderForApprovalDTO instance.
+         */
+        public PresentRepairOrderForApprovalDTO build() {
+            return new PresentRepairOrderForApprovalDTO(this);
+        }
+    }
+
 
     /**
      * @return The brand of the bike.

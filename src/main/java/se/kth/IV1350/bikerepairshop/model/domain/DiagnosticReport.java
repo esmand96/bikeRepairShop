@@ -10,16 +10,50 @@ public class DiagnosticReport {
     private String description;
     private LocalDateTime estimatedRepairTime;
 
+    private DiagnosticReport(Builder builder) {
+        this.description = builder.description;
+        this.estimatedRepairTime = builder.estimatedRepairTime;
+    }
+
     /**
-     * Creates a new diagnostic report with the specified description and estimated
-     * repair time.
-     *
-     * @param description The technician's description of the diagnosis.
-     * @param estimatedRepairTime The estimated time when the repair will be completed.
+     * Builder for creating instances of {@link DiagnosticReport}.
+     * Provides a clear and consistent way to create diagnostic report objects.
      */
-    public DiagnosticReport(String description, LocalDateTime estimatedRepairTime) {
-        this.description = description;
-        this.estimatedRepairTime = estimatedRepairTime;
+    public static class Builder {
+        private String description;
+        private LocalDateTime estimatedRepairTime;
+
+        /**
+         * Sets the description of the diagnosis.
+         *
+         * @param description The technician's description of the diagnosis.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        /**
+         * Sets the estimated repair time.
+         *
+         * @param estimatedRepairTime The estimated time when the repair will be completed.
+         * @return This builder, to allow method chaining.
+         */
+        public Builder estimatedRepairTime(LocalDateTime estimatedRepairTime) {
+            this.estimatedRepairTime = estimatedRepairTime;
+            return this;
+        }
+
+        /**
+         * Creates and returns a new {@link DiagnosticReport} with the values
+         * set on this builder.
+         *
+         * @return A new DiagnosticReport instance.
+         */
+        public DiagnosticReport build() {
+            return new DiagnosticReport(this);
+        }
     }
 
     /**
