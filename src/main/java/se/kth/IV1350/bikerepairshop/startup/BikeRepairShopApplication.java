@@ -36,7 +36,7 @@ public class BikeRepairShopApplication {
         service.addObserver(repairOrderObserver);
         service.addObserver(repairOrderObserver1);
         Controller controller = new Controller(service);
-        Logger logger = new FileLogger();
+        Logger <String> logger = new FileLogger();
         View view = new View(controller, logger);
         view.askForPhoneNumber();
     }
