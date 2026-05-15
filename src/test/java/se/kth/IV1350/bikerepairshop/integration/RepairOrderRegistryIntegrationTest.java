@@ -15,7 +15,7 @@ public class RepairOrderRegistryIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        repairOrderRegistry = new RepairOrderRegistryIntegration();
+        repairOrderRegistry = RepairOrderRegistryIntegration.getInstance();
     }
 
     @Test

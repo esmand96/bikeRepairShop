@@ -9,9 +9,27 @@ import java.util.List;
 /**
  * Provides access to the external repair order registry. The registry is simulated by
  * an in-memory list of repair orders that is shared across all instances of this class.
+ * This class uses the Singleton pattern to ensure that only one RepairOrderRegistryIntegration instance
+ * exists in the system.
  */
 public class RepairOrderRegistryIntegration {
+    private static final RepairOrderRegistryIntegration instance = new RepairOrderRegistryIntegration();
+
     private static final List<RepairOrderEntity> repairOrders = new ArrayList<>();
+
+    /**
+     * Creates a single instance of CustomerRegistryIntegration.
+     */
+    private RepairOrderRegistryIntegration(){
+    }
+
+    /**
+     * @return The single RepairOrderRegistryIntegration instance.
+     */
+    public static RepairOrderRegistryIntegration getInstance(){
+        return instance;
+    }
+
 
     /**
      * Saves the specified repair order to the registry. If a repair order with the same

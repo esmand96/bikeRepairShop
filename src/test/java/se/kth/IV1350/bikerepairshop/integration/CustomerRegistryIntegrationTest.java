@@ -15,7 +15,7 @@ public class CustomerRegistryIntegrationTest {
 
     @BeforeEach
     public void setUp(){
-        customerRegistry = new CustomerRegistryIntegration();
+        customerRegistry = CustomerRegistryIntegration.getInstance();
     }
 
     @Test

@@ -27,9 +27,9 @@ public class BikeRepairShopApplication {
      */
     public static void main(String[] args) {
         PrinterIntegration printerIntegration = new PrinterIntegration();
-        CustomerRegistryIntegration customerRegistryIntegration = new CustomerRegistryIntegration();
+        CustomerRegistryIntegration customerRegistryIntegration = CustomerRegistryIntegration.getInstance();
         Mapper mapper = new Mapper();
-        RepairOrderRegistryIntegration repairOrderRegistryIntegration = new RepairOrderRegistryIntegration();
+        RepairOrderRegistryIntegration repairOrderRegistryIntegration = RepairOrderRegistryIntegration.getInstance();
         RepairOrderObserver repairOrderObserver = new RepairOrderView();
         RepairOrderObserver repairOrderObserver1 = new RepairOrderLogger();
         Service service = new Service(repairOrderRegistryIntegration, customerRegistryIntegration, printerIntegration, mapper);

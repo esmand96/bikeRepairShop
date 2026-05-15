@@ -41,8 +41,8 @@ public class ServiceTest {
 
     @BeforeEach
     public void setUp() {
-        customerRegistryIntegration = new CustomerRegistryIntegration();
-        RepairOrderRegistryIntegration repairOrderRegistryIntegration = new RepairOrderRegistryIntegration();
+        customerRegistryIntegration = CustomerRegistryIntegration.getInstance();
+        RepairOrderRegistryIntegration repairOrderRegistryIntegration = RepairOrderRegistryIntegration.getInstance();
         Mapper mapper = new Mapper();
         PrinterIntegration printerIntegration = new SilentPrinterIntegration();
 

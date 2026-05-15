@@ -10,8 +10,12 @@ import java.util.*;
 /**
  * Provides access to the external customer registry. The registry is simulated by an
  * in-memory list of customers, populated with seed data at class load time.
+ * This class uses the Singleton pattern to ensure that only one CustomerRegistryIntegration instance
+ * exists in the system.
  */
 public class CustomerRegistryIntegration {
+    private static final CustomerRegistryIntegration instance = new CustomerRegistryIntegration();
+
     private static final List<CustomerDetailsEntity> customerDetailsList;
     static {
         customerDetailsList = new ArrayList<>();
@@ -33,9 +37,16 @@ public class CustomerRegistryIntegration {
     }
 
     /**
-     * Creates a new instance.
+     * Creates a single instance of CustomerRegistryIntegration.
      */
-    public CustomerRegistryIntegration() {
+    private CustomerRegistryIntegration() {
+    }
+
+    /**.
+     * @return The single CustomerRegistryIntegration instance.
+     */
+    public static CustomerRegistryIntegration getInstance(){
+        return instance;
     }
 
     /**
