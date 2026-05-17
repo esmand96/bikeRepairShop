@@ -6,9 +6,20 @@ import se.kth.IV1350.bikerepairshop.observer.RepairOrderObserver;
 
 import java.time.format.DateTimeFormatter;
 
+/**
+ * An observer that presents repair order updates to the user by printing them to
+ * {@code System.out}. Represents an external view, such as a display or application,
+ * that is notified whenever a repair order changes.
+ */
 public class RepairOrderView implements RepairOrderObserver {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+    /**
+     * Called when an observed repair order has changed. Prints the updated order,
+     * including diagnosis and proposed repair tasks if the order is ready for approval.
+     *
+     * @param repairOrderUpdatedDTO The data describing the updated repair order.
+     */
     @Override
     public void stateHasChanged(RepairOrderUpdatedDTO repairOrderUpdatedDTO) {
         System.out.println(" ===================== REPAIR ORDER STATE CHANGED =====================");

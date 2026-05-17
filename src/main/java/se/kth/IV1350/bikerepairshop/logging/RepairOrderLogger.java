@@ -10,10 +10,19 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * An observer that logs repair order updates to a file. Implements both
+ * {@link RepairOrderObserver}, to be notified of changes, and {@link Logger}, since
+ * its task is to log the events it observes.
+ */
 public class RepairOrderLogger implements Logger <RepairOrderUpdatedDTO>, RepairOrderObserver {
-    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");;
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private PrintWriter logStream;
 
+    /**
+     * Creates a new instance. Appends to an existing log file, or creates a new one
+     * if it does not exist.
+     */
     public RepairOrderLogger () {
         try {
             logStream = new PrintWriter(
@@ -24,6 +33,11 @@ public class RepairOrderLogger implements Logger <RepairOrderUpdatedDTO>, Repair
         }
     }
 
+    /**
+     * Writes the specified repair order to the log file with a timestamp.
+     *
+     * @param message The repair order data to write to the log file.
+     */
     @Override
     public void logg(RepairOrderUpdatedDTO message) {
         StringBuilder logEntry = new StringBuilder();
@@ -75,8 +89,13 @@ public class RepairOrderLogger implements Logger <RepairOrderUpdatedDTO>, Repair
 
     }
 
+    /**
+     * Called when an observed repair order has changed. Logs the updated order to file.
+     *
+     * @param repairOrderUpdatedDTO The data describing the updated repair order.
+     */
     @Override
     public void stateHasChanged(RepairOrderUpdatedDTO repairOrderUpdatedDTO) {
-    logg(repairOrderUpdatedDTO);
+        logg(repairOrderUpdatedDTO);
     }
 }
