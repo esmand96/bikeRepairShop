@@ -231,7 +231,7 @@ public class RepairOrder {
                 return;
             else
                 setState(nextState);
-        } else if (nextState == RepairOrderState.ACCEPTED) {
+        } else if (nextState == RepairOrderState.ACCEPTED || nextState == RepairOrderState.REJECTED) {
             if (state != RepairOrderState.READY_FOR_APPROVAL)
                 return;
             else

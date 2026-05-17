@@ -179,7 +179,6 @@ public class Service {
 
 
     private void updateRepairOrderState(String repairOrderId, RepairOrderState repairOrderState){
-
         RepairOrderEntity repairOrderEntity = repairOrderRegistryIntegration.getRepairOrderById(repairOrderId);
         RepairOrder repairOrder = mapper.ENTITY.repairOrderEntityToDomain(repairOrderEntity);
         repairOrder.transitionState(repairOrderState);
