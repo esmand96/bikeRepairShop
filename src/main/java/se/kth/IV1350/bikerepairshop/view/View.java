@@ -34,7 +34,7 @@ public class View {
             CustomerDetailsDTO customerDetailsDTO = controller.findCustomer(phoneNumber);
             printCustomerInfo(customerDetailsDTO);
             String consultationId = customerDetailsDTO.getConsultationId();
-            enterDescription(consultationId);
+            enterDescription(consultationId); // blir newlyCreated efter detta anrop
         } catch (CustomerNotFoundException e) {
             System.out.println(e.getMessage());
         } catch (DatabaseFailureException e) {

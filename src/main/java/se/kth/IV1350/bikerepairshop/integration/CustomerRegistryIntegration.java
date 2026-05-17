@@ -1,6 +1,4 @@
 package se.kth.IV1350.bikerepairshop.integration;
-
-import se.kth.IV1350.bikerepairshop.exceptions.CustomerNotFoundException;
 import se.kth.IV1350.bikerepairshop.exceptions.DatabaseFailureException;
 import se.kth.IV1350.bikerepairshop.model.entity.BikeRepairConsultationEntity;
 import se.kth.IV1350.bikerepairshop.model.entity.CustomerDetailsEntity;

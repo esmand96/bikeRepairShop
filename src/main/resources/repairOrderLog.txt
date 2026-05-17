@@ -162,3 +162,85 @@ Proposed repair tasks
  - Task : Laga punktering |  Cost : 5.9
 ========================================================
 
+========================================================
+Time of log entry: 2026-05-17 21:26:22
+--------------------------------------------------------
+Repair order ID : bc5f9f9a-e692-4ef9-ae30-89efe6ed7284
+State           : NEWLY_CREATED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+  (none)
+
+Proposed repair tasks
+  (none)
+========================================================
+
+========================================================
+Time of log entry: 2026-05-17 21:26:22
+--------------------------------------------------------
+Repair order ID : bc5f9f9a-e692-4ef9-ae30-89efe6ed7284
+State           : READY_FOR_APPROVAL
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-05-20T21:26:22.721663654
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-17 21:26:26
+--------------------------------------------------------
+Repair order ID : bc5f9f9a-e692-4ef9-ae30-89efe6ed7284
+State           : ACCEPTED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-05-20T21:26:22.721663654
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
