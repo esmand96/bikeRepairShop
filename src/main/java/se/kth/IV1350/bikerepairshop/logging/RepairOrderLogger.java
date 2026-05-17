@@ -68,7 +68,9 @@ public class RepairOrderLogger implements Logger <RepairOrderUpdatedDTO>, Repair
 
         logEntry.append("Diagnostic report\n");
         if (message.getDiagnosticReport() != null) {
-            logEntry.append("  ").append(message.getDiagnosticReport()).append("\n");
+            logEntry.append(" description ").append(message.getDiagnosticReport().getDescription()).append("\n");
+            logEntry.append(" description ").append(message.getDiagnosticReport().getEstimatedRepairTime()).append("\n");
+
         } else {
             logEntry.append("  (none)\n");
         }
@@ -77,7 +79,8 @@ public class RepairOrderLogger implements Logger <RepairOrderUpdatedDTO>, Repair
         logEntry.append("Proposed repair tasks\n");
         if (message.getProposedRepairTasks() != null && !message.getProposedRepairTasks().isEmpty()) {
             for (RepairTaskDTO task : message.getProposedRepairTasks()) {
-                logEntry.append("  - ").append(task).append("\n");
+                logEntry.append(" - Task : ").append(task.getDescription()).append(" | ");
+                logEntry.append(" Cost : ").append(task.getCost()).append("\n");
             }
         } else {
             logEntry.append("  (none)\n");
