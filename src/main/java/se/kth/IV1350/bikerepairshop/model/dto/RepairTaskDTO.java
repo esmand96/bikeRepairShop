@@ -1,4 +1,4 @@
-package se.kth.IV1350.bikerepairshop.model.dto.common;
+package se.kth.IV1350.bikerepairshop.model.dto;
 
 /**
  * Carries data describing a single repair task, including its description and cost,

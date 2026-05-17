@@ -1,13 +1,11 @@
-package se.kth.IV1350.bikerepairshop.model.dto.common;
-
-import java.util.List;
+package se.kth.IV1350.bikerepairshop.model.dto;
 
 /**
- * Carries all data needed to print a receipt for an approved repair order, including
- * customer details, bike details, the diagnosis, the performed repair tasks, and the
- * total cost.
+ * Carries the data needed to present a newly created repair order to the technician,
+ * including customer details, bike details, the problem description, and the order's
+ * current state.
  */
-public class ReceiptDTO {
+public class PresentNewlyCreatedRepairOrderDTO {
     private final String name;
     private final String email;
     private final String phoneNumber;
@@ -16,11 +14,9 @@ public class ReceiptDTO {
     private final String bikeSerialNumber;
     private final String problemDescription;
     private final String state;
-    private final List<RepairTaskDTO> repairTasks;
-    private final DiagnosticReportDTO diagnosticReport;
-    private final double totalCost;
+    private final String repairOrderId;
 
-    private ReceiptDTO(Builder builder) {
+    private PresentNewlyCreatedRepairOrderDTO(Builder builder) {
         this.name = builder.name;
         this.email = builder.email;
         this.phoneNumber = builder.phoneNumber;
@@ -29,9 +25,7 @@ public class ReceiptDTO {
         this.bikeSerialNumber = builder.bikeSerialNumber;
         this.problemDescription = builder.problemDescription;
         this.state = builder.state;
-        this.repairTasks = builder.repairTasks;
-        this.diagnosticReport = builder.diagnosticReport;
-        this.totalCost = builder.totalCost;
+        this.repairOrderId = builder.repairOrderId;
     }
 
     /**
@@ -44,8 +38,8 @@ public class ReceiptDTO {
     }
 
     /**
-     * Builder for creating instances of {@link ReceiptDTO}.
-     * Provides a clear and consistent way to create receipt DTO objects.
+     * Builder for creating instances of {@link PresentNewlyCreatedRepairOrderDTO}.
+     * Provides a clear and consistent way to create newly created repair order DTO objects.
      */
     public static class Builder {
         private String name;
@@ -56,9 +50,7 @@ public class ReceiptDTO {
         private String bikeSerialNumber;
         private String problemDescription;
         private String state;
-        private List<RepairTaskDTO> repairTasks;
-        private DiagnosticReportDTO diagnosticReport;
-        private double totalCost;
+        private String repairOrderId;
 
         /**
          * Sets the customer's name.
@@ -140,7 +132,7 @@ public class ReceiptDTO {
         /**
          * Sets the state of the repair order.
          *
-         * @param state The state of the repair order.
+         * @param state The current state of the repair order.
          * @return This builder, to allow method chaining.
          */
         public Builder state(String state) {
@@ -149,54 +141,33 @@ public class ReceiptDTO {
         }
 
         /**
-         * Sets the repair tasks.
+         * Sets the repair order id.
          *
-         * @param repairTasks The repair tasks performed on the bike.
+         * @param repairOrderId The id of the repair order.
          * @return This builder, to allow method chaining.
          */
-        public Builder repairTasks(List<RepairTaskDTO> repairTasks) {
-            this.repairTasks = repairTasks;
+        public Builder repairOrderId(String repairOrderId) {
+            this.repairOrderId = repairOrderId;
             return this;
         }
 
         /**
-         * Sets the diagnostic report.
-         *
-         * @param diagnosticReport The technician's diagnosis.
-         * @return This builder, to allow method chaining.
-         */
-        public Builder diagnosticReport(DiagnosticReportDTO diagnosticReport) {
-            this.diagnosticReport = diagnosticReport;
-            return this;
-        }
-
-        /**
-         * Sets the total cost.
-         *
-         * @param totalCost The total cost of all repair tasks.
-         * @return This builder, to allow method chaining.
-         */
-        public Builder totalCost(double totalCost) {
-            this.totalCost = totalCost;
-            return this;
-        }
-
-        /**
-         * Creates and returns a new {@link ReceiptDTO} with the values
+         * Creates and returns a new {@link PresentNewlyCreatedRepairOrderDTO} with the values
          * set on this builder.
          *
-         * @return A new ReceiptDTO instance.
+         * @return A new PresentNewlyCreatedRepairOrderDTO instance.
          */
-        public ReceiptDTO build() {
-            return new ReceiptDTO(this);
+        public PresentNewlyCreatedRepairOrderDTO build() {
+            return new PresentNewlyCreatedRepairOrderDTO(this);
         }
     }
 
+
     /**
-     * @return The customer's phone number.
+     * @return The customer's email address.
      */
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getEmail() {
+        return email;
     }
 
     /**
@@ -207,10 +178,31 @@ public class ReceiptDTO {
     }
 
     /**
-     * @return The customer's email address.
+     * @return The current state of the repair order.
      */
-    public String getEmail() {
-        return email;
+    public String getState() {
+        return state;
+    }
+
+    /**
+     * @return The id of the repair order.
+     */
+    public String getRepairOrderId() {
+        return repairOrderId;
+    }
+
+    /**
+     * @return The customer's description of the problem.
+     */
+    public String getProblemDescription() {
+        return problemDescription;
+    }
+
+    /**
+     * @return The serial number of the bike.
+     */
+    public String getBikeSerialNumber() {
+        return bikeSerialNumber;
     }
 
     /**
@@ -228,44 +220,9 @@ public class ReceiptDTO {
     }
 
     /**
-     * @return The serial number of the bike.
+     * @return The customer's phone number.
      */
-    public String getBikeSerialNumber() {
-        return bikeSerialNumber;
-    }
-
-    /**
-     * @return The total cost of all repair tasks.
-     */
-    public double getTotalCost() {
-        return totalCost;
-    }
-
-    /**
-     * @return The technician's diagnosis.
-     */
-    public DiagnosticReportDTO getDiagnosticReport() {
-        return diagnosticReport;
-    }
-
-    /**
-     * @return The repair tasks performed on the bike.
-     */
-    public List<RepairTaskDTO> getRepairTasks() {
-        return repairTasks;
-    }
-
-    /**
-     * @return The state of the repair order.
-     */
-    public String getState() {
-        return state;
-    }
-
-    /**
-     * @return The customer's description of the problem.
-     */
-    public String getProblemDescription() {
-        return problemDescription;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 }

@@ -18,7 +18,7 @@ public class TestUtil {
     public static final String ORDER_PROBLEM_DESCRIPTION = "Bike makes noise";
     public static final RepairOrderState ORDER_STATE = RepairOrderState.NEWLY_CREATED;
     public static final String CUSTOMER_NAME = "Customer Customersson";
-    public static final String CUSTOMER_PHONE = "07012345";
+    public static final String CUSTOMER_PHONE = "070123";
     public static final String CUSTOMER_EMAIL = "janeDoe@example.com";
     public static final String CONSULTATION_ID = "consult-1";
     public static final String BIKE_SERIAL_NUMBER = "SN-12345";

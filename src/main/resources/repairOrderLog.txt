@@ -44,11 +44,11 @@ Problem description
   Punktering på bakhjulet.
 
 Diagnostic report
-  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@5e265ba4
+  se.kth.IV1350.bikerepairshop.model.dto.DiagnosticReportDTO@5e265ba4
 
 Proposed repair tasks
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@156643d4
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@123a439b
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@156643d4
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@123a439b
 ========================================================
 
 ========================================================
@@ -97,11 +97,11 @@ Problem description
   Punktering på bakhjulet.
 
 Diagnostic report
-  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@36aa7bc2
+  se.kth.IV1350.bikerepairshop.model.dto.DiagnosticReportDTO@36aa7bc2
 
 Proposed repair tasks
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@76ccd017
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@182decdb
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@76ccd017
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@182decdb
 ========================================================
 
 ========================================================
@@ -124,11 +124,11 @@ Problem description
   Punktering på bakhjulet.
 
 Diagnostic report
-  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@2401f4c3
+  se.kth.IV1350.bikerepairshop.model.dto.DiagnosticReportDTO@2401f4c3
 
 Proposed repair tasks
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@7637f22
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@4926097b
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@7637f22
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@4926097b
 ========================================================
 
 ========================================================
@@ -177,11 +177,11 @@ Problem description
   Punktering på bakhjulet.
 
 Diagnostic report
-  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@73a28541
+  se.kth.IV1350.bikerepairshop.model.dto.DiagnosticReportDTO@73a28541
 
 Proposed repair tasks
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@6f75e721
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@69222c14
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@6f75e721
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@69222c14
 ========================================================
 
 ========================================================
@@ -204,11 +204,11 @@ Problem description
   Punktering på bakhjulet.
 
 Diagnostic report
-  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@33833882
+  se.kth.IV1350.bikerepairshop.model.dto.DiagnosticReportDTO@33833882
 
 Proposed repair tasks
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@200a570f
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@16b3fc9e
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@200a570f
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@16b3fc9e
 ========================================================
 
 ========================================================
@@ -257,11 +257,11 @@ Problem description
   Punktering på bakhjulet.
 
 Diagnostic report
-  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@71dac704
+  se.kth.IV1350.bikerepairshop.model.dto.DiagnosticReportDTO@71dac704
 
 Proposed repair tasks
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@123772c4
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@2d363fb3
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@123772c4
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@2d363fb3
 ========================================================
 
 ========================================================
@@ -284,11 +284,11 @@ Problem description
   Punktering på bakhjulet.
 
 Diagnostic report
-  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@69222c14
+  se.kth.IV1350.bikerepairshop.model.dto.DiagnosticReportDTO@69222c14
 
 Proposed repair tasks
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@606d8acf
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@782830e
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@606d8acf
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@782830e
 ========================================================
 
 ========================================================
@@ -337,11 +337,11 @@ Problem description
   Punktering på bakhjulet.
 
 Diagnostic report
-  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@71dac704
+  se.kth.IV1350.bikerepairshop.model.dto.DiagnosticReportDTO@71dac704
 
 Proposed repair tasks
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@123772c4
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@2d363fb3
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@123772c4
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@2d363fb3
 ========================================================
 
 ========================================================
@@ -364,10 +364,10 @@ Problem description
   Punktering på bakhjulet.
 
 Diagnostic report
-  se.kth.IV1350.bikerepairshop.model.dto.common.DiagnosticReportDTO@69222c14
+  se.kth.IV1350.bikerepairshop.model.dto.DiagnosticReportDTO@69222c14
 
 Proposed repair tasks
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@606d8acf
-  - se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO@782830e
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@606d8acf
+  - se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO@782830e
 ========================================================
 

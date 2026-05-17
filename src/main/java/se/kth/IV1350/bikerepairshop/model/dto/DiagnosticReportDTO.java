@@ -1,4 +1,4 @@
-package se.kth.IV1350.bikerepairshop.model.dto.common;
+package se.kth.IV1350.bikerepairshop.model.dto;
 
 import java.time.LocalDateTime;
 

@@ -6,7 +6,7 @@ import se.kth.IV1350.bikerepairshop.integration.CustomerRegistryIntegration;
 import se.kth.IV1350.bikerepairshop.integration.PrinterIntegration;
 import se.kth.IV1350.bikerepairshop.integration.RepairOrderRegistryIntegration;
 import se.kth.IV1350.bikerepairshop.model.domain.*;
-import se.kth.IV1350.bikerepairshop.model.dto.common.*;
+import se.kth.IV1350.bikerepairshop.model.dto.*;
 import se.kth.IV1350.bikerepairshop.model.entity.BikeRepairConsultationEntity;
 import se.kth.IV1350.bikerepairshop.model.entity.CustomerDetailsEntity;
 import se.kth.IV1350.bikerepairshop.model.entity.RepairOrderEntity;

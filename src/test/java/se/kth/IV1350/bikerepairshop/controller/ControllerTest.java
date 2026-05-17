@@ -8,11 +8,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.kth.IV1350.bikerepairshop.exceptions.CustomerNotFoundException;
 import se.kth.IV1350.bikerepairshop.exceptions.DatabaseFailureException;
-import se.kth.IV1350.bikerepairshop.model.dto.common.CustomerDetailsDTO;
-import se.kth.IV1350.bikerepairshop.model.dto.common.PresentNewlyCreatedRepairOrderDTO;
-import se.kth.IV1350.bikerepairshop.model.dto.common.PresentRepairOrderForApprovalDTO;
-import se.kth.IV1350.bikerepairshop.model.dto.common.ReceiptDTO;
-import se.kth.IV1350.bikerepairshop.model.dto.common.RepairTaskDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.CustomerDetailsDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.PresentNewlyCreatedRepairOrderDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.PresentRepairOrderForApprovalDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.ReceiptDTO;
+import se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO;
 import se.kth.IV1350.bikerepairshop.service.Service;
 
 import java.time.LocalDateTime;

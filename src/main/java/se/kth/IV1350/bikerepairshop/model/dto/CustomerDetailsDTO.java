@@ -1,4 +1,4 @@
-package se.kth.IV1350.bikerepairshop.model.dto.common;
+package se.kth.IV1350.bikerepairshop.model.dto;
 
 /**
  * Carries customer details together with the bike data and the consultation id, for

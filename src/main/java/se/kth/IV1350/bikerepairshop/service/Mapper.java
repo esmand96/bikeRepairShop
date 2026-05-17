@@ -1,7 +1,7 @@
 package se.kth.IV1350.bikerepairshop.service;
 
 import se.kth.IV1350.bikerepairshop.model.domain.*;
-import se.kth.IV1350.bikerepairshop.model.dto.common.*;
+import se.kth.IV1350.bikerepairshop.model.dto.*;
 import se.kth.IV1350.bikerepairshop.model.entity.*;
 
 import java.time.LocalDateTime;
@@ -238,7 +238,13 @@ public class Mapper {
                     .build();
 
         }
-
+        /**
+         * Converts the specified domain repair order to a repair order updated DTO,
+         * used to notify observers when a repair order has changed.
+         *
+         * @param repairOrder The repair order to convert.
+         * @return A DTO containing the data needed to notify observers about the updated order.
+         */
         RepairOrderUpdatedDTO repairOrderToRepairOrderUpdatedDTO(RepairOrder repairOrder){
             String name = repairOrder.getCustomerDetails().getName();
             String email = repairOrder.getCustomerDetails().getEmail();
@@ -266,6 +272,13 @@ public class Mapper {
                     .build();
 
         }
+
+        /**
+         * Converts the specified domain diagnostic report to a diagnostic report DTO.
+         *
+         * @param diagnosticReport The domain object to convert, or {@code null}.
+         * @return The corresponding DTO, or {@code null} if the input is {@code null}.
+         */
         DiagnosticReportDTO toDiagnosticReportDTO(DiagnosticReport diagnosticReport){
             if(diagnosticReport == null)
                 return null;
@@ -386,10 +399,7 @@ public class Mapper {
          * @return A DTO ready to be presented to the receptionist.
          */
         PresentRepairOrderForApprovalDTO createPresentRepairOrderForApprovalDTO(RepairOrder repairOrder, double totalCost) {
-            DiagnosticReportDTO diagnosticReportDTO = DiagnosticReportDTO.builder()
-                    .description(repairOrder.getDiagnosticReport().getDescription())
-                    .estimatedRepairTime(repairOrder.getDiagnosticReport().getEstimatedRepairTime())
-                    .build();
+            DiagnosticReportDTO diagnosticReportDTO = toDiagnosticReportDTO(repairOrder.getDiagnosticReport());
             List<RepairTaskDTO> repairTaskDTOs = repairTaskToDTO(repairOrder.getRepairTasks());
 
             return PresentRepairOrderForApprovalDTO.builder()
@@ -435,10 +445,7 @@ public class Mapper {
         ReceiptDTO createReceiptDTO(RepairOrder repairOrder, double totalCost) {
             List<RepairTaskDTO> repairTaskDTOs = repairTaskToDTO(repairOrder.getRepairTasks());
 
-            DiagnosticReportDTO diagnosticReportDTO = DiagnosticReportDTO.builder()
-                    .description(repairOrder.getDiagnosticReport().getDescription())
-                    .estimatedRepairTime(repairOrder.getDiagnosticReport().getEstimatedRepairTime())
-                    .build();
+            DiagnosticReportDTO diagnosticReportDTO = toDiagnosticReportDTO(repairOrder.getDiagnosticReport());
 
 
             return ReceiptDTO.builder()
