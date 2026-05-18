@@ -2,6 +2,10 @@ package se.kth.IV1350.bikerepairshop.model.dto;
 
 import java.util.List;
 
+/**
+ * A DTO carrying the updated state of a repair order to observers.
+ * Contains customer information, bike details, and the current repair order state.
+ */
 public class RepairOrderUpdatedDTO {
     private final String name;
     private final String email;
@@ -13,20 +17,19 @@ public class RepairOrderUpdatedDTO {
     private final String state;
     private final String repairOrderId;
     private final DiagnosticReportDTO diagnosticReport;
-    private final List<RepairTaskDTO> proposedRepairTasks;;
-
+    private final List<RepairTaskDTO> proposedRepairTasks;
 
     private RepairOrderUpdatedDTO(String name,
-                                 String email,
-                                 String phoneNumber,
-                                 String bikeBrand,
-                                 String bikeModel,
-                                 String bikeSerialNumber,
-                                 String problemDescription,
-                                 String state,
-                                 String repairOrderId,
-                                 DiagnosticReportDTO diagnosticReport,
-                                 List<RepairTaskDTO> proposedRepairTasks) {
+                                  String email,
+                                  String phoneNumber,
+                                  String bikeBrand,
+                                  String bikeModel,
+                                  String bikeSerialNumber,
+                                  String problemDescription,
+                                  String state,
+                                  String repairOrderId,
+                                  DiagnosticReportDTO diagnosticReport,
+                                  List<RepairTaskDTO> proposedRepairTasks) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -40,54 +43,95 @@ public class RepairOrderUpdatedDTO {
         this.proposedRepairTasks = proposedRepairTasks;
     }
 
-    public static Builder builder(){
+    /**
+     * Creates and returns a new {@link Builder} instance.
+     *
+     * @return A new Builder.
+     */
+    public static Builder builder() {
         return new Builder();
     }
 
+    /**
+     * @return The customer's full name.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return The proposed repair tasks for this order.
+     */
     public List<RepairTaskDTO> getProposedRepairTasks() {
         return proposedRepairTasks;
     }
 
+    /**
+     * @return The diagnostic report for this order.
+     */
     public DiagnosticReportDTO getDiagnosticReport() {
         return diagnosticReport;
     }
 
+    /**
+     * @return The unique identifier of the repair order.
+     */
     public String getRepairOrderId() {
         return repairOrderId;
     }
 
+    /**
+     * @return The current state of the repair order.
+     */
     public String getState() {
         return state;
     }
 
+    /**
+     * @return The customer's description of the problem.
+     */
     public String getProblemDescription() {
         return problemDescription;
     }
 
+    /**
+     * @return The bike's serial number.
+     */
     public String getBikeSerialNumber() {
         return bikeSerialNumber;
     }
 
+    /**
+     * @return The bike's model name.
+     */
     public String getBikeModel() {
         return bikeModel;
     }
 
+    /**
+     * @return The bike's brand name.
+     */
     public String getBikeBrand() {
         return bikeBrand;
     }
 
+    /**
+     * @return The customer's email address.
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * @return The customer's phone number.
+     */
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
+    /**
+     * Builder for {@link RepairOrderUpdatedDTO}.
+     */
     public static class Builder {
         private String name;
         private String email;
@@ -101,61 +145,132 @@ public class RepairOrderUpdatedDTO {
         private DiagnosticReportDTO diagnosticReport;
         private List<RepairTaskDTO> proposedRepairTasks;
 
+        /**
+         * Sets the customer's full name.
+         *
+         * @param name The customer's full name.
+         * @return This builder, to allow method chaining.
+         */
         public Builder name(String name) {
             this.name = name;
             return this;
         }
 
+        /**
+         * Sets the customer's email address.
+         *
+         * @param email The customer's email address.
+         * @return This builder, to allow method chaining.
+         */
         public Builder email(String email) {
             this.email = email;
             return this;
         }
 
+        /**
+         * Sets the customer's phone number.
+         *
+         * @param phoneNumber The customer's phone number.
+         * @return This builder, to allow method chaining.
+         */
         public Builder phoneNumber(String phoneNumber) {
             this.phoneNumber = phoneNumber;
             return this;
         }
 
+        /**
+         * Sets the bike brand.
+         *
+         * @param bikeBrand The brand of the bike.
+         * @return This builder, to allow method chaining.
+         */
         public Builder bikeBrand(String bikeBrand) {
             this.bikeBrand = bikeBrand;
             return this;
         }
 
+        /**
+         * Sets the bike model.
+         *
+         * @param bikeModel The model of the bike.
+         * @return This builder, to allow method chaining.
+         */
         public Builder bikeModel(String bikeModel) {
             this.bikeModel = bikeModel;
             return this;
         }
 
+        /**
+         * Sets the bike serial number.
+         *
+         * @param bikeSerialNumber The serial number of the bike.
+         * @return This builder, to allow method chaining.
+         */
         public Builder bikeSerialNumber(String bikeSerialNumber) {
             this.bikeSerialNumber = bikeSerialNumber;
             return this;
         }
 
+        /**
+         * Sets the problem description.
+         *
+         * @param problemDescription The customer's description of the problem.
+         * @return This builder, to allow method chaining.
+         */
         public Builder problemDescription(String problemDescription) {
             this.problemDescription = problemDescription;
             return this;
         }
 
+        /**
+         * Sets the state of the repair order.
+         *
+         * @param state The current state of the repair order.
+         * @return This builder, to allow method chaining.
+         */
         public Builder state(String state) {
             this.state = state;
             return this;
         }
 
+        /**
+         * Sets the repair order ID.
+         *
+         * @param repairOrderId The unique identifier of the repair order.
+         * @return This builder, to allow method chaining.
+         */
         public Builder repairOrderId(String repairOrderId) {
             this.repairOrderId = repairOrderId;
             return this;
         }
 
+        /**
+         * Sets the diagnostic report.
+         *
+         * @param diagnosticReport The technician's diagnosis.
+         * @return This builder, to allow method chaining.
+         */
         public Builder diagnosticReport(DiagnosticReportDTO diagnosticReport) {
             this.diagnosticReport = diagnosticReport;
             return this;
         }
 
+        /**
+         * Sets the proposed repair tasks.
+         *
+         * @param proposedRepairTasks The repair tasks proposed by the technician.
+         * @return This builder, to allow method chaining.
+         */
         public Builder proposedRepairTasks(List<RepairTaskDTO> proposedRepairTasks) {
             this.proposedRepairTasks = proposedRepairTasks;
             return this;
         }
 
+        /**
+         * Creates and returns a new {@link RepairOrderUpdatedDTO} with the values set on this builder.
+         *
+         * @return A new RepairOrderUpdatedDTO instance.
+         */
         public RepairOrderUpdatedDTO build() {
             return new RepairOrderUpdatedDTO(
                     name,
@@ -172,7 +287,4 @@ public class RepairOrderUpdatedDTO {
             );
         }
     }
-
-
 }
-

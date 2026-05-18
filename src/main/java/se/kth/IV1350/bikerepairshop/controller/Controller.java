@@ -100,6 +100,11 @@ public class Controller {
         return service.getReceipt(repairOrderId);
     }
 
+    /**
+     * Rejects the repair order with the specified id.
+     *
+     * @param repairOrderId The id of the repair order to reject.
+     */
     public void rejectRepairOrder(String repairOrderId) {
         service.rejectRepairOrder(repairOrderId);
     }

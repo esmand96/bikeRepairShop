@@ -28,7 +28,7 @@ public class Service {
     private final CustomerRegistryIntegration customerRegistryIntegration;
     private final PrinterIntegration printerIntegration;
     private final Mapper mapper;
-    private final List <RepairOrderObserver> repairOrderObservers = new ArrayList<>();
+    private final List<RepairOrderObserver> repairOrderObservers = new ArrayList<>();
 
     public Service(RepairOrderRegistryIntegration repairOrderRegistryIntegration,
                    CustomerRegistryIntegration customerRegistryIntegration,
@@ -40,7 +40,12 @@ public class Service {
         this.mapper = mapper;
     }
 
-    public void addObserver(RepairOrderObserver repairOrderObserver){
+    /**
+     * Registers an observer to be notified when a repair order is updated.
+     *
+     * @param repairOrderObserver The observer to register.
+     */
+    public void addObserver(RepairOrderObserver repairOrderObserver) {
         repairOrderObservers.add(repairOrderObserver);
     }
 
@@ -173,12 +178,18 @@ public class Service {
     }
 
 
+    /**
+     * Rejects the repair order with the specified id by transitioning it to the
+     * {@code REJECTED} state and saving the change.
+     *
+     * @param repairOrderId The id of the repair order to reject.
+     */
     public void rejectRepairOrder(String repairOrderId) {
         updateRepairOrderState(repairOrderId, RepairOrderState.REJECTED);
     }
 
 
-    private void updateRepairOrderState(String repairOrderId, RepairOrderState repairOrderState){
+    private void updateRepairOrderState(String repairOrderId, RepairOrderState repairOrderState) {
         RepairOrderEntity repairOrderEntity = repairOrderRegistryIntegration.getRepairOrderById(repairOrderId);
         RepairOrder repairOrder = mapper.ENTITY.repairOrderEntityToDomain(repairOrderEntity);
         repairOrder.transitionState(repairOrderState);
@@ -220,8 +231,8 @@ public class Service {
                 .build();
     }
 
-    private void notifyObservers(RepairOrderUpdatedDTO repairOrderUpdatedDTO){
-        for (RepairOrderObserver repairOrderObserver : repairOrderObservers){
+    private void notifyObservers(RepairOrderUpdatedDTO repairOrderUpdatedDTO) {
+        for (RepairOrderObserver repairOrderObserver : repairOrderObservers) {
             repairOrderObserver.stateHasChanged(repairOrderUpdatedDTO);
         }
     }

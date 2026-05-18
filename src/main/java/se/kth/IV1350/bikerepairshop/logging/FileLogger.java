@@ -5,7 +5,11 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class FileLogger implements Logger <String> {
+/**
+ * Logs messages to a file with a timestamp.
+ * Appends to an existing log file, or creates a new one if it does not exist.
+ */
+public class FileLogger implements Logger<String> {
     private PrintWriter logStream;
     private static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
