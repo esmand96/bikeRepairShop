@@ -1,0 +1,738 @@
+========================================================
+Time of log entry: 2026-05-17 20:27:13
+--------------------------------------------------------
+Repair order ID : e82e8889-a133-4008-bd28-8d9eb1217dd1
+State           : NEWLY_CREATED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+  (none)
+
+Proposed repair tasks
+  (none)
+========================================================
+
+========================================================
+Time of log entry: 2026-05-17 20:27:13
+--------------------------------------------------------
+Repair order ID : e82e8889-a133-4008-bd28-8d9eb1217dd1
+State           : READY_FOR_APPROVAL
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-05-20T20:27:13.372135150
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-17 20:27:16
+--------------------------------------------------------
+Repair order ID : e82e8889-a133-4008-bd28-8d9eb1217dd1
+State           : READY_FOR_APPROVAL
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-05-20T20:27:13.372135150
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-17 20:29:38
+--------------------------------------------------------
+Repair order ID : e7cec92e-7fdc-4c72-ace6-2046b7038b98
+State           : NEWLY_CREATED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+  (none)
+
+Proposed repair tasks
+  (none)
+========================================================
+
+========================================================
+Time of log entry: 2026-05-17 20:29:38
+--------------------------------------------------------
+Repair order ID : e7cec92e-7fdc-4c72-ace6-2046b7038b98
+State           : READY_FOR_APPROVAL
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-05-20T20:29:38.361351700
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-17 20:29:42
+--------------------------------------------------------
+Repair order ID : e7cec92e-7fdc-4c72-ace6-2046b7038b98
+State           : REJECTED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-05-20T20:29:38.361351700
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-17 21:26:22
+--------------------------------------------------------
+Repair order ID : bc5f9f9a-e692-4ef9-ae30-89efe6ed7284
+State           : NEWLY_CREATED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+  (none)
+
+Proposed repair tasks
+  (none)
+========================================================
+
+========================================================
+Time of log entry: 2026-05-17 21:26:22
+--------------------------------------------------------
+Repair order ID : bc5f9f9a-e692-4ef9-ae30-89efe6ed7284
+State           : READY_FOR_APPROVAL
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-05-20T21:26:22.721663654
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-17 21:26:26
+--------------------------------------------------------
+Repair order ID : bc5f9f9a-e692-4ef9-ae30-89efe6ed7284
+State           : ACCEPTED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-05-20T21:26:22.721663654
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-18 09:14:40
+--------------------------------------------------------
+Repair order ID : f62b9f96-6c18-491f-8345-6ba2d9bd93ee
+State           : NEWLY_CREATED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+  (none)
+
+Proposed repair tasks
+  (none)
+========================================================
+
+========================================================
+Time of log entry: 2026-05-18 09:14:40
+--------------------------------------------------------
+Repair order ID : f62b9f96-6c18-491f-8345-6ba2d9bd93ee
+State           : READY_FOR_APPROVAL
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-05-21T09:14:40.302846
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-18 09:15:07
+--------------------------------------------------------
+Repair order ID : f62b9f96-6c18-491f-8345-6ba2d9bd93ee
+State           : ACCEPTED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-05-21T09:14:40.302846
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-30 15:32:33
+--------------------------------------------------------
+Repair order ID : 1729fa1d-ffad-4107-aff8-ec5ea73d9439
+State           : NEWLY_CREATED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+  (none)
+
+Proposed repair tasks
+  (none)
+========================================================
+
+========================================================
+Time of log entry: 2026-05-30 15:32:33
+--------------------------------------------------------
+Repair order ID : 1729fa1d-ffad-4107-aff8-ec5ea73d9439
+State           : READY_FOR_APPROVAL
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-06-02T15:32:33.306783
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-30 15:32:33
+--------------------------------------------------------
+Repair order ID : 1729fa1d-ffad-4107-aff8-ec5ea73d9439
+State           : ACCEPTED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-06-02T15:32:33.306783
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-30 15:32:33
+--------------------------------------------------------
+Repair order ID : 05fd24f8-4058-49dd-9e7d-a17bcb5abe0b
+State           : NEWLY_CREATED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+  (none)
+
+Proposed repair tasks
+  (none)
+========================================================
+
+========================================================
+Time of log entry: 2026-05-30 15:32:33
+--------------------------------------------------------
+Repair order ID : 05fd24f8-4058-49dd-9e7d-a17bcb5abe0b
+State           : READY_FOR_APPROVAL
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-06-02T15:32:33.323443
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-30 15:32:33
+--------------------------------------------------------
+Repair order ID : 05fd24f8-4058-49dd-9e7d-a17bcb5abe0b
+State           : ACCEPTED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-06-02T15:32:33.323443
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-30 15:32:33
+--------------------------------------------------------
+Repair order ID : de43db90-4400-4a6c-a960-8e357c1f0b87
+State           : NEWLY_CREATED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+  (none)
+
+Proposed repair tasks
+  (none)
+========================================================
+
+========================================================
+Time of log entry: 2026-05-30 15:32:33
+--------------------------------------------------------
+Repair order ID : de43db90-4400-4a6c-a960-8e357c1f0b87
+State           : READY_FOR_APPROVAL
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-06-02T15:32:33.328147
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-30 15:32:33
+--------------------------------------------------------
+Repair order ID : de43db90-4400-4a6c-a960-8e357c1f0b87
+State           : ACCEPTED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-06-02T15:32:33.328147
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-30 15:32:33
+--------------------------------------------------------
+Repair order ID : 6c5510f6-7d6a-476d-9b95-013501a2a964
+State           : NEWLY_CREATED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+  (none)
+
+Proposed repair tasks
+  (none)
+========================================================
+
+========================================================
+Time of log entry: 2026-05-30 15:32:33
+--------------------------------------------------------
+Repair order ID : 6c5510f6-7d6a-476d-9b95-013501a2a964
+State           : READY_FOR_APPROVAL
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-06-02T15:32:33.332243
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-30 15:32:33
+--------------------------------------------------------
+Repair order ID : 6c5510f6-7d6a-476d-9b95-013501a2a964
+State           : ACCEPTED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-06-02T15:32:33.332243
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-30 15:32:33
+--------------------------------------------------------
+Repair order ID : 5850296e-f9c5-47b0-8d92-9f1e68225ef3
+State           : NEWLY_CREATED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+  (none)
+
+Proposed repair tasks
+  (none)
+========================================================
+
+========================================================
+Time of log entry: 2026-05-30 15:32:33
+--------------------------------------------------------
+Repair order ID : 5850296e-f9c5-47b0-8d92-9f1e68225ef3
+State           : READY_FOR_APPROVAL
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-06-02T15:32:33.335523
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
+========================================================
+Time of log entry: 2026-05-30 15:32:33
+--------------------------------------------------------
+Repair order ID : 5850296e-f9c5-47b0-8d92-9f1e68225ef3
+State           : ACCEPTED
+
+Customer
+  Name          : Customer Customersson
+  Email         : first@customer.now
+  Phone number  : 070123
+
+Bike
+  Brand         : someBrand
+  Model         : someModel
+  Serial number : serial123
+
+Problem description
+  Punktering på bakhjulet.
+
+Diagnostic report
+ description Brustet hjul och punktering
+ description 2026-06-02T15:32:33.335523
+
+Proposed repair tasks
+ - Task : Laga brustet hjul |  Cost : 75.84
+ - Task : Laga punktering |  Cost : 5.9
+========================================================
+
