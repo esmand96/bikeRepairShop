@@ -43,27 +43,7 @@ import static se.kth.IV1350.bikerepairshop.TestUtil.ORDER_PROBLEM_DESCRIPTION;
 import static se.kth.IV1350.bikerepairshop.TestUtil.TASK_COST;
 import static se.kth.IV1350.bikerepairshop.TestUtil.TASK_DESCRIPTION;
 
-/**
- * Tests for all informational printouts in the {@link View} class. Each test
- * redirects {@link System#out} to an in-memory buffer, invokes the method under test
- * on a {@link View} wired to a mocked {@link Controller}, and asserts that the
- * captured output contains the expected information.
- *
- * <p>The view owns a {@link java.util.Scanner} that is created over {@link System#in}
- * in the constructor, so {@link System#in} is redirected before the view is created.
- * For this reason the view is instantiated explicitly in each test via
- * {@link #createView()} or {@link #createViewWithStdin(String)}, rather than with
- * {@code @InjectMocks}.
- *
- * <p>Only the controller methods that actually return a value used by the method under
- * test are stubbed, so that the default strict stubbing of {@link MockitoExtension} is
- * satisfied without any unused stubs. Void controller calls are verified where the
- * point of the test is that the call was made.
- *
- * <p>Purely decorative output, such as separator lines made of {@code =} and {@code -}
- * characters, is not asserted on, in line with the task description that says only
- * printouts that contain information have to be tested.
- */
+
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class ViewTest {

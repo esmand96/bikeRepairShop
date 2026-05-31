@@ -15,20 +15,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * Tests for the informational printouts produced by
- * {@link BikeRepairShopApplication#main}. Because {@code main} runs the entire
- * program in a single call, the test redirects both {@link System#in} and
- * {@link System#out} before the call and restores them afterwards.
- *
- * <p>The singleton {@link RepairOrderRegistryIntegration} persists its list of repair
- * orders across test runs within the same JVM. If the registry already contains an
- * order for the only consultation belonging to customer {@code 070123}, {@code main}
- * will find no unhandled consultation and return {@code null} from
- * {@code Service.findCustomerByPhoneNumber}, which would cause a
- * {@link NullPointerException} in the view. To prevent this, the in-memory order list
- * is cleared via reflection in {@link #setUp} before each test run.
- */
 class BikeRepairShopApplicationTest {
 
     private ByteArrayOutputStream outContent;
@@ -53,12 +39,6 @@ class BikeRepairShopApplicationTest {
         return outContent.toString(StandardCharsets.UTF_8);
     }
 
-    /**
-     * Clears the in-memory repair order list in {@link RepairOrderRegistryIntegration}
-     * so that each test run starts with an empty registry, regardless of what earlier
-     * tests may have inserted. This is necessary because the singleton is shared across
-     * all tests within the same JVM process.
-     */
     private void clearRepairOrderRegistry() throws Exception {
         Field repairOrdersField = RepairOrderRegistryIntegration.class.getDeclaredField("repairOrders");
         repairOrdersField.setAccessible(true);
@@ -67,7 +47,7 @@ class BikeRepairShopApplicationTest {
     }
 
     @Test
-    void main_shouldPrintCustomerInformationSection() {
+    void main_shouldPrintCustomerInformationSection() throws Exception {
         BikeRepairShopApplication.main(new String[]{});
 
         String output = capturedOutput();
@@ -78,7 +58,7 @@ class BikeRepairShopApplicationTest {
     }
 
     @Test
-    void main_shouldPrintProblemDescription() {
+    void main_shouldPrintProblemDescription() throws Exception {
         BikeRepairShopApplication.main(new String[]{});
 
         assertTrue(capturedOutput().contains("Punktering på bakhjulet."),
@@ -86,7 +66,7 @@ class BikeRepairShopApplicationTest {
     }
 
     @Test
-    void main_shouldNotifyObserversAndPrintRepairOrderStateChangedAtLeastOnce() {
+    void main_shouldNotifyObserversAndPrintRepairOrderStateChangedAtLeastOnce() throws Exception {
         BikeRepairShopApplication.main(new String[]{});
 
         assertTrue(capturedOutput().contains("REPAIR ORDER STATE CHANGED"),
@@ -94,7 +74,7 @@ class BikeRepairShopApplicationTest {
     }
 
     @Test
-    void main_shouldPrintApprovalPrompt() {
+    void main_shouldPrintApprovalPrompt() throws Exception {
         BikeRepairShopApplication.main(new String[]{});
 
         assertTrue(capturedOutput().contains("ÄR REPAIR ORDER GODKÄND AV KUND"),
@@ -102,7 +82,7 @@ class BikeRepairShopApplicationTest {
     }
 
     @Test
-    void main_shouldPrintReceiptWithCustomerNameAndAcceptedStatus() {
+    void main_shouldPrintReceiptWithCustomerNameAndAcceptedStatus() throws Exception {
         BikeRepairShopApplication.main(new String[]{});
 
         String output = capturedOutput();

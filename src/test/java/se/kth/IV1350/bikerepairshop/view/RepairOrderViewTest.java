@@ -26,21 +26,7 @@ import static se.kth.IV1350.bikerepairshop.TestUtil.ORDER_PROBLEM_DESCRIPTION;
 import static se.kth.IV1350.bikerepairshop.TestUtil.TASK_COST;
 import static se.kth.IV1350.bikerepairshop.TestUtil.TASK_DESCRIPTION;
 
-/**
- * Tests for all informational printouts in {@link RepairOrderView}. Each test
- * redirects {@link System#out} to an in-memory buffer, calls
- * {@link RepairOrderView#stateHasChanged} with a {@link RepairOrderUpdatedDTO} for a
- * specific state, and then asserts that the captured output contains or does not
- * contain the expected information.
- *
- * <p>{@link RepairOrderView} has no external dependencies and can therefore be
- * instantiated directly without mocking.
- *
- * <p>The test cases cover all four state values that the view can receive:
- * {@code NEWLY_CREATED}, {@code READY_FOR_APPROVAL}, {@code ACCEPTED}, and
- * {@code REJECTED}. The state determines whether the diagnosis section and the repair
- * tasks are included in the printout.
- */
+
 class RepairOrderViewTest {
 
     private RepairOrderView repairOrderView;
