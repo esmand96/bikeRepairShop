@@ -78,16 +78,6 @@ public class RepairOrderLogger extends AbstractRepairOrderObserver implements Lo
 
     }
 
-    /**
-     * Called when an observed repair order has changed. Logs the updated order to file.
-     *
-     * @param repairOrderUpdatedDTO The data describing the updated repair order.
-     */
-    @Override
-    public void stateHasChanged(RepairOrderUpdatedDTO repairOrderUpdatedDTO) {
-        logg(repairOrderUpdatedDTO);
-    }
-
     @Override
     protected void doHandleStateChange(RepairOrderUpdatedDTO repairOrderUpdatedDTO) {
         logg(repairOrderUpdatedDTO);

@@ -15,14 +15,9 @@ import java.time.format.DateTimeFormatter;
 public class RepairOrderView extends AbstractRepairOrderObserver {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    /**
-     * Called when an observed repair order has changed. Prints the updated order,
-     * including diagnosis and proposed repair tasks if the order is ready for approval.
-     *
-     * @param repairOrderUpdatedDTO The data describing the updated repair order.
-     */
+
     @Override
-    public void stateHasChanged(RepairOrderUpdatedDTO repairOrderUpdatedDTO) {
+    protected void doHandleStateChange(RepairOrderUpdatedDTO repairOrderUpdatedDTO) throws Exception {
         System.out.println(" ===================== REPAIR ORDER STATE CHANGED =====================");
 
         System.out.println("  ORDER ID: " + repairOrderUpdatedDTO.getRepairOrderId());
@@ -44,19 +39,10 @@ public class RepairOrderView extends AbstractRepairOrderObserver {
             }
 
         }
-        System.out.println("========================================================================");
-
-
-
-    }
+        System.out.println("========================================================================");    }
 
     @Override
-    public void doHandleStateChange(RepairOrderUpdatedDTO repairOrderUpdatedDTO) throws Exception {
-        stateHasChanged(repairOrderUpdatedDTO);
-    }
-
-    @Override
-    protected void handleErrors(Exception e) { //vi throwar nt exception men läraren sa man mst ha med try catch i abstract klassen?
+    protected void handleErrors(Exception e) {
         System.out.println("Could not display repair order state change.");
     }
 }
