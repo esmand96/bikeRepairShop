@@ -4,11 +4,6 @@ import se.kth.IV1350.bikerepairshop.model.dto.RepairOrderUpdatedDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO;
 import se.kth.IV1350.bikerepairshop.observer.RepairOrderObserver;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * An observer that logs repair order updates to a file. Implements both
@@ -16,21 +11,14 @@ import java.time.format.DateTimeFormatter;
  * its task is to log the events it observes.
  */
 public class RepairOrderLogger implements Logger <RepairOrderUpdatedDTO>, RepairOrderObserver {
-    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private PrintWriter logStream;
+    private TimestampedLogWriter logger;
 
     /**
      * Creates a new instance. Appends to an existing log file, or creates a new one
      * if it does not exist.
      */
-    public RepairOrderLogger () {
-        try {
-            logStream = new PrintWriter(
-                    new FileWriter("src/main/resources/repairOrderLog.txt", true), true);
-        } catch (IOException ioe) {
-            System.out.println("CAN NOT LOG.");
-            ioe.printStackTrace();
-        }
+    public RepairOrderLogger (TimestampedLogWriter timestampedLogWriter) {
+        logger = timestampedLogWriter;
     }
 
     /**
@@ -43,9 +31,6 @@ public class RepairOrderLogger implements Logger <RepairOrderUpdatedDTO>, Repair
         StringBuilder logEntry = new StringBuilder();
 
         logEntry.append("========================================================\n");
-        logEntry.append("Time of log entry: ")
-                .append(LocalDateTime.now().format(TIME_FORMATTER)).append("\n");
-        logEntry.append("--------------------------------------------------------\n");
         logEntry.append("Repair order ID : ").append(message.getRepairOrderId()).append("\n");
         logEntry.append("State           : ").append(message.getState()).append("\n");
         logEntry.append("\n");
@@ -87,7 +72,7 @@ public class RepairOrderLogger implements Logger <RepairOrderUpdatedDTO>, Repair
         }
         logEntry.append("========================================================\n");
 
-        logStream.println(logEntry);
+        logger.println(logEntry.toString());
 
 
     }
