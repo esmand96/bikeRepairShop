@@ -2,15 +2,16 @@ package se.kth.IV1350.bikerepairshop.logging;
 
 import se.kth.IV1350.bikerepairshop.model.dto.RepairOrderUpdatedDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO;
+import se.kth.IV1350.bikerepairshop.observer.AbstractRepairOrderObserver;
 import se.kth.IV1350.bikerepairshop.observer.RepairOrderObserver;
 
 
+
 /**
- * An observer that logs repair order updates to a file. Implements both
- * {@link RepairOrderObserver}, to be notified of changes, and {@link Logger}, since
+ * An observer that logs repair order updates to a file. Implements {@link Logger}, since
  * its task is to log the events it observes.
  */
-public class RepairOrderLogger implements Logger <RepairOrderUpdatedDTO>, RepairOrderObserver {
+public class RepairOrderLogger extends AbstractRepairOrderObserver implements Logger <RepairOrderUpdatedDTO> {
     private TimestampedLogWriter logger;
 
     /**
@@ -85,5 +86,15 @@ public class RepairOrderLogger implements Logger <RepairOrderUpdatedDTO>, Repair
     @Override
     public void stateHasChanged(RepairOrderUpdatedDTO repairOrderUpdatedDTO) {
         logg(repairOrderUpdatedDTO);
+    }
+
+    @Override
+    protected void doHandleStateChange(RepairOrderUpdatedDTO repairOrderUpdatedDTO) {
+        logg(repairOrderUpdatedDTO);
+    }
+
+    @Override
+    protected void handleErrors(Exception e) {
+        System.out.println("Could not log repair order state change.");
     }
 }

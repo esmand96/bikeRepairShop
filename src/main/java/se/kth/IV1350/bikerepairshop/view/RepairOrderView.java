@@ -2,6 +2,7 @@ package se.kth.IV1350.bikerepairshop.view;
 
 import se.kth.IV1350.bikerepairshop.model.dto.RepairOrderUpdatedDTO;
 import se.kth.IV1350.bikerepairshop.model.dto.RepairTaskDTO;
+import se.kth.IV1350.bikerepairshop.observer.AbstractRepairOrderObserver;
 import se.kth.IV1350.bikerepairshop.observer.RepairOrderObserver;
 
 import java.time.format.DateTimeFormatter;
@@ -11,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  * {@code System.out}. Represents an external view, such as a display or application,
  * that is notified whenever a repair order changes.
  */
-public class RepairOrderView implements RepairOrderObserver {
+public class RepairOrderView extends AbstractRepairOrderObserver {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     /**
@@ -47,6 +48,16 @@ public class RepairOrderView implements RepairOrderObserver {
 
 
 
+    }
+
+    @Override
+    public void doHandleStateChange(RepairOrderUpdatedDTO repairOrderUpdatedDTO) throws Exception {
+        stateHasChanged(repairOrderUpdatedDTO);
+    }
+
+    @Override
+    protected void handleErrors(Exception e) { //vi throwar nt exception men läraren sa man mst ha med try catch i abstract klassen?
+        System.out.println("Could not display repair order state change.");
     }
 }
 
